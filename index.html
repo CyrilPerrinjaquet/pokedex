@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="assert/CSS/index.css" />
     <title>Pokédex</title>
   </head>
   <body>
@@ -14,41 +14,33 @@
         </h1>
         <div>
           <!--Search Bar-->
-          <input type="text" placeholder="Search for a pokemon..." />
+          <input type="text" placeholder="Search for a pokemon... " />
+          <!--TODO Make another div for the search icon-->
         </div>
-        <div>
-          <!--Filter button or option-->
-          <select name="" id="">
-            <option value="filterBy">Filter by</option>
-            <option value="type"></option>
-            <option value="name"></option>
-            <option value="nbDescending"></option>
-          </select>
+        <div class="pokedex-dropdown-container">
+          <button>Filter pokemons by...</button>
+          <div class="pokedex-dropdown-options-container">
+            <a href="#">Name</a>
+            <a href="#">Type</a>
+            <a href="#">Ascending numbers</a>
+            <a href="#">Descending numbers</a>
+          </div>
         </div>
       </div>
     </header>
     <main>
-        <!--Container of the page that will be separated in one column/row only-->
-        <!-- Flex displayed row flex direction-->
+      <!--Container of the page-->
+      <!-- TODO Flex direction row -->
       <div>
-        <div>
-            <div>
-                <p>Number of the pokemon</p>
-            </div>
-            <div>
-                <img src="" alt="image of the pokemon">
-                <img src="" alt="icon for the type of pokemon">
-                <p>Name of the type of the pokemon</p>
-                <p>Name of the pokemon</p>
-                
-            </div>
-        </div>
+        <!--TODO Display information card-->
       </div>
       <div>
-        <!--The button we'll be in position fixed so they are acessible-->
+        <!-- TODO The button we'll be in position fixed so they are acessible -->
         <!--This is the second div of the main page, we'll use for the anchor button -->
       </div>
     </main>
-    <script src="index.js"></script>
+    <footer>
+      <!--TODO Mettre crédit/coordonnées-->
+    </footer>
   </body>
 </html>

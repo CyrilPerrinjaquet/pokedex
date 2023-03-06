@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@200&display=swap");
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+header > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 + div:nth-child(2) {
+  width: 600px;
+  margin-bottom: 10px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Archivo", sans-serif;
+}
+
+input {
+  border: 1.5px lightgrey solid;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0px 0px 20px -18px;
+  font-family: "Archivo", sans-serif;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+}
+input:hover {
+  border: 1.8px lightgrey solid;
+  box-shadow: 0px 0px 20px -17px;
+}
+input:active {
+  transform: scale(0.99);
+}
+input:focus {
+  border: 1.6px #000000 solid;
+}
+
+button {
+  background-color: white;
+  border-collapse: collapse;
+  padding: 10px;
+  box-shadow: #ededed 0 10px 10px;
+  border-radius: 10px;
+}
+
+.pokedex-dropdown-container {
+  position: relative;
+}
+.pokedex-dropdown-container:hover .pokedex-dropdown-options-container {
+  display: block;
+  top: 38px;
+  box-shadow: #ededed 0 10px 10px;
+  border: 2px #000000 solid;
+  border-radius: 10px;
+}
+
+.pokedex-dropdown-options-container {
+  display: none;
+  position: absolute;
+  text-align: center;
+  background-color: #fff;
+}
+
+.pokedex-dropdown-options-container a {
+  display: block;
+  color: #000000;
+  padding: 5px;
+  text-decoration: none;
+  padding: 15px 20px;
+  width: 102px;
+  border-radius: 10px;
+  font-family: "Archivo", sans-serif;
+}
+.pokedex-dropdown-options-container a:hover {
+  background-color: #f9fafb;
+}
+
+/*# sourceMappingURL=index.css.map */
