@@ -5,6 +5,7 @@ body {
   width: 100%;
   padding: 0;
   margin: 0;
+  background-color: #f8fafc;
 }
 
 header > div {
@@ -15,8 +16,51 @@ header > div {
 }
 
 h1 + div:nth-child(2) {
-  width: 600px;
-  margin-bottom: 10px;
+  width: 800px;
+  display: flex;
+  position: relative;
+  height: 150px;
+}
+
+#search {
+  width: 70%;
+  height: 15px;
+}
+
+input + div {
+  position: absolute;
+  bottom: 0;
+  top: 2.9px;
+  right: 0px;
+  left: 89.5%;
+  min-width: 35px;
+  max-height: 30px;
+}
+
+div img {
+  width: 30px;
+}
+div img:hover {
+  cursor: pointer;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 30px;
+  height: 100vh;
+  width: 100%;
+}
+
+main > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 70%;
+  min-height: 425px;
+  height: auto;
 }
 
 h1,
@@ -24,6 +68,10 @@ h2,
 h3,
 h4 {
   font-family: "Archivo", sans-serif;
+}
+
+p {
+  margin: 0;
 }
 
 input {
@@ -36,14 +84,14 @@ input {
   width: 100%;
 }
 input:hover {
-  border: 1.8px lightgrey solid;
+  border: 1.5px #000000 solid;
   box-shadow: 0px 0px 20px -17px;
 }
 input:active {
   transform: scale(0.99);
 }
 input:focus {
-  border: 1.6px #000000 solid;
+  border: 1.5px #000000 solid;
 }
 
 button {
@@ -56,6 +104,8 @@ button {
 
 .pokedex-dropdown-container {
   position: relative;
+  margin-right: 20px;
+  width: 19%;
 }
 .pokedex-dropdown-container:hover .pokedex-dropdown-options-container {
   display: block;
@@ -84,6 +134,58 @@ button {
 }
 .pokedex-dropdown-options-container a:hover {
   background-color: #f9fafb;
+}
+
+.pokedex-card-container {
+  margin: 30px 10px 0 10px;
+  height: 150px;
+}
+
+.pokedex-card-info {
+  display: grid;
+  grid-template-columns: [first] 30% [second] 45% [third] 25%;
+  grid-template-rows: [row1-start] 80% [row2-start] 20%;
+  background-color: #ededed;
+  box-shadow: 0 0.4rem #dfd9d9;
+  border-radius: 8px;
+  width: 20vw;
+  height: 150px;
+  place-items: center;
+}
+
+.pokedex-card-info img {
+  width: 150px;
+  height: 150px;
+  image-rendering: pixelated;
+}
+.pokedex-card-info img:hover {
+  cursor: default;
+}
+
+div ~ p {
+  grid-column-start: second;
+  grid-row-start: row2-start;
+  font-family: "Archivo", sans-serif;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.pokedex-type-word-container {
+  padding: 5px;
+  border-radius: 5px;
+  font-family: "Archivo", sans-serif;
+  font-size: 0.8em;
+  font-weight: bold;
+  background-color: #57c4e5;
+}
+
+.pokedex-type-icon {
+  padding: 0px 0px 10px 5px;
+}
+
+.pokedex-card-number-container {
+  font-weight: bold;
+  font-family: "Archivo", sans-serif;
 }
 
 /*# sourceMappingURL=index.css.map */

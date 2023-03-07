@@ -2,6 +2,8 @@
 
 $black: #000000;
 $font-archivo: "Archivo", sans-serif;
+$plante-type: #79b473;
+$aqua-type: #57c4e5;
 
 html,
 body {
@@ -9,6 +11,11 @@ body {
   width: 100%;
   padding: 0;
   margin: 0;
+  background-color: #f8fafc;
+}
+
+@mixin border($border-size, $border-color) {
+  border: $border-size $border-color solid;
 }
 
 header > div {
@@ -19,8 +26,52 @@ header > div {
 }
 
 h1 + div:nth-child(2) {
-  width: 600px;
-  margin-bottom: 10px;
+  width: 800px;
+  display: flex;
+  position: relative;
+  height: 150px;
+}
+
+#search {
+  width: 70%;
+  height: 15px;
+}
+
+input + div {
+  position: absolute;
+  bottom: 0;
+  top: 2.9px;
+  right: 0px;
+  left: 89.5%;
+  min-width: 35px;
+  max-height: 30px;
+}
+
+div img {
+  width: 30px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 30px;
+  height: 100vh;
+  width: 100%;
+}
+
+main > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 70%;
+  min-height: 425px;
+  height: auto;
 }
 
 h1,
@@ -30,8 +81,8 @@ h4 {
   font-family: $font-archivo;
 }
 
-@mixin border($border-size, $border-color) {
-  border: $border-size $border-color solid;
+p {
+  margin: 0;
 }
 
 input {
@@ -43,14 +94,14 @@ input {
   border-radius: 10px;
   width: 100%;
   &:hover {
-    @include border(1.8px, lightgrey);
+    @include border(1.5px, $black);
     box-shadow: 0px 0px 20px -17px;
   }
   &:active {
     transform: scale(0.99);
   }
   &:focus {
-    @include border(1.6px, $black);
+    @include border(1.5px, $black);
   }
 }
 
@@ -64,7 +115,8 @@ button {
 
 .pokedex-dropdown-container {
   position: relative;
-  
+  margin-right: 20px;
+  width: 19%;
   &:hover .pokedex-dropdown-options-container {
     display: block;
     top: 38px;
@@ -93,5 +145,63 @@ button {
 
   &:hover {
     background-color: #f9fafb;
+  }
+}
+
+.pokedex-card-container {
+  margin: 30px 10px 0 10px;
+  height: 150px;
+}
+
+.pokedex-card-info {
+  display: grid;
+  grid-template-columns: [first] 30% [second] 45% [third] 25%;
+  grid-template-rows: [row1-start] 80% [row2-start] 20%;
+  background-color: #ededed;
+  box-shadow: 0 0.4rem #dfd9d9 ;
+  border-radius: 8px;
+  width: 20vw;
+  height: 150px;
+  place-items: center;
+}
+
+.pokedex-card-info img {
+  width: 150px;
+  height: 150px;
+  image-rendering: pixelated;
+  &:hover {
+    cursor: default;
+  }
+}
+
+div ~ p {
+  grid-column-start: second;
+  grid-row-start: row2-start;
+  font: {
+    family: $font-archivo;
+    weight: bold;
+    size: 0.8em;
+  }
+}
+
+.pokedex-type-word-container {
+  padding: 5px;
+  border-radius: 5px;
+  font: {
+    family: $font-archivo;
+    size: 0.8em;
+    weight: bold;
+  }
+  background-color: $aqua-type;
+}
+
+.pokedex-type-icon {
+  padding: 0px 0px 10px 5px;
+}
+
+.pokedex-card-number-container {
+  font: {
+    weight: bold;
+    family: $font-archivo;
   }
 }
