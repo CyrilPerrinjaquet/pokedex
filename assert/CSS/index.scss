@@ -2,56 +2,89 @@
 
 $black: #000000;
 $font-archivo: "Archivo", sans-serif;
-$plante-type: #79b473;
+$grass-type: #79b473;
 $aqua-type: #57c4e5;
+$fire-type: #FF4E00;
+$numberInPourcentage100: 100%;
+$px150: 150px;
+$lightGrey: #ededed;
 
-html,
-body {
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  background-color: #f8fafc;
+* {
+  font-family: $font-archivo;
+}
+
+@mixin box-shadow($shadow...) {
+  box-shadow: $shadow;
 }
 
 @mixin border($border-size, $border-color) {
   border: $border-size $border-color solid;
 }
 
+@mixin dynamicMixin($value, $properties...) {
+  @each $property in $properties {
+    #{$property}: $value;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  @include dynamicMixin(0, padding, margin);
+  background-color: #f8fafc;
+}
+
 header > div {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include dynamicMixin(center, justify-content, align-items);
+  width: $numberInPourcentage100;
 }
 
 h1 + div:nth-child(2) {
   width: 800px;
   display: flex;
-  position: relative;
-  height: 150px;
-}
-
-#search {
-  width: 70%;
-  height: 15px;
+  flex-direction: row;
 }
 
 input + div {
-  position: absolute;
-  bottom: 0;
-  top: 2.9px;
-  right: 0px;
-  left: 89.5%;
-  min-width: 35px;
-  max-height: 30px;
+  display: flex;
+  align-items: center;
+  @include dynamicMixin(35px, max-height, min-width);
 }
 
 div img {
   width: 30px;
-
   &:hover {
     cursor: pointer;
+  }
+}
+
+.pokedex-search-bar-container {
+  display: flex;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  @include border(1.5px, lightgrey);
+  @include box-shadow(0px 0px 20px -18px);
+  @include dynamicMixin(center, align-items, justify-content);
+  @include dynamicMixin(10px, border-radius);
+  background-color: #fff;
+  width: $numberInPourcentage100;
+  &:hover {
+    @include border(1.5px, $black);
+    @include box-shadow(0px 0px 20px -17px);
+  }
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.pokedex-search-bar-container input {
+  @include dynamicMixin(10px, padding, border-radius);
+  width: $numberInPourcentage100;
+  border: none;
+  &:focus {
+    outline: none;
   }
 }
 
@@ -60,71 +93,43 @@ main {
   justify-content: center;
   align-items: flex-start;
   margin-top: 30px;
-  height: 100vh;
-  width: 100%;
+  @include dynamicMixin(100%, height, width);
 }
 
 main > div {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(3, 180px) auto;
+  place-items: center;
+  width: 960px;
   min-height: 425px;
   height: auto;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  font-family: $font-archivo;
 }
 
 p {
   margin: 0;
 }
 
-input {
-  @include border(1.5px, lightgrey);
-  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-  box-shadow: 0px 0px 20px -18px;
-  font-family: $font-archivo;
-  padding: 10px;
-  border-radius: 10px;
-  width: 100%;
-  &:hover {
-    @include border(1.5px, $black);
-    box-shadow: 0px 0px 20px -17px;
-  }
-  &:active {
-    transform: scale(0.99);
-  }
-  &:focus {
-    @include border(1.5px, $black);
-  }
-}
-
 button {
+  @include dynamicMixin(10px, padding, border-radius);
+  @include box-shadow($lightGrey 0 10px 10px);
   background-color: white;
   border-collapse: collapse;
-  padding: 10px;
-  box-shadow: #ededed 0 10px 10px;
-  border-radius: 10px;
 }
 
 .pokedex-dropdown-container {
   position: relative;
   margin-right: 20px;
-  width: 19%;
+  width: 187px;
   &:hover .pokedex-dropdown-options-container {
     display: block;
     top: 38px;
-    box-shadow: #ededed 0 10px 10px;
     @include border(2px, $black);
+    @include box-shadow($lightGrey 0 10px 10px);
     border-radius: 10px;
   }
 }
+
 
 .pokedex-dropdown-options-container {
   display: none;
@@ -136,12 +141,10 @@ button {
 .pokedex-dropdown-options-container a {
   display: block;
   color: $black;
-  padding: 5px;
   text-decoration: none;
   padding: 15px 20px;
-  width: 102px;
+  width: 97px;
   border-radius: 10px;
-  font-family: $font-archivo;
 
   &:hover {
     background-color: #f9fafb;
@@ -149,25 +152,25 @@ button {
 }
 
 .pokedex-card-container {
-  margin: 30px 10px 0 10px;
-  height: 150px;
+  margin: 15px 10px 0 10px;
+  height: $px150;
 }
 
 .pokedex-card-info {
   display: grid;
   grid-template-columns: [first] 30% [second] 45% [third] 25%;
   grid-template-rows: [row1-start] 80% [row2-start] 20%;
-  background-color: #ededed;
-  box-shadow: 0 0.4rem #dfd9d9 ;
+  background-color: $lightGrey;
+  @include box-shadow(0 0.4rem #dfd9d9);
   border-radius: 8px;
-  width: 20vw;
-  height: 150px;
+  width: 300px;
+  max-width: 300px;
+  height: $px150;
   place-items: center;
 }
 
 .pokedex-card-info img {
-  width: 150px;
-  height: 150px;
+  @include dynamicMixin(180px, width, height);
   image-rendering: pixelated;
   &:hover {
     cursor: default;
@@ -185,23 +188,71 @@ div ~ p {
 }
 
 .pokedex-type-word-container {
-  padding: 5px;
-  border-radius: 5px;
+  @include dynamicMixin(5px, padding, border-radius);
   font: {
-    family: $font-archivo;
     size: 0.8em;
     weight: bold;
   }
   background-color: $aqua-type;
 }
 
+.pokedex-card-info > div:last-child {
+  display: grid;
+}
+
 .pokedex-type-icon {
-  padding: 0px 0px 10px 5px;
+  place-self: center;
 }
 
 .pokedex-card-number-container {
-  font: {
-    weight: bold;
-    family: $font-archivo;
+  font-weight: bold;
+}
+
+#first-three-pokemons {
+  background-color: $grass-type;
+}
+
+#last-three-pokemons {
+  background-color: $fire-type;
+}
+
+
+#charizard {
+  @include dynamicMixin(170px, height, width);
+}
+
+
+@media screen and (max-width: 440px) {
+  h1 + div:nth-child(2) {
+    width: $numberInPourcentage100;
+    flex-direction: column-reverse;
+    @include dynamicMixin(center, justify-content, align-items);
   }
+
+  main > div {
+    width: $numberInPourcentage100;
+    grid-template-columns: 1fr;
+    place-items: center;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .pokedex-dropdown-container {
+    margin: 0;
+  }
+
+  .pokedex-search-bar-container {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .pokedex-dropdown-container {
+    width: 142px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.5em;
+  }
+
 }
