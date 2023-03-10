@@ -218,23 +218,33 @@ div ~ p {
 
 
 #charizard {
-  @include dynamicMixin(170px, height, width);
+  @include dynamicMixin(155px, height, width);
 }
 
 
 @media screen and (max-width: 440px) {
+
   h1 + div:nth-child(2) {
     width: $numberInPourcentage100;
     flex-direction: column-reverse;
     @include dynamicMixin(center, justify-content, align-items);
   }
 
+  main {
+    height: 1100px;
+  }
+
   main > div {
-    width: $numberInPourcentage100;
+    width: 100%;
+    height: 1085px;
     grid-template-columns: 1fr;
     place-items: center;
     margin-right: auto;
     margin-left: auto;
+  }
+
+  .pokedex-card-info {
+    width: 250px;
   }
 
   .pokedex-dropdown-container {

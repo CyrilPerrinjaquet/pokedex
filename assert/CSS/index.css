@@ -196,8 +196,8 @@ div ~ p {
 }
 
 #charizard {
-  height: 170px;
-  width: 170px;
+  height: 155px;
+  width: 155px;
 }
 
 @media screen and (max-width: 440px) {
@@ -207,12 +207,19 @@ div ~ p {
     justify-content: center;
     align-items: center;
   }
+  main {
+    height: 1100px;
+  }
   main > div {
     width: 100%;
+    height: 1085px;
     grid-template-columns: 1fr;
     place-items: center;
     margin-right: auto;
     margin-left: auto;
+  }
+  .pokedex-card-info {
+    width: 250px;
   }
   .pokedex-dropdown-container {
     margin: 0;
