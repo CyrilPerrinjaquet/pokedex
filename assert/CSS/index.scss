@@ -100,7 +100,7 @@ div ~ p {
 
   font: {
     weight: bold;
-    size: 0.8em;
+    size: 1em;
   }
 }
 
@@ -216,10 +216,6 @@ div ~ p {
   place-self: center;
 }
 
-.pokedex-card-number-container {
-  font-weight: bold;
-}
-
 #first-three-pokemons {
   background-color: $grass-type;
 }
@@ -274,7 +270,7 @@ div ~ p {
   }
 
   #venusaur {
-    @include putSameValueForTheGivenParameters(135px, height, width);
+    @include putSameValueForTheGivenParameters(145px, height, width);
   }
 
   h1 {

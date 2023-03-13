@@ -75,7 +75,7 @@ div ~ p {
   grid-column-start: second;
   grid-row-start: row2-start;
   font-weight: bold;
-  font-size: 0.8em;
+  font-size: 1em;
 }
 
 .pokedex-search-bar-container {
@@ -183,10 +183,6 @@ div ~ p {
   place-self: center;
 }
 
-.pokedex-card-number-container {
-  font-weight: bold;
-}
-
 #first-three-pokemons {
   background-color: #79b473;
 }
@@ -233,8 +229,8 @@ div ~ p {
     width: 142px;
   }
   #venusaur {
-    height: 135px;
-    width: 135px;
+    height: 145px;
+    width: 145px;
   }
   h1 {
     text-align: center;
