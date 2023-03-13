@@ -1,0 +1,241 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@200&display=swap");
+* {
+  font-family: "Archivo", sans-serif;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #f8fafc;
+}
+
+header > div {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+h1 + div:nth-child(2) {
+  width: 800px;
+  display: flex;
+  flex-direction: row;
+}
+
+input + div {
+  max-height: 35px;
+  min-width: 35px;
+  display: flex;
+  align-items: center;
+}
+
+div img {
+  width: 30px;
+}
+div img:hover {
+  cursor: pointer;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+main > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(auto-fit, 180px);
+  place-items: center;
+  width: 960px;
+  min-height: 425px;
+  height: auto;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: #ededed 0 10px 10px;
+  background-color: white;
+  border-collapse: collapse;
+}
+
+div ~ p {
+  grid-column-start: second;
+  grid-row-start: row2-start;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.pokedex-search-bar-container {
+  border: 1.5px lightgrey solid;
+  box-shadow: 0px 0px 20px -18px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  display: flex;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  background-color: #fff;
+  width: 100%;
+}
+.pokedex-search-bar-container:hover {
+  border: 1.5px #000000 solid;
+  box-shadow: 0px 0px 20px -17px;
+}
+.pokedex-search-bar-container:active {
+  transform: scale(0.99);
+}
+
+.pokedex-search-bar-container input {
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  border: none;
+  font-weight: bold;
+}
+.pokedex-search-bar-container input:focus {
+  outline: none;
+}
+
+.pokedex-dropdown-container {
+  position: relative;
+  margin-right: 20px;
+  width: 187px;
+}
+.pokedex-dropdown-container:hover .pokedex-dropdown-options-container {
+  border: 2px #000000 solid;
+  box-shadow: #ededed 0 10px 10px;
+  display: block;
+  top: 38px;
+  border-radius: 10px;
+}
+
+.pokedex-dropdown-options-container {
+  display: none;
+  position: absolute;
+  text-align: center;
+  background-color: #fff;
+}
+
+.pokedex-dropdown-options-container a {
+  display: block;
+  color: #000000;
+  text-decoration: none;
+  padding: 15px 20px;
+  width: 97px;
+  border-radius: 10px;
+}
+.pokedex-dropdown-options-container a:hover {
+  background-color: #f9fafb;
+}
+
+.pokedex-card-container {
+  margin: 15px 10px 0 10px;
+  height: 150px;
+}
+
+.pokedex-card-info {
+  width: 300px;
+  max-width: 300px;
+  box-shadow: 0 0.4rem #dfd9d9;
+  display: grid;
+  grid-template-columns: [first] 30% [second] 45% [third] 25%;
+  grid-template-rows: [row1-start] 80% [row2-start] 20%;
+  background-color: #ededed;
+  border-radius: 8px;
+  height: 150px;
+  place-items: center;
+}
+
+.pokedex-card-info img {
+  width: 180px;
+  height: 180px;
+  image-rendering: pixelated;
+}
+.pokedex-card-info img:hover {
+  cursor: default;
+}
+
+.pokedex-type-word-container {
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.8em;
+  font-weight: bold;
+  background-color: #57c4e5;
+}
+
+.pokedex-card-info > div:last-child {
+  display: grid;
+}
+
+.pokedex-type-icon {
+  place-self: center;
+}
+
+#first-three-pokemons {
+  background-color: #79b473;
+}
+
+#last-three-pokemons {
+  background-color: #ff4e00;
+}
+
+#charizard {
+  height: 155px;
+  width: 155px;
+}
+
+@media screen and (max-width: 440px) {
+  h1 + div:nth-child(2) {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column-reverse;
+  }
+  main {
+    height: 1100px;
+  }
+  main > div {
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+    height: 8000px;
+    min-height: 3000px;
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+  .pokedex-card-info {
+    width: 250px;
+  }
+  .pokedex-dropdown-container {
+    margin: 0;
+  }
+  .pokedex-search-bar-container {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+  .pokedex-dropdown-container {
+    width: 142px;
+  }
+  #venusaur {
+    height: 145px;
+    width: 145px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.5em;
+  }
+}
+
+/*# sourceMappingURL=index.css.map */
