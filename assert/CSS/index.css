@@ -43,9 +43,12 @@ div img:hover {
 main {
   height: 100%;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  justify-items: center;
+  margin-right: auto;
+  margin-left: auto;
   margin-top: 30px;
 }
 
@@ -55,7 +58,14 @@ main > div {
   grid-template-rows: repeat(auto-fit, 180px);
   place-items: center;
   width: 960px;
-  min-height: 3000px;
+  height: auto;
+}
+
+main > div:nth-child(2) {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  max-height: 200px;
 }
 
 p {
@@ -170,15 +180,7 @@ div ~ p {
   padding: 5px;
   border-radius: 5px;
   text-align: center;
-  font-size: 0.8em;
-  font-weight: bold;
-  background-color: #57c4e5;
-}
-
-.pokedex-second-type-word-container {
-  padding: 5px;
-  border-radius: 5px;
-  margin-top: 20px;
+  margin-bottom: 12px;
   font-size: 0.8em;
   font-weight: bold;
   background-color: #ff4e00;
@@ -203,6 +205,54 @@ div ~ p {
 #charizard {
   height: 155px;
   width: 155px;
+}
+
+.background-grass-type {
+  background-color: #79b473;
+}
+
+.background-water-type {
+  background-color: #57c4e5;
+}
+
+.background-fire-type {
+  background-color: #ff4e00;
+}
+
+.background-normal-type {
+  background-color: #d7dae5;
+}
+
+.background-poison-type {
+  background-color: #bc76ae;
+}
+
+.background-flying-type {
+  background-color: #85aeff;
+}
+
+.background-bug-type {
+  background-color: #bcc949;
+}
+
+.background-fairy-type {
+  background-color: #ffbdff;
+}
+
+.background-psychic-type {
+  background-color: #ff76ae;
+}
+
+.background-electric-type {
+  background-color: #ffd759;
+}
+
+.background-ground-type {
+  background-color: #e5c976;
+}
+
+.background-fighting-type {
+  background-color: #c97668;
 }
 
 @media screen and (max-width: 440px) {

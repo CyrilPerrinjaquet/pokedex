@@ -1,9 +1,11 @@
-url_to_fetch = "https://pokeapi.co/api/v2/pokemon/";
+let next = "";
+const initialPokemon = "https://pokeapi.co/api/v2/pokemon/";
 
-async function fetchEx() {
-  await fetch(url_to_fetch)
+async function fetchEx(route) {
+  await fetch(route)
     .then((response) => response.json())
     .then((my_response_in_json_format) => {
+      next = my_response_in_json_format["next"];
       my_response_in_json_format["results"].forEach((element) => {
         createNewPokemonCard(element);
       });
@@ -12,14 +14,21 @@ async function fetchEx() {
 
 function createNewPokemonCard(element) {
   const pokedexList = document.getElementById("pokedex-list");
+
   fetch(element.url)
     .then((response) => response.json())
     .then((my_response_in_json_format) => {
       const data = my_response_in_json_format;
-      const pokemonName = element["name"];
-      const id = data.id;
+      const pokemonId = data.id;
       const firstType = data.types[0];
-      let secondType = data.types[1];
+      const secondType = data.types[1];
+
+      /*  if (filter_type == 'name'){
+        if (filter_value != element["name"]){ // utiliser substring
+          return;
+        }
+      } */
+
       const animatedSprite =
         data["sprites"]["versions"]["generation-v"]["black-white"]["animated"][
           "front_default"
@@ -29,40 +38,102 @@ function createNewPokemonCard(element) {
           "front_default"
         ];
 
-      const doesTheSecondTypeExists = () => {
-        if (secondType) {
-          return (
-            '<div class="pokedex-second-type-word-container"><p>' +
-            secondType.type.name +
-            "</p></div>"
-          );
-        } else {
+      const displaySecondTypeIfExists = () => {
+        if (secondType === undefined) {
           return "";
+        } else {
+          return returnDivContainerForSecondType(pokemonId, secondType.type.name);
         }
       };
 
+      const temp = secondType === undefined ? "" : returnDivContainerForSecondType(pokemonId, secondType.type.name);
+
+      const applySecondPokemonTypeIfExists = () => {
+        if (secondType != undefined) {
+          applyPokemonTypes(secondType.type.name, "second-pokemon-type-", pokemonId);
+      }
+    };
+  
       pokedexList.innerHTML +=
         '<div class="pokedex-card-container"><div class="pokedex-card-info"><div><p>N°' +
-        id +
+        pokemonId +
         "</p></div><p>" +
-        pokemonName +
+        element["name"] +
         '</p><img src="' +
         staticSprite +
-        '" alt="pokemon-image" /><div><p class="pokedex-type-icon" >🌿</p><div class="pokedex-type-word-container"><p>' +
+        '" alt="pokemon-image" /><div><p class="pokedex-type-icon" id="emoji-pokemon-' +
+        pokemonId +
+        '"></p><div class="pokedex-type-word-container" id="pokemon-type-' +
+        pokemonId +
+        '"><p>' +
         firstType.type.name +
         "</p></div>" +
-        doesTheSecondTypeExists() +
+        temp +
         "</div></div></div>";
-    });
+      applyPokemonTypes(firstType.type.name, "pokemon-type-", pokemonId);
+      applySecondPokemonTypeIfExists();
+});
+} 
+
+
+function returnDivContainerForSecondType(pokemonId, name) {
+  return (
+    '<div class="pokedex-type-word-container" id="second-pokemon-type-' +
+    pokemonId +
+    '"><p>' +
+    name +
+    "</p></div>"
+  );
 }
 
-function whatColorIsTheType(firstType, secondType) {
-  if (firstType === "grass") {
-    alert("nice");
-  }
+function applyTheBackgroundColor(nameOfType, whichPokemonId, pokemonId) {
+  let lastElementFromArray = document.getElementById(
+    whichPokemonId + pokemonId
+  );
+  lastElementFromArray.classList.add(nameOfType);
 }
 
-// TODO Faire une fonction pour les émojis en fonction du type */ 
-// TODO Faire une condition que si un pokémon spécifique est trop grand => On le réduit 
+function emojiSetting(emoji, pokemonId) {
+  let lastElementFromArray = document.getElementById(
+    "emoji-pokemon-" + pokemonId
+  );
+  lastElementFromArray.innerHTML = emoji;
+}
 
-fetchEx();
+function applyPokemonTypes(nameOfFirstType, whichPokemonId, pokemonId) {
+  const type_mapping = {
+    grass: { color: "background-grass-type", emoji: "🌿" },
+    water: { color: "background-water-type", emoji: "💧" },
+    fire: { color: "background-fire-type", emoji: "🔥" },
+    normal: { color: "background-normal-type", emoji: "⭐" },
+    poison: { color: "background-poison-type", emoji: "🧪" },
+    flying: { color: "background-flying-type", emoji: "🪶" },
+    bug: { color: "background-bug-type", emoji: "🐞" },
+    fairy: { color: "background-fairy-type", emoji: "🧚‍♀️" },
+    psychic: { color: "background-psychic-type", emoji: "🧚👁️‍🗨️" },
+    electric: { color: "background-electric-type", emoji: "⚡" },
+    ground: { color: "background-ground-type", emoji: "🪨" },
+    fighting: { color: "background-fighting-type", emoji: "🥊" },
+  };
+  // TODO type_mapping[nameOfFirstType] === undefined
+
+  applyTheBackgroundColor(
+    type_mapping[nameOfFirstType].color,
+    whichPokemonId,
+    pokemonId
+  );
+  emojiSetting(type_mapping[nameOfFirstType].emoji, pokemonId);
+}
+
+function filter() {
+  // todo -> identifier par quoi on filter
+  // recuperer tes cards
+  //fetchEx("name", "name_value");
+}
+
+function loadMorePokemons() {
+  fetchEx(next);
+}
+
+fetchEx(initialPokemon);
+filter();

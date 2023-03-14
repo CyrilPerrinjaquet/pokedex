@@ -5,6 +5,15 @@ $font-archivo: "Archivo", sans-serif;
 $grass-type: #79b473;
 $aqua-type: #57c4e5;
 $fire-type: #ff4e00;
+$normal-type: #d7dae5;
+$poison-type: #bc76ae;
+$flying-type: #85aeff;
+$bug-type: #bcc949;
+$fairy-type: #ffbdff;
+$psychic-type: #ff76ae;
+$electric-type: #ffd759;
+$ground-type: #e5c976;
+$fighting-type: #c97668;
 $numberInPourcentage100: 100%;
 $px150: 150px;
 $lightGrey: #ededed;
@@ -67,9 +76,11 @@ div img {
 
 main {
   @include putSameValueForTheGivenParameters(100%, height, width);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  justify-items: center;
+  @include putSameValueForTheGivenParameters(auto, margin-right, margin-left);
   margin-top: 30px;
 }
 
@@ -79,7 +90,14 @@ main > div {
   grid-template-rows: repeat(auto-fit, 180px);
   place-items: center;
   width: 960px;
-  min-height: 3000px;
+  height: auto;
+}
+
+main > div:nth-child(2) {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  max-height: 200px;
 }
 
 p {
@@ -200,16 +218,7 @@ div ~ p {
 .pokedex-type-word-container {
   @include putSameValueForTheGivenParameters(5px, padding, border-radius);
   text-align: center;
-  font: {
-    size: 0.8em;
-    weight: bold;
-  }
-  background-color: $aqua-type;
-}
-
-.pokedex-second-type-word-container {
-  @include putSameValueForTheGivenParameters(5px, padding, border-radius);
-  margin-top: 20px;
+  margin-bottom: 12px;
   font: {
     size: 0.8em;
     weight: bold;
@@ -235,6 +244,53 @@ div ~ p {
 
 #charizard {
   @include putSameValueForTheGivenParameters(155px, height, width);
+}
+
+.background-grass-type {
+  background-color: $grass-type;
+}
+
+.background-water-type {
+  background-color: $aqua-type;
+}
+.background-fire-type {
+  background-color: $fire-type;
+}
+
+.background-normal-type {
+  background-color: $normal-type;
+}
+
+.background-poison-type {
+  background-color: $poison-type;
+}
+
+.background-flying-type {
+  background-color: $flying-type;
+}
+
+.background-bug-type {
+  background-color: $bug-type;
+}
+
+.background-fairy-type {
+  background-color: $fairy-type;
+}
+
+.background-psychic-type {
+  background-color: $psychic-type;
+}
+
+.background-electric-type {
+  background-color: $electric-type;
+}
+
+.background-ground-type {
+  background-color: $ground-type;
+}
+
+.background-fighting-type {
+  background-color: $fighting-type;
 }
 
 @media screen and (max-width: 440px) {
