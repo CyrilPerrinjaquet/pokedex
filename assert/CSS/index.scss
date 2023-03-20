@@ -1,0 +1,280 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@200&display=swap");
+
+$black: #000000;
+$font-archivo: "Archivo", sans-serif;
+$grass-type: #79b473;
+$aqua-type: #57c4e5;
+$fire-type: #ff4e00;
+$numberInPourcentage100: 100%;
+$px150: 150px;
+$lightGrey: #ededed;
+
+* {
+  font-family: $font-archivo;
+}
+
+@mixin box-shadow($shadow...) {
+  box-shadow: $shadow;
+}
+
+@mixin border($border-size, $border-color) {
+  border: $border-size $border-color solid;
+}
+
+@mixin putSameValueForTheGivenParameters($value, $properties...) {
+  @each $property in $properties {
+    #{$property}: $value;
+  }
+}
+
+html,
+body {
+  @include putSameValueForTheGivenParameters(0, padding, margin);
+  @include putSameValueForTheGivenParameters(100%, height, width);
+  background-color: #f8fafc;
+}
+
+header > div {
+  @include putSameValueForTheGivenParameters(
+    center,
+    justify-content,
+    align-items
+  );
+  display: flex;
+  flex-direction: column;
+  width: $numberInPourcentage100;
+}
+
+h1 + div:nth-child(2) {
+  width: 800px;
+  display: flex;
+  flex-direction: row;
+}
+
+input + div {
+  @include putSameValueForTheGivenParameters(35px, max-height, min-width);
+  display: flex;
+  align-items: center;
+}
+
+div img {
+  width: 30px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+main {
+  @include putSameValueForTheGivenParameters(100%, height, width);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+main > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(auto-fit, 180px) ;
+  place-items: center;
+  width: 960px;
+  min-height: 425px;
+  height: auto;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  @include putSameValueForTheGivenParameters(10px, padding, border-radius);
+  @include box-shadow($lightGrey 0 10px 10px);
+  background-color: white;
+  border-collapse: collapse;
+}
+
+div ~ p {
+  grid-column-start: second;
+  grid-row-start: row2-start;
+
+  font: {
+    weight: bold;
+    size: 1em;
+  }
+}
+
+.pokedex-search-bar-container {
+  @include border(1.5px, lightgrey);
+  @include box-shadow(0px 0px 20px -18px);
+  @include putSameValueForTheGivenParameters(
+    center,
+    align-items,
+    justify-content
+  );
+  @include putSameValueForTheGivenParameters(10px, border-radius);
+  display: flex;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  background-color: #fff;
+  width: $numberInPourcentage100;
+
+  &:hover {
+    @include border(1.5px, $black);
+    @include box-shadow(0px 0px 20px -17px);
+  }
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.pokedex-search-bar-container input {
+  @include putSameValueForTheGivenParameters(10px, padding, border-radius);
+  width: $numberInPourcentage100;
+  border: none;
+  font-weight: bold;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.pokedex-dropdown-container {
+  position: relative;
+  margin-right: 20px;
+  width: 187px;
+
+  &:hover .pokedex-dropdown-options-container {
+    @include border(2px, $black);
+    @include box-shadow($lightGrey 0 10px 10px);
+    display: block;
+    top: 38px;
+    border-radius: 10px;
+  }
+}
+
+.pokedex-dropdown-options-container {
+  display: none;
+  position: absolute;
+  text-align: center;
+  background-color: #fff;
+}
+
+.pokedex-dropdown-options-container a {
+  display: block;
+  color: $black;
+  text-decoration: none;
+  padding: 15px 20px;
+  width: 97px;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: #f9fafb;
+  }
+}
+
+.pokedex-card-container {
+  margin: 15px 10px 0 10px;
+  height: $px150;
+}
+
+.pokedex-card-info {
+  @include putSameValueForTheGivenParameters(300px, width, max-width);
+  @include box-shadow(0 0.4rem #dfd9d9);
+  display: grid;
+  grid-template-columns: [first] 30% [second] 45% [third] 25%;
+  grid-template-rows: [row1-start] 80% [row2-start] 20%;
+  background-color: $lightGrey;
+  border-radius: 8px;
+  height: $px150;
+  place-items: center;
+}
+
+.pokedex-card-info img {
+  @include putSameValueForTheGivenParameters(180px, width, height);
+  image-rendering: pixelated;
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+.pokedex-type-word-container {
+  @include putSameValueForTheGivenParameters(5px, padding, border-radius);
+
+  font: {
+    size: 0.8em;
+    weight: bold;
+  }
+  background-color: $aqua-type;
+}
+
+.pokedex-card-info > div:last-child {
+  display: grid;
+}
+
+.pokedex-type-icon {
+  place-self: center;
+}
+
+#first-three-pokemons {
+  background-color: $grass-type;
+}
+
+#last-three-pokemons {
+  background-color: $fire-type;
+}
+
+#charizard {
+  @include putSameValueForTheGivenParameters(155px, height, width);
+}
+
+@media screen and (max-width: 440px) {
+  h1 + div:nth-child(2) {
+    @include putSameValueForTheGivenParameters(
+      center,
+      justify-content,
+      align-items
+    );
+    width: $numberInPourcentage100;
+    flex-direction: column-reverse;
+  }
+
+  main {
+    height: 1100px;
+  }
+
+  main > div {
+    @include putSameValueForTheGivenParameters(auto, margin-right, margin-left);
+    width: 100%;
+    height: 8000px;
+    min-height: 3000px;
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+
+  .pokedex-card-info {
+    width: 250px;
+  }
+
+  .pokedex-dropdown-container {
+    margin: 0;
+  }
+
+  .pokedex-search-bar-container {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .pokedex-dropdown-container {
+    width: 142px;
+  }
+
+  #venusaur {
+    @include putSameValueForTheGivenParameters(145px, height, width);
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.5em;
+  }
+}
