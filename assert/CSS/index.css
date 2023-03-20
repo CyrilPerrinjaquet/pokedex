@@ -79,6 +79,9 @@ button {
   background-color: white;
   border-collapse: collapse;
 }
+button:hover {
+  cursor: pointer;
+}
 
 div ~ p {
   grid-column-start: second;

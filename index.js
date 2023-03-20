@@ -22,6 +22,7 @@ function createNewPokemonCard(element) {
       const pokemonId = data.id;
       const firstType = data.types[0];
       const secondType = data.types[1];
+      const nameOfPokemon = element["name"];
 
       /*  if (filter_type == 'name'){
         if (filter_value != element["name"]){ // utiliser substring
@@ -38,30 +39,31 @@ function createNewPokemonCard(element) {
           "front_default"
         ];
 
-      const displaySecondTypeIfExists = () => {
-        if (secondType === undefined) {
-          return "";
-        } else {
-          return returnDivContainerForSecondType(pokemonId, secondType.type.name);
-        }
-      };
-
-      const temp = secondType === undefined ? "" : returnDivContainerForSecondType(pokemonId, secondType.type.name);
+      const temp =
+        secondType === undefined
+          ? ""
+          : returnDivContainerForSecondType(pokemonId, secondType.type.name);
 
       const applySecondPokemonTypeIfExists = () => {
         if (secondType != undefined) {
-          applyPokemonTypes(secondType.type.name, "second-pokemon-type-", pokemonId);
-      }
-    };
-  
+          applyPokemonTypes(
+            secondType.type.name,
+            "second-pokemon-type-",
+            pokemonId
+          );
+        }
+      };
+
       pokedexList.innerHTML +=
         '<div class="pokedex-card-container"><div class="pokedex-card-info"><div><p>N°' +
         pokemonId +
         "</p></div><p>" +
-        element["name"] +
+        nameOfPokemon +
         '</p><img src="' +
         staticSprite +
-        '" alt="pokemon-image" /><div><p class="pokedex-type-icon" id="emoji-pokemon-' +
+        '" alt="pokemon-image of ' +
+        nameOfPokemon +
+        '" /><div><p class="pokedex-type-icon" id="emoji-pokemon-' +
         pokemonId +
         '"></p><div class="pokedex-type-word-container" id="pokemon-type-' +
         pokemonId +
@@ -70,11 +72,14 @@ function createNewPokemonCard(element) {
         "</p></div>" +
         temp +
         "</div></div></div>";
-      applyPokemonTypes(firstType.type.name, "pokemon-type-", pokemonId);
       applySecondPokemonTypeIfExists();
-});
-} 
-
+      /* Ici si j'inverse les deux lignes, cela va inverser l'ordre des émojis, car
+       * les deux fonctions vont set les emojis en fonction de leurs noms de types, du coup vu que c'est .innerHTML
+       * ca va Override le précedent, c'est pourquoi je le met en premier
+       */
+      applyPokemonTypes(firstType.type.name, "pokemon-type-", pokemonId);
+    });
+}
 
 function returnDivContainerForSecondType(pokemonId, name) {
   return (
@@ -100,6 +105,7 @@ function emojiSetting(emoji, pokemonId) {
   lastElementFromArray.innerHTML = emoji;
 }
 
+
 function applyPokemonTypes(nameOfFirstType, whichPokemonId, pokemonId) {
   const type_mapping = {
     grass: { color: "background-grass-type", emoji: "🌿" },
@@ -116,23 +122,23 @@ function applyPokemonTypes(nameOfFirstType, whichPokemonId, pokemonId) {
     fighting: { color: "background-fighting-type", emoji: "🥊" },
   };
   // TODO type_mapping[nameOfFirstType] === undefined
-
+  
   applyTheBackgroundColor(
     type_mapping[nameOfFirstType].color,
     whichPokemonId,
     pokemonId
-  );
-  emojiSetting(type_mapping[nameOfFirstType].emoji, pokemonId);
+    );
+    emojiSetting(type_mapping[nameOfFirstType].emoji, pokemonId);
+  }
+  
+function loadMorePokemons() {
+  fetchEx(next);
 }
 
 function filter() {
-  // todo -> identifier par quoi on filter
-  // recuperer tes cards
+  const dw = document.querySelectorAll("div.pokedex-card-container");
+  console.log(dw);
   //fetchEx("name", "name_value");
-}
-
-function loadMorePokemons() {
-  fetchEx(next);
 }
 
 fetchEx(initialPokemon);

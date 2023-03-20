@@ -109,6 +109,9 @@ button {
   @include box-shadow($lightGrey 0 10px 10px);
   background-color: white;
   border-collapse: collapse;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 div ~ p {
