@@ -2,18 +2,18 @@ let next = "";
 const initialPokemon = "https://pokeapi.co/api/v2/pokemon/?limit=151";
 const pokedexList = document.getElementById("pokedex-list");
 
-async function fetchEx(route, nameValue) {
+async function pokedex(route, searchInputValue) {
   await fetch(route)
     .then((response) => response.json())
     .then((my_response_in_json_format) => {
       next = my_response_in_json_format["next"];
       my_response_in_json_format["results"].forEach((element) => {
-        createNewPokemonCard(element, nameValue);
+        createNewPokemonCard(element, searchInputValue);
       });
     });
 }
 
-function createNewPokemonCard(element, nameValue) {
+function createNewPokemonCard(element, searchInputValue) {
   fetch(element.url)
     .then((response) => response.json())
     .then((my_response_in_json_format) => {
@@ -23,11 +23,11 @@ function createNewPokemonCard(element, nameValue) {
       const secondType = data.types[1];
       const nameOfPokemon = element["name"];
 
-      if (!nameValue) {
-        nameValue = " ";
-        nameValue = "";
+      if (!searchInputValue) {
+        searchInputValue = " ";
+        searchInputValue = "";
       }
-      if (!nameOfPokemon.startsWith(nameValue)) {
+      if (!nameOfPokemon.startsWith(searchInputValue)) {
         return;
       }
 
@@ -75,10 +75,6 @@ function createNewPokemonCard(element, nameValue) {
         temp +
         "</div></div></div>";
       applySecondPokemonTypeIfExists();
-      /* Ici si j'inverse les deux lignes, cela va inverser l'ordre des émojis, car
-       * les deux fonctions vont set les emojis en fonction de leurs noms de types, du coup vu que c'est .innerHTML
-       * ca va Override le précedent, c'est pourquoi je le met en premier
-       */
       applyPokemonTypes(firstType.type.name, "pokemon-type-", pokemonId);
     });
 }
@@ -138,12 +134,12 @@ function applyPokemonTypes(nameOfFirstType, whichPokemonId, pokemonId) {
 }
 
 function loadMorePokemons() {
-  fetchEx(next);
+  pokedex(next);
 }
 
 function filter() {
   const searchElementValue = document.getElementById("search").value;
-  fetchEx(initialPokemon, searchElementValue.toLowerCase());
+  pokedex(initialPokemon, searchElementValue.toLowerCase());
 }
 
 document.getElementById("search").addEventListener("input", () => {
@@ -151,4 +147,4 @@ document.getElementById("search").addEventListener("input", () => {
   filter();
 });
 
-fetchEx(initialPokemon);
+pokedex(initialPokemon);
