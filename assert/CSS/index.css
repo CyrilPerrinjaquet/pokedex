@@ -52,20 +52,26 @@ main {
   margin-top: 30px;
 }
 
-main > div {
+main > div:first-child {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: repeat(auto-fit, 180px);
   place-items: center;
-  width: 960px;
-  height: auto;
+  width: 33%;
+  min-width: 960px;
+  height: 110%;
 }
 
-main > div:nth-child(2) {
-  display: grid;
-  grid-template-columns: 1fr;
-  place-items: center;
-  max-height: 200px;
+button:only-child {
+  position: fixed;
+  bottom: 0;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+  margin-bottom: 30px;
 }
 
 p {
@@ -171,8 +177,8 @@ div ~ p {
 }
 
 .pokedex-card-info img {
-  width: 180px;
-  height: 180px;
+  width: 155px;
+  height: 155px;
   image-rendering: pixelated;
 }
 .pokedex-card-info img:hover {
@@ -203,11 +209,6 @@ div ~ p {
 
 #last-three-pokemons {
   background-color: #ff4e00;
-}
-
-#charizard {
-  height: 155px;
-  width: 155px;
 }
 
 .background-grass-type {
@@ -258,6 +259,32 @@ div ~ p {
   background-color: #c97668;
 }
 
+.background-ghost-type {
+  color: white;
+  background-color: #382856;
+}
+
+.background-dragon-type {
+  background-color: #9385f2;
+}
+
+.background-ice-type {
+  background-color: #9ccef6;
+}
+
+.background-rock-type {
+  background-color: #826155;
+}
+
+.background-steel-type {
+  background-color: #bcbdc9;
+}
+
+.background-dark-type {
+  color: white;
+  background-color: #000000;
+}
+
 @media screen and (max-width: 440px) {
   h1 + div:nth-child(2) {
     justify-content: center;
@@ -268,13 +295,12 @@ div ~ p {
   main {
     height: 1100px;
   }
-  main > div {
+  main > div:first-child {
     margin-right: auto;
     margin-left: auto;
     width: 100%;
     grid-template-columns: 1fr;
     place-items: center;
-    height: 6000px;
   }
   .pokedex-card-info {
     width: 250px;
@@ -289,9 +315,9 @@ div ~ p {
   .pokedex-dropdown-container {
     width: 142px;
   }
-  #venusaur {
-    height: 125px;
-    width: 125px;
+  .pokedex-card-info img {
+    width: 135px;
+    height: 135px;
   }
   h1 {
     text-align: center;

@@ -14,6 +14,13 @@ $psychic-type: #ff76ae;
 $electric-type: #ffd759;
 $ground-type: #e5c976;
 $fighting-type: #c97668;
+$dragon-type: #9385f2;
+$ice-type: #9ccef6;
+$ghost-type: #382856;
+$rock-type: #826155;
+$steel-type: #bcbdc9;
+$dark-type: #000000;
+
 $numberInPourcentage100: 100%;
 $px150: 150px;
 $lightGrey: #ededed;
@@ -84,20 +91,25 @@ main {
   margin-top: 30px;
 }
 
-main > div {
+main > div:first-child {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: repeat(auto-fit, 180px);
   place-items: center;
-  width: 960px;
-  height: auto;
+  width: 33%;
+  min-width: 960px;
+  height: 110%;
 }
 
-main > div:nth-child(2) {
-  display: grid;
-  grid-template-columns: 1fr;
-  place-items: center;
-  max-height: 200px;
+button:only-child {
+  position: fixed;
+  bottom: 0;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  @include putSameValueForTheGivenParameters(auto, margin-left, margin-right);
+  width: 100px;
+  margin-bottom: 30px;
 }
 
 p {
@@ -210,7 +222,7 @@ div ~ p {
 }
 
 .pokedex-card-info img {
-  @include putSameValueForTheGivenParameters(180px, width, height);
+  @include putSameValueForTheGivenParameters(155px, width, height);
   image-rendering: pixelated;
 
   &:hover {
@@ -243,10 +255,6 @@ div ~ p {
 
 #last-three-pokemons {
   background-color: $fire-type;
-}
-
-#charizard {
-  @include putSameValueForTheGivenParameters(155px, height, width);
 }
 
 .background-grass-type {
@@ -296,7 +304,34 @@ div ~ p {
   background-color: $fighting-type;
 }
 
+.background-ghost-type {
+  color: white;
+  background-color: $ghost-type;
+}
+
+.background-dragon-type {
+  background-color: $dragon-type;
+}
+
+.background-ice-type {
+  background-color: $ice-type;
+}
+
+.background-rock-type {
+  background-color: $rock-type;
+}
+
+.background-steel-type {
+  background-color: $steel-type;
+}
+
+.background-dark-type {
+  color: white;
+  background-color: $dark-type;
+}
+
 @media screen and (max-width: 440px) {
+
   h1 + div:nth-child(2) {
     @include putSameValueForTheGivenParameters(
       center,
@@ -311,12 +346,11 @@ div ~ p {
     height: 1100px;
   }
 
-  main > div {
+  main > div:first-child {
     @include putSameValueForTheGivenParameters(auto, margin-right, margin-left);
     width: 100%;
     grid-template-columns: 1fr;
     place-items: center;
-    height: 6000px;
   }
 
   .pokedex-card-info {
@@ -336,8 +370,8 @@ div ~ p {
     width: 142px;
   }
 
-  #venusaur {
-    @include putSameValueForTheGivenParameters(125px, height, width);
+  .pokedex-card-info img {
+    @include putSameValueForTheGivenParameters(135px, width, height);
   }
 
   h1 {
