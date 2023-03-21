@@ -58,7 +58,7 @@ header > div {
   min-width: $numberInPourcentage100;
 }
 
-h1 + div:nth-child(2) {
+h1 + div {
   width: 800px;
   display: flex;
   flex-direction: row;
@@ -170,7 +170,7 @@ div ~ p {
   margin-right: 20px;
   width: 187px;
 
-  &:hover .pokedex-dropdown-options-container {
+  &:hover div {
     @include border(2px, $black);
     @include box-shadow($lightGrey 0 10px 10px);
     display: block;
@@ -179,14 +179,14 @@ div ~ p {
   }
 }
 
-.pokedex-dropdown-options-container {
+.pokedex-dropdown-container > div {
   display: none;
   position: absolute;
   text-align: center;
   background-color: #fff;
 }
 
-.pokedex-dropdown-options-container a {
+a {
   display: block;
   color: $black;
   text-decoration: none;
@@ -320,7 +320,8 @@ div ~ p {
 
 
 @media screen and (max-width: 800px) {
-  h1 + div:nth-child(2) {
+
+  h1 + div {
     @include putSameValue(center, justify-content, align-items);
     width: $numberInPourcentage100;
     flex-direction: column-reverse;
@@ -364,5 +365,9 @@ div ~ p {
   main > div:first-child {
     grid-template-columns: 1fr;
     min-width: 100%;
+  }
+
+  h1 {
+    text-align: center;
   }
 }
