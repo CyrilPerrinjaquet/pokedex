@@ -22,11 +22,12 @@ function createNewPokemonCard(element, searchInputValue) {
       const firstType = data.types[0];
       const secondType = data.types[1];
       const nameOfPokemon = element["name"];
-
+      
       if (!searchInputValue) {
         searchInputValue = " ";
         searchInputValue = "";
       }
+
       if (!nameOfPokemon.startsWith(searchInputValue)) {
         return;
       }
@@ -54,7 +55,6 @@ function createNewPokemonCard(element, searchInputValue) {
           );
         }
       };
-
 
       pokedexList.innerHTML +=
         '<div class="pokedex-card-container"><div class="pokedex-card-info"><div><p>N°' +
@@ -122,7 +122,7 @@ function applyPokemonTypes(nameOfFirstType, whichPokemonId, pokemonId) {
     ice: { color: "background-ice-type", emoji: "❄️" },
     ghost: { color: "background-ghost-type", emoji: "👻" },
     steel: { color: "background-steel-type", emoji: "🛡️" },
-    dark: { color: "background-dark-type", emoji: "🌙" }
+    dark: { color: "background-dark-type", emoji: "🌙" },
   };
 
   applyTheBackgroundColor(
@@ -137,10 +137,13 @@ function loadMorePokemons() {
   pokedex(next);
 }
 
-function filter() {
+async function filter() {
   const searchElementValue = document.getElementById("search").value;
-  pokedex("https://pokeapi.co/api/v2/pokemon/?limit=151", searchElementValue.toLowerCase());
-} 
+ await pokedex(
+    "https://pokeapi.co/api/v2/pokemon/?limit=151",
+    searchElementValue.toLowerCase()
+  );
+}
 
 document.getElementById("search").addEventListener("input", () => {
   pokedexList.innerHTML = "";

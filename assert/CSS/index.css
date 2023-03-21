@@ -206,6 +206,7 @@ a:hover {
 
 .pokedex-type-icon {
   place-self: center;
+  font-size: 1.4em;
 }
 
 .background-grass-type {
