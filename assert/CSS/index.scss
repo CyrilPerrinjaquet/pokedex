@@ -37,7 +37,7 @@ $lightGrey: #ededed;
   border: $border-size $border-color solid;
 }
 
-@mixin putSameValueForTheGivenParameters($value, $properties...) {
+@mixin putSameValue($value, $properties...) {
   @each $property in $properties {
     #{$property}: $value;
   }
@@ -45,20 +45,17 @@ $lightGrey: #ededed;
 
 html,
 body {
-  @include putSameValueForTheGivenParameters(0, padding, margin);
-  @include putSameValueForTheGivenParameters(100%, height, width);
+  @include putSameValue(0, padding, margin);
+  @include putSameValue(100%, height, width);
   background-color: #f8fafc;
 }
 
 header > div {
-  @include putSameValueForTheGivenParameters(
-    center,
-    justify-content,
-    align-items
-  );
+  @include putSameValue(center, justify-content, align-items);
+  @include putSameValue(auto, margin-left, margin-right);
   display: flex;
   flex-direction: column;
-  width: $numberInPourcentage100;
+  min-width: $numberInPourcentage100;
 }
 
 h1 + div:nth-child(2) {
@@ -68,7 +65,7 @@ h1 + div:nth-child(2) {
 }
 
 input + div {
-  @include putSameValueForTheGivenParameters(35px, max-height, min-width);
+  @include putSameValue(35px, max-height, min-width);
   display: flex;
   align-items: center;
 }
@@ -82,12 +79,12 @@ div img {
 }
 
 main {
-  @include putSameValueForTheGivenParameters(100%, height, width);
+  @include putSameValue(100%, height, width);
+  @include putSameValue(auto, margin-right, margin-left);
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
   justify-items: center;
-  @include putSameValueForTheGivenParameters(auto, margin-right, margin-left);
   margin-top: 30px;
 }
 
@@ -98,26 +95,28 @@ main > div:first-child {
   place-items: center;
   width: 33%;
   min-width: 960px;
-  height: 110%;
+  height: 115%;
 }
 
 button:only-child {
+  @include putSameValue(auto, margin-left, margin-right);
+  @include putSameValue(0, bottom, left, right);
   position: fixed;
-  bottom: 0;
   z-index: 3;
-  left: 0;
-  right: 0;
-  @include putSameValueForTheGivenParameters(auto, margin-left, margin-right);
   width: 100px;
   margin-bottom: 30px;
 }
 
 p {
   margin: 0;
+
+  &::first-letter {
+    text-transform: capitalize;
+  }
 }
 
 button {
-  @include putSameValueForTheGivenParameters(10px, padding, border-radius);
+  @include putSameValue(10px, padding, border-radius);
   @include box-shadow($lightGrey 0 10px 10px);
   background-color: white;
   border-collapse: collapse;
@@ -139,12 +138,8 @@ div ~ p {
 .pokedex-search-bar-container {
   @include border(1.5px, lightgrey);
   @include box-shadow(0px 0px 20px -18px);
-  @include putSameValueForTheGivenParameters(
-    center,
-    align-items,
-    justify-content
-  );
-  @include putSameValueForTheGivenParameters(10px, border-radius);
+  @include putSameValue(center, align-items, justify-content);
+  border-radius: 10px;
   display: flex;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
   background-color: #fff;
@@ -160,7 +155,7 @@ div ~ p {
 }
 
 .pokedex-search-bar-container input {
-  @include putSameValueForTheGivenParameters(10px, padding, border-radius);
+  @include putSameValue(10px, padding, border-radius);
   width: $numberInPourcentage100;
   border: none;
   font-weight: bold;
@@ -210,8 +205,8 @@ div ~ p {
 }
 
 .pokedex-card-info {
-  @include putSameValueForTheGivenParameters(300px, width, max-width);
-  @include box-shadow(0 0.4rem #dfd9d9);
+  @include putSameValue(300px, width, max-width);
+  @include box-shadow(0 0.5rem #dfd9d9);
   display: grid;
   grid-template-columns: [first] 30% [second] 45% [third] 25%;
   grid-template-rows: [row1-start] 80% [row2-start] 20%;
@@ -222,7 +217,7 @@ div ~ p {
 }
 
 .pokedex-card-info img {
-  @include putSameValueForTheGivenParameters(155px, width, height);
+  @include putSameValue(140px, width, height);
   image-rendering: pixelated;
 
   &:hover {
@@ -231,7 +226,7 @@ div ~ p {
 }
 
 .pokedex-type-word-container {
-  @include putSameValueForTheGivenParameters(5px, padding, border-radius);
+  @include putSameValue(5px, padding, border-radius);
   text-align: center;
   margin-bottom: 12px;
   font: {
@@ -249,13 +244,6 @@ div ~ p {
   place-self: center;
 }
 
-#first-three-pokemons {
-  background-color: $grass-type;
-}
-
-#last-three-pokemons {
-  background-color: $fire-type;
-}
 
 .background-grass-type {
   background-color: $grass-type;
@@ -330,25 +318,17 @@ div ~ p {
   background-color: $dark-type;
 }
 
-@media screen and (max-width: 440px) {
 
+@media screen and (max-width: 800px) {
   h1 + div:nth-child(2) {
-    @include putSameValueForTheGivenParameters(
-      center,
-      justify-content,
-      align-items
-    );
+    @include putSameValue(center, justify-content, align-items);
     width: $numberInPourcentage100;
     flex-direction: column-reverse;
   }
 
-  main {
-    height: 1100px;
-  }
-
   main > div:first-child {
-    @include putSameValueForTheGivenParameters(auto, margin-right, margin-left);
-    width: 100%;
+    @include putSameValue(auto, margin-right, margin-left);
+    min-width: 100%;
     grid-template-columns: 1fr;
     place-items: center;
   }
@@ -371,11 +351,18 @@ div ~ p {
   }
 
   .pokedex-card-info img {
-    @include putSameValueForTheGivenParameters(135px, width, height);
+    @include putSameValue(135px, width, height);
   }
 
   h1 {
     text-align: center;
     font-size: 1.5em;
+  }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  main > div:first-child {
+    grid-template-columns: 1fr;
+    min-width: 100%;
   }
 }

@@ -1,5 +1,5 @@
 let next = "";
-const initialPokemon = "https://pokeapi.co/api/v2/pokemon/?limit=151";
+const initialPokemon = "https://pokeapi.co/api/v2/pokemon/";
 const pokedexList = document.getElementById("pokedex-list");
 
 async function pokedex(route, searchInputValue) {
@@ -40,7 +40,7 @@ function createNewPokemonCard(element, searchInputValue) {
           "front_default"
         ];
 
-      const temp =
+      const containerOfSecondDiv =
         secondType === undefined
           ? ""
           : returnDivContainerForSecondType(pokemonId, secondType.type.name);
@@ -72,7 +72,7 @@ function createNewPokemonCard(element, searchInputValue) {
         '"><p>' +
         firstType.type.name +
         "</p></div>" +
-        temp +
+        containerOfSecondDiv +
         "</div></div></div>";
       applySecondPokemonTypeIfExists();
       applyPokemonTypes(firstType.type.name, "pokemon-type-", pokemonId);
@@ -139,8 +139,8 @@ function loadMorePokemons() {
 
 function filter() {
   const searchElementValue = document.getElementById("search").value;
-  pokedex(initialPokemon, searchElementValue.toLowerCase());
-}
+  pokedex("https://pokeapi.co/api/v2/pokemon/?limit=151", searchElementValue.toLowerCase());
+} 
 
 document.getElementById("search").addEventListener("input", () => {
   pokedexList.innerHTML = "";

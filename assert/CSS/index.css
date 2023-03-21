@@ -15,9 +15,11 @@ body {
 header > div {
   justify-content: center;
   align-items: center;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  min-width: 100%;
 }
 
 h1 + div:nth-child(2) {
@@ -43,12 +45,12 @@ div img:hover {
 main {
   height: 100%;
   width: 100%;
+  margin-right: auto;
+  margin-left: auto;
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
   justify-items: center;
-  margin-right: auto;
-  margin-left: auto;
   margin-top: 30px;
 }
 
@@ -59,23 +61,26 @@ main > div:first-child {
   place-items: center;
   width: 33%;
   min-width: 960px;
-  height: 110%;
+  height: 115%;
 }
 
 button:only-child {
-  position: fixed;
-  bottom: 0;
-  z-index: 3;
-  left: 0;
-  right: 0;
   margin-left: auto;
   margin-right: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: 3;
   width: 100px;
   margin-bottom: 30px;
 }
 
 p {
   margin: 0;
+}
+p::first-letter {
+  text-transform: capitalize;
 }
 
 button {
@@ -166,7 +171,7 @@ div ~ p {
 .pokedex-card-info {
   width: 300px;
   max-width: 300px;
-  box-shadow: 0 0.4rem #dfd9d9;
+  box-shadow: 0 0.5rem #dfd9d9;
   display: grid;
   grid-template-columns: [first] 30% [second] 45% [third] 25%;
   grid-template-rows: [row1-start] 80% [row2-start] 20%;
@@ -177,8 +182,8 @@ div ~ p {
 }
 
 .pokedex-card-info img {
-  width: 155px;
-  height: 155px;
+  width: 140px;
+  height: 140px;
   image-rendering: pixelated;
 }
 .pokedex-card-info img:hover {
@@ -201,14 +206,6 @@ div ~ p {
 
 .pokedex-type-icon {
   place-self: center;
-}
-
-#first-three-pokemons {
-  background-color: #79b473;
-}
-
-#last-three-pokemons {
-  background-color: #ff4e00;
 }
 
 .background-grass-type {
@@ -285,20 +282,17 @@ div ~ p {
   background-color: #000000;
 }
 
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 800px) {
   h1 + div:nth-child(2) {
     justify-content: center;
     align-items: center;
     width: 100%;
     flex-direction: column-reverse;
   }
-  main {
-    height: 1100px;
-  }
   main > div:first-child {
     margin-right: auto;
     margin-left: auto;
-    width: 100%;
+    min-width: 100%;
     grid-template-columns: 1fr;
     place-items: center;
   }
@@ -322,6 +316,12 @@ div ~ p {
   h1 {
     text-align: center;
     font-size: 1.5em;
+  }
+}
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  main > div:first-child {
+    grid-template-columns: 1fr;
+    min-width: 100%;
   }
 }
 
