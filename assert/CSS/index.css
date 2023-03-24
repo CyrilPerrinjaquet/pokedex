@@ -28,11 +28,13 @@ h1 + div {
   flex-direction: row;
 }
 
-input + div {
+input + button {
   max-height: 35px;
   min-width: 35px;
   display: flex;
   align-items: center;
+  border: none;
+  box-shadow: none;
 }
 
 div img {
@@ -65,6 +67,7 @@ main > div:first-child {
 }
 
 button:only-child {
+  display: none;
   margin-left: auto;
   margin-right: auto;
   bottom: 0;
@@ -88,7 +91,6 @@ button {
   border-radius: 10px;
   box-shadow: #ededed 0 10px 10px;
   background-color: white;
-  border-collapse: collapse;
 }
 button:hover {
   cursor: pointer;

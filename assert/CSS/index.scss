@@ -64,10 +64,12 @@ h1 + div {
   flex-direction: row;
 }
 
-input + div {
+input + button {
   @include putSameValue(35px, max-height, min-width);
   display: flex;
   align-items: center;
+  border: none;
+  box-shadow: none;
 }
 
 div img {
@@ -99,6 +101,7 @@ main > div:first-child {
 }
 
 button:only-child {
+  display: none;
   @include putSameValue(auto, margin-left, margin-right);
   @include putSameValue(0, bottom, left, right);
   position: fixed;
@@ -119,7 +122,6 @@ button {
   @include putSameValue(10px, padding, border-radius);
   @include box-shadow($lightGrey 0 10px 10px);
   background-color: white;
-  border-collapse: collapse;
   &:hover {
     cursor: pointer;
   }

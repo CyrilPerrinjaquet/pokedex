@@ -1,82 +1,196 @@
-let next = "";
-const initialPokemon = "https://pokeapi.co/api/v2/pokemon/";
-const pokedexList = document.getElementById("pokedex-list");
+/*
+ **********
+ *ELEMENTS*
+ **********
+ */
 
-async function pokedex(route, searchInputValue) {
-  await fetch(route)
-    .then((response) => response.json())
-    .then((my_response_in_json_format) => {
-      next = my_response_in_json_format["next"];
-      my_response_in_json_format["results"].forEach((element) => {
-        createNewPokemonCard(element, searchInputValue);
-      });
-    });
+const POKE_API_BASE_URL = "https://pokeapi.co/api/";
+const VERSION = "v2";
+
+const pokemonURL = POKE_API_BASE_URL + VERSION + "/pokemon";
+
+const pokedexListElement = document.getElementById("pokedex-list");
+const pokedexLoadMoreButtonElement =
+  document.getElementById("loadMorePokemons");
+const searchPokemonButtonElement = document.getElementById(
+  "searchPokemonButton"
+);
+const searchElementValue = document.getElementById("search");
+
+/*
+ ***********
+ *VARIABLES*
+ ***********
+ */
+
+let nextSetOfPokemons = "";
+
+/*
+ *******************
+ *POKEDEX FUNCTIONS*
+ *******************
+ */
+
+function getSetOfPokemons() {
+  getPokemons().then((result) => createNewPokemonCardsFromJSON(result));
 }
 
-function createNewPokemonCard(element, searchInputValue) {
-  fetch(element.url)
-    .then((response) => response.json())
-    .then((my_response_in_json_format) => {
-      const data = my_response_in_json_format;
-      const pokemonId = data.id;
-      const firstType = data.types[0];
-      const secondType = data.types[1];
-      const nameOfPokemon = element["name"];
-      
-      if (!searchInputValue) {
-        searchInputValue = " ";
-        searchInputValue = "";
-      }
+function loadMorePokemons() {
+  getNextSetOfPokemons(nextSetOfPokemons).then((result) =>
+    createNewPokemonCardsFromJSON(result)
+  );
+}
 
-      if (!nameOfPokemon.startsWith(searchInputValue)) {
-        return;
-      }
+// UTILISER UN MAP PLUS TOT QUE FOREACH CAR IL EST PAS FORCEMENT SYNCRONISE H24
 
-      const animatedSprite =
-        data["sprites"]["versions"]["generation-v"]["black-white"]["animated"][
-          "front_default"
-        ];
-      const staticSprite =
-        data["sprites"]["versions"]["generation-v"]["black-white"][
-          "front_default"
-        ];
-
-      const containerOfSecondDiv =
-        secondType === undefined
-          ? ""
-          : returnDivContainerForSecondType(pokemonId, secondType.type.name);
-
-      const applySecondPokemonTypeIfExists = () => {
-        if (secondType != undefined) {
-          applyPokemonTypes(
-            secondType.type.name,
-            "second-pokemon-type-",
-            pokemonId
-          );
-        }
-      };
-
-      pokedexList.innerHTML +=
-        '<div class="pokedex-card-container"><div class="pokedex-card-info"><div><p>N°' +
-        pokemonId +
-        "</p></div><p>" +
-        nameOfPokemon +
-        '</p><img src="' +
-        staticSprite +
-        '" alt="pokemon-image of ' +
-        nameOfPokemon +
-        '" /><div><p class="pokedex-type-icon" id="emoji-pokemon-' +
-        pokemonId +
-        '"></p><div class="pokedex-type-word-container" id="pokemon-type-' +
-        pokemonId +
-        '"><p>' +
-        firstType.type.name +
-        "</p></div>" +
-        containerOfSecondDiv +
-        "</div></div></div>";
-      applySecondPokemonTypeIfExists();
-      applyPokemonTypes(firstType.type.name, "pokemon-type-", pokemonId);
+function createNewPokemonCardsFromJSON(pokemonsJSON) {
+  nextSetOfPokemons = pokemonsJSON["next"];
+  pokemonsJSON["results"].map((element) => {
+    getPokemon(element.name).then((result) => {
+      createPokemonsCard(
+        result,
+        getDataOfPokemons(result, "pokemonsName"),
+        getDataOfPokemons(result, "staticSprite"),
+        returnTheContainersSecondType(result)
+      );
     });
+  });
+}
+
+/*
+ *****
+ *API*
+ *****
+ */
+
+async function fetchAPI(URL, options) {
+  const response = await fetch(URL, options);
+  if (response.ok) {
+    return response.json();
+  } else {
+    alert("ERROR");
+  }
+}
+
+function getPokemons() {
+  return fetchAPI(pokemonURL, { method: "GET" });
+}
+// TODO Mettre un commentaire qui explique les deux fonctions en dessus et en dessous
+function getNextSetOfPokemons(nextURL) {
+  return fetchAPI(nextURL, { method: "GET" });
+}
+
+function getPokemon(nameOfPokemon) {
+  return fetchAPI(`${pokemonURL}/${nameOfPokemon}`, { method: "GET" });
+}
+
+function getAbilities(nameOfPokemon) {
+  return fetchAPI(`${POKE_API_BASE_URL}/${VERSION}/ability/${nameOfPokemon}`, {
+    method: "GET",
+  });
+}
+function getCharacteristic(nameOfPokemon) {
+  return fetchAPI(
+    `${POKE_API_BASE_URL}/${VERSION}/characteristic/${nameOfPokemon}`,
+    { method: "GET" }
+  );
+}
+
+function getDataOfPokemons(response, elementWeAreSearchingFor) {
+  const dataMapping = {
+    element: response,
+    pokemonId: response.id,
+    firstType: response.types[0],
+    secondType: response.types[1],
+    staticSprite:
+      response["sprites"]["versions"]["generation-v"]["black-white"][
+        "front_default"
+      ],
+    pokemonsName: response.name,
+  };
+  return dataMapping[elementWeAreSearchingFor];
+}
+
+function returnTheContainersSecondType(result) {
+  return getDataOfPokemons(result, "secondType") === undefined
+    ? ""
+    : returnDivContainerForSecondType(
+        getDataOfPokemons(result, "pokemonId"),
+        getDataOfPokemons(result, "secondType").type.name
+      );
+}
+
+/*
+ *****************
+ *SEARCH FUNCTION*
+ *****************
+ */
+
+function searchForAPokemon() {
+  pokedexListElement.innerHTML = "";
+  getPokemon(searchElementValue.value).then((result) =>
+    createPokemonsCard(
+      result,
+      getDataOfPokemons(result, "pokemonsName"),
+      getDataOfPokemons(result, "staticSprite"),
+      returnTheContainersSecondType(result)
+    )
+  );
+}
+
+/*
+ ********************************
+ *SHOW LOAD MORE BUTTON FUNCTION*
+ ********************************
+ */
+
+function showButtonLoadMore() {
+  const currentHeightOfThePage = document.documentElement.scrollHeight;
+  const positionOfTheUser = window.scrollY + window.innerHeight;
+
+  if (positionOfTheUser >= currentHeightOfThePage - 1) {
+    pokedexLoadMoreButtonElement.style.display = "block";
+  } else {
+    pokedexLoadMoreButtonElement.style.display = "none";
+  }
+}
+
+/*
+ *************************************
+ *CONSTRUCTION OF THE CARDS FUNCTIONS*
+ *************************************
+ */
+
+function createPokemonsCard(
+  JSONResponse,
+  pokemonsName,
+  imageOfThePokemon,
+  secondDivTypes
+) {
+  pokedexListElement.innerHTML +=
+    '<div class="pokedex-card-container"><div class="pokedex-card-info"><div><p>N°' +
+    getDataOfPokemons(JSONResponse, "pokemonId") +
+    "</p></div><p>" +
+    pokemonsName +
+    '</p><img src="' +
+    imageOfThePokemon +
+    '" alt="pokemon-image of ' +
+    pokemonsName +
+    '" /><div><p class="pokedex-type-icon" id="emoji-pokemon-' +
+    getDataOfPokemons(JSONResponse, "pokemonId") +
+    '"></p><div class="pokedex-type-word-container" id="pokemon-type-' +
+    getDataOfPokemons(JSONResponse, "pokemonId") +
+    '"><p>' +
+    getDataOfPokemons(JSONResponse, "firstType").type.name +
+    "</p></div>" +
+    secondDivTypes +
+    "</div></div></div>";
+  applySecondPokemonTypeIfExists(JSONResponse);
+  applyPokemonTypes(
+    getDataOfPokemons(JSONResponse, "firstType").type.name,
+    "pokemon-type-",
+    getDataOfPokemons(JSONResponse, "pokemonId")
+  );
 }
 
 function returnDivContainerForSecondType(pokemonId, name) {
@@ -87,6 +201,16 @@ function returnDivContainerForSecondType(pokemonId, name) {
     name +
     "</p></div>"
   );
+}
+
+function applySecondPokemonTypeIfExists(JSONResponse) {
+  if (getDataOfPokemons(JSONResponse, "secondType") != undefined) {
+    applyPokemonTypes(
+      getDataOfPokemons(JSONResponse, "secondType").type.name,
+      "second-pokemon-type-",
+      getDataOfPokemons(JSONResponse, "pokemonId")
+    );
+  }
 }
 
 function applyTheBackgroundColor(nameOfType, whichPokemonId, pokemonId) {
@@ -133,21 +257,27 @@ function applyPokemonTypes(nameOfFirstType, whichPokemonId, pokemonId) {
   emojiSetting(type_mapping[nameOfFirstType].emoji, pokemonId);
 }
 
-function loadMorePokemons() {
-  pokedex(next);
-}
+/*
+ ****************
+ *EVENT FUNCTION*
+ ****************
+ */
 
-async function filter() {
-  const searchElementValue = document.getElementById("search").value;
- await pokedex(
-    "https://pokeapi.co/api/v2/pokemon/?limit=151",
-    searchElementValue.toLowerCase()
-  );
-}
-
-document.getElementById("search").addEventListener("input", () => {
-  pokedexList.innerHTML = "";
-  filter();
+searchPokemonButtonElement.onclick = searchForAPokemon;
+searchElementValue.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    searchForAPokemon();
+  }
 });
+// TODO Voir avec Jérôme comment est-ce que je peux faire pour gérer la hauteur qui change dynamiquement
+document.onscroll = showButtonLoadMore;
+document.onresize = showButtonLoadMore;
+pokedexLoadMoreButtonElement.onclick = loadMorePokemons;
 
-pokedex(initialPokemon);
+/*
+ ***********************
+ *MAIN POKEDEX FUNCTION*
+ ***********************
+ */
+
+getSetOfPokemons();

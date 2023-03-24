@@ -17,9 +17,6 @@
             <button>Filter pokemons by...</button>
             <div>
               <a href="#">Name</a>
-              <!-- <a href="#">Type</a>
-              <a href="#">Ascending numbers</a>
-              <a href="#">Descending numbers</a> -->
             </div>
           </div>
           <!--Search Bar-->
@@ -29,9 +26,9 @@
               type="text"
               placeholder="Search for a pokemon... "
             />
-            <div>
+            <button id="searchPokemonButton">
               <img src="images/search_icon.png" alt="search-bar-icon" />
-            </div>
+            </button>
           </div>
         </div>
       </div>
@@ -40,8 +37,8 @@
       <div id="pokedex-list">
         <!--Card-->
       </div>
-      <div>
-        <button onclick="loadMorePokemons()">Charger plus</button>
+      <div><!--  Bouton charger s'affiche que à la fin de la liste -->
+        <button id="loadMorePokemons">Charger plus</button>
       </div>
     </main>
     <script src="index.js"></script>
