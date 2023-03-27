@@ -15,7 +15,7 @@ const pokedexLoadMoreButtonElement =
 const searchPokemonButtonElement = document.getElementById(
   "searchPokemonButton"
 );
-const searchElementValue = document.getElementById("search");
+const searchElement = document.getElementById("search");
 
 /*
  ***********
@@ -24,7 +24,7 @@ const searchElementValue = document.getElementById("search");
  */
 
 let nextSetOfPokemons = "";
-
+let currentPokemons = [];
 /*
  *******************
  *POKEDEX FUNCTIONS*
@@ -41,20 +41,15 @@ function loadMorePokemons() {
   );
 }
 
-// UTILISER UN MAP PLUS TOT QUE FOREACH CAR IL EST PAS FORCEMENT SYNCRONISE H24
+async function createNewPokemonCardsFromJSON(pokemonsJSON) {
+  currentPokemons = [];
+  nextSetOfPokemons = pokemonsJSON.next;
+  for (const pokemon of pokemonsJSON.results) {
+    const pokemonDetails = await getPokemon(pokemon.name);
+    currentPokemons.push(pokemonDetails);
+  }
 
-function createNewPokemonCardsFromJSON(pokemonsJSON) {
-  nextSetOfPokemons = pokemonsJSON["next"];
-  pokemonsJSON["results"].map((element) => {
-    getPokemon(element.name).then((result) => {
-      createPokemonsCard(
-        result,
-        getDataOfPokemons(result, "pokemonsName"),
-        getDataOfPokemons(result, "staticSprite"),
-        returnTheContainersSecondType(result)
-      );
-    });
-  });
+  createPokemonCards();
 }
 
 /*
@@ -63,6 +58,13 @@ function createNewPokemonCardsFromJSON(pokemonsJSON) {
  *****
  */
 
+
+/**
+ * Fetches the given URL with an fetch method
+ * @param {string} URL 
+ * @param {object} options 
+ * @returns the response in JSON format of the fetched URL
+ */
 async function fetchAPI(URL, options) {
   const response = await fetch(URL, options);
   if (response.ok) {
@@ -72,10 +74,19 @@ async function fetchAPI(URL, options) {
   }
 }
 
+/**
+ * Calls the function fetchAPI() with the pokemonURL constant and with the method "GET"
+ * @returns The response in JSON of the pokemonURL
+ */
 function getPokemons() {
   return fetchAPI(pokemonURL, { method: "GET" });
 }
 // TODO Mettre un commentaire qui explique les deux fonctions en dessus et en dessous
+/**
+ * Calls the function fetchAPI() with the nextURL parameter and with the method "GET"
+ * The nextURL parameter refers to the url given by the api pointing to the next of comming pokemons
+ * @returns The response in JSON of the nextURL
+ */
 function getNextSetOfPokemons(nextURL) {
   return fetchAPI(nextURL, { method: "GET" });
 }
@@ -126,33 +137,25 @@ function returnTheContainersSecondType(result) {
  *****************
  */
 
-function searchForAPokemon() {
+async function searchForAPokemon() {
   pokedexListElement.innerHTML = "";
-  getPokemon(searchElementValue.value).then((result) =>
-    createPokemonsCard(
-      result,
-      getDataOfPokemons(result, "pokemonsName"),
-      getDataOfPokemons(result, "staticSprite"),
-      returnTheContainersSecondType(result)
-    )
+  currentPokemons = [];
+  const pokemonDetails = await getPokemon(
+    searchElement.value.toLowerCase()
   );
+  currentPokemons.push(pokemonDetails);
+  createPokemonCards();
 }
 
-/*
- ********************************
- *SHOW LOAD MORE BUTTON FUNCTION*
- ********************************
- */
-
-function showButtonLoadMore() {
-  const currentHeightOfThePage = document.documentElement.scrollHeight;
-  const positionOfTheUser = window.scrollY + window.innerHeight;
-
-  if (positionOfTheUser >= currentHeightOfThePage - 1) {
-    pokedexLoadMoreButtonElement.style.display = "block";
-  } else {
-    pokedexLoadMoreButtonElement.style.display = "none";
-  }
+function createPokemonCards() {
+  currentPokemons.forEach((pokemon) =>
+    createPokemonsCard(
+      pokemon,
+      getDataOfPokemons(pokemon, "pokemonsName"),
+      getDataOfPokemons(pokemon, "staticSprite"),
+      returnTheContainersSecondType(pokemon)
+    )
+  );
 }
 
 /*
@@ -162,34 +165,34 @@ function showButtonLoadMore() {
  */
 
 function createPokemonsCard(
-  JSONResponse,
-  pokemonsName,
-  imageOfThePokemon,
+  pokemonDetails,
+  pokemonName,
+  pokemonImage,
   secondDivTypes
 ) {
   pokedexListElement.innerHTML +=
     '<div class="pokedex-card-container"><div class="pokedex-card-info"><div><p>N°' +
-    getDataOfPokemons(JSONResponse, "pokemonId") +
+    getDataOfPokemons(pokemonDetails, "pokemonId") +
     "</p></div><p>" +
-    pokemonsName +
+    pokemonName +
     '</p><img src="' +
-    imageOfThePokemon +
+    pokemonImage +
     '" alt="pokemon-image of ' +
-    pokemonsName +
+    pokemonName +
     '" /><div><p class="pokedex-type-icon" id="emoji-pokemon-' +
-    getDataOfPokemons(JSONResponse, "pokemonId") +
+    getDataOfPokemons(pokemonDetails, "pokemonId") +
     '"></p><div class="pokedex-type-word-container" id="pokemon-type-' +
-    getDataOfPokemons(JSONResponse, "pokemonId") +
+    getDataOfPokemons(pokemonDetails, "pokemonId") +
     '"><p>' +
-    getDataOfPokemons(JSONResponse, "firstType").type.name +
+    getDataOfPokemons(pokemonDetails, "firstType").type.name +
     "</p></div>" +
     secondDivTypes +
     "</div></div></div>";
-  applySecondPokemonTypeIfExists(JSONResponse);
+  applySecondPokemonTypeIfExists(pokemonDetails);
   applyPokemonTypes(
-    getDataOfPokemons(JSONResponse, "firstType").type.name,
+    getDataOfPokemons(pokemonDetails, "firstType").type.name,
     "pokemon-type-",
-    getDataOfPokemons(JSONResponse, "pokemonId")
+    getDataOfPokemons(pokemonDetails, "pokemonId")
   );
 }
 
@@ -203,12 +206,12 @@ function returnDivContainerForSecondType(pokemonId, name) {
   );
 }
 
-function applySecondPokemonTypeIfExists(JSONResponse) {
-  if (getDataOfPokemons(JSONResponse, "secondType") != undefined) {
+function applySecondPokemonTypeIfExists(pokemonDetails) {
+  if (getDataOfPokemons(pokemonDetails, "secondType") != undefined) {
     applyPokemonTypes(
-      getDataOfPokemons(JSONResponse, "secondType").type.name,
+      getDataOfPokemons(pokemonDetails, "secondType").type.name,
       "second-pokemon-type-",
-      getDataOfPokemons(JSONResponse, "pokemonId")
+      getDataOfPokemons(pokemonDetails, "pokemonId")
     );
   }
 }
@@ -264,14 +267,12 @@ function applyPokemonTypes(nameOfFirstType, whichPokemonId, pokemonId) {
  */
 
 searchPokemonButtonElement.onclick = searchForAPokemon;
-searchElementValue.addEventListener("keydown", (event) => {
+searchElement.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     searchForAPokemon();
   }
 });
-// TODO Voir avec Jérôme comment est-ce que je peux faire pour gérer la hauteur qui change dynamiquement
-document.onscroll = showButtonLoadMore;
-document.onresize = showButtonLoadMore;
+
 pokedexLoadMoreButtonElement.onclick = loadMorePokemons;
 
 /*

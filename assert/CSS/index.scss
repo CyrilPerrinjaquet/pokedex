@@ -93,21 +93,14 @@ main {
 main > div:first-child {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: repeat(auto-fit, 180px);
+  grid-row-gap: 23px;
   place-items: center;
   width: 33%;
   min-width: 960px;
-  height: 115%;
 }
 
-button:only-child {
-  display: none;
-  @include putSameValue(auto, margin-left, margin-right);
-  @include putSameValue(0, bottom, left, right);
-  position: fixed;
-  z-index: 3;
-  width: 100px;
-  margin-bottom: 30px;
+#loadMorePokemons {
+  margin-top: 20px;
 }
 
 p {
@@ -202,7 +195,6 @@ a {
 }
 
 .pokedex-card-container {
-  margin: 15px 10px 0 10px;
   height: $px150;
 }
 
