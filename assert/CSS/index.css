@@ -65,8 +65,12 @@ main > div:first-child {
   min-width: 960px;
 }
 
-#loadMorePokemons {
-  margin-top: 20px;
+main > div:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100px;
 }
 
 p {
@@ -91,6 +95,17 @@ div ~ p {
   grid-row-start: row2-start;
   font-weight: bold;
   font-size: 1em;
+}
+
+#loader {
+  display: none;
+  border: 8px solid #222930;
+  border-radius: 50%;
+  border-top: 8px solid #baeca7;
+  animation: spin 1.3s linear;
+  width: 30px;
+  height: 30px;
+  margin: 6px;
 }
 
 .pokedex-search-bar-container {
@@ -317,6 +332,14 @@ a:hover {
   }
   h1 {
     text-align: center;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 

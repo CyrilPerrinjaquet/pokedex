@@ -17,6 +17,8 @@ const searchPokemonButtonElement = document.getElementById(
 );
 const searchElement = document.getElementById("search");
 
+const loaderElement = document.getElementById("loader");
+
 /*
  ***********
  *VARIABLES*
@@ -25,6 +27,7 @@ const searchElement = document.getElementById("search");
 
 let nextSetOfPokemons = "";
 let currentPokemons = [];
+
 /*
  *******************
  *POKEDEX FUNCTIONS*
@@ -35,9 +38,15 @@ function getSetOfPokemons() {
   getPokemons().then((result) => createNewPokemonCardsFromJSON(result));
 }
 
+function loader() {
+  pokedexLoadMoreButtonElement.style.display = "none";
+  loaderElement.style.display = "block";
+}
+
 function loadMorePokemons() {
-  getNextSetOfPokemons(nextSetOfPokemons).then((result) =>
-    createNewPokemonCardsFromJSON(result)
+  getNextSetOfPokemons(nextSetOfPokemons).then(
+    (result) => createNewPokemonCardsFromJSON(result),
+    loader()
   );
 }
 
@@ -52,17 +61,29 @@ async function createNewPokemonCardsFromJSON(pokemonsJSON) {
   createPokemonCards();
 }
 
+function createPokemonCards() {
+  currentPokemons.forEach((pokemon) =>
+    constructTheCardWithAllInformation(
+      pokemon,
+      pokemon.name,
+      pokemon["sprites"]["versions"]["generation-v"]["black-white"][
+        "front_default"
+      ],
+      returnTheContainersSecondType(pokemon)
+    )
+  );
+}
+
 /*
  *****
  *API*
  *****
  */
 
-
 /**
  * Fetches the given URL with an fetch method
- * @param {string} URL 
- * @param {object} options 
+ * @param {string} URL
+ * @param {object} options
  * @returns the response in JSON format of the fetched URL
  */
 async function fetchAPI(URL, options) {
@@ -107,28 +128,14 @@ function getCharacteristic(nameOfPokemon) {
   );
 }
 
-function getDataOfPokemons(response, elementWeAreSearchingFor) {
-  const dataMapping = {
-    element: response,
-    pokemonId: response.id,
-    firstType: response.types[0],
-    secondType: response.types[1],
-    staticSprite:
-      response["sprites"]["versions"]["generation-v"]["black-white"][
-        "front_default"
-      ],
-    pokemonsName: response.name,
-  };
-  return dataMapping[elementWeAreSearchingFor];
-}
-
 function returnTheContainersSecondType(result) {
-  return getDataOfPokemons(result, "secondType") === undefined
+  return result.types[1] === undefined
     ? ""
-    : returnDivContainerForSecondType(
-        getDataOfPokemons(result, "pokemonId"),
-        getDataOfPokemons(result, "secondType").type.name
-      );
+    : '<div class="pokedex-type-word-container" id="second-pokemon-type-' +
+        result.id +
+        '"><p>' +
+        result.types[1].type.name +
+        "</p></div>";
 }
 
 /*
@@ -140,22 +147,12 @@ function returnTheContainersSecondType(result) {
 async function searchForAPokemon() {
   pokedexListElement.innerHTML = "";
   currentPokemons = [];
-  const pokemonDetails = await getPokemon(
-    searchElement.value.toLowerCase()
-  );
+  const pokemonDetails = await getPokemon(searchElement.value.toLowerCase());
   currentPokemons.push(pokemonDetails);
   createPokemonCards();
-}
-
-function createPokemonCards() {
-  currentPokemons.forEach((pokemon) =>
-    createPokemonsCard(
-      pokemon,
-      getDataOfPokemons(pokemon, "pokemonsName"),
-      getDataOfPokemons(pokemon, "staticSprite"),
-      returnTheContainersSecondType(pokemon)
-    )
-  );
+  if (currentPokemons.length === 1) {
+    pokedexLoadMoreButtonElement.style.display = "none";
+  }
 }
 
 /*
@@ -164,15 +161,15 @@ function createPokemonCards() {
  *************************************
  */
 
-function createPokemonsCard(
+function constructTheCardWithAllInformation(
   pokemonDetails,
   pokemonName,
   pokemonImage,
-  secondDivTypes
+  containerOfTheSecondDiv
 ) {
   pokedexListElement.innerHTML +=
     '<div class="pokedex-card-container"><div class="pokedex-card-info"><div><p>N°' +
-    getDataOfPokemons(pokemonDetails, "pokemonId") +
+    pokemonDetails.id +
     "</p></div><p>" +
     pokemonName +
     '</p><img src="' +
@@ -180,38 +177,28 @@ function createPokemonsCard(
     '" alt="pokemon-image of ' +
     pokemonName +
     '" /><div><p class="pokedex-type-icon" id="emoji-pokemon-' +
-    getDataOfPokemons(pokemonDetails, "pokemonId") +
+    pokemonDetails.id +
     '"></p><div class="pokedex-type-word-container" id="pokemon-type-' +
-    getDataOfPokemons(pokemonDetails, "pokemonId") +
+    pokemonDetails.id +
     '"><p>' +
-    getDataOfPokemons(pokemonDetails, "firstType").type.name +
+    pokemonDetails.types[0].type.name +
     "</p></div>" +
-    secondDivTypes +
+    containerOfTheSecondDiv +
     "</div></div></div>";
   applySecondPokemonTypeIfExists(pokemonDetails);
   applyPokemonTypes(
-    getDataOfPokemons(pokemonDetails, "firstType").type.name,
+    pokemonDetails.types[0].type.name,
     "pokemon-type-",
-    getDataOfPokemons(pokemonDetails, "pokemonId")
-  );
-}
-
-function returnDivContainerForSecondType(pokemonId, name) {
-  return (
-    '<div class="pokedex-type-word-container" id="second-pokemon-type-' +
-    pokemonId +
-    '"><p>' +
-    name +
-    "</p></div>"
+    pokemonDetails.id
   );
 }
 
 function applySecondPokemonTypeIfExists(pokemonDetails) {
-  if (getDataOfPokemons(pokemonDetails, "secondType") != undefined) {
+  if (pokemonDetails.types[1] != undefined) {
     applyPokemonTypes(
-      getDataOfPokemons(pokemonDetails, "secondType").type.name,
+      pokemonDetails.types[1].type.name,
       "second-pokemon-type-",
-      getDataOfPokemons(pokemonDetails, "pokemonId")
+      pokemonDetails.id
     );
   }
 }
@@ -274,6 +261,11 @@ searchElement.addEventListener("keydown", (event) => {
 });
 
 pokedexLoadMoreButtonElement.onclick = loadMorePokemons;
+
+loaderElement.addEventListener("animationend", () => {
+  loaderElement.style.display = "none";
+  pokedexLoadMoreButtonElement.style.display = "block";
+});
 
 /*
  ***********************
