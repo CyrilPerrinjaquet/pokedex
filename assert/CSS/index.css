@@ -61,7 +61,6 @@ main > div:first-child {
   grid-template-columns: 1fr 1fr 1fr;
   grid-row-gap: 23px;
   place-items: center;
-  width: 33%;
   min-width: 960px;
 }
 
@@ -97,12 +96,11 @@ div ~ p {
   font-size: 1em;
 }
 
-#loader {
-  display: none;
-  border: 8px solid #222930;
+.pokedex-loader-animation {
   border-radius: 50%;
-  border-top: 8px solid #baeca7;
-  animation: spin 1.3s linear;
+  border: 3px solid #1574e9;
+  border-top: 3px solid white;
+  animation: spin 1.2s cubic-bezier(0.02, 0.29, 0.24, 0.66) infinite;
   width: 30px;
   height: 30px;
   margin: 6px;
@@ -133,6 +131,7 @@ div ~ p {
   width: 100%;
   border: none;
   font-weight: bold;
+  letter-spacing: 1.4px;
 }
 .pokedex-search-bar-container input:focus {
   outline: none;

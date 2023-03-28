@@ -38,27 +38,33 @@ function getSetOfPokemons() {
   getPokemons().then((result) => createNewPokemonCardsFromJSON(result));
 }
 
-function loader() {
-  pokedexLoadMoreButtonElement.style.display = "none";
-  loaderElement.style.display = "block";
+function loadMorePokemons() {
+  addCSSAnimationClassToElement();
+  getNextSetOfPokemons(nextSetOfPokemons).then((result) =>
+    createNewPokemonCardsFromJSON(result)
+  );
 }
 
-function loadMorePokemons() {
-  getNextSetOfPokemons(nextSetOfPokemons).then(
-    (result) => createNewPokemonCardsFromJSON(result),
-    loader()
-  );
+function addCSSAnimationClassToElement() {
+  loaderElement.classList.add("pokedex-loader-animation");
+  pokedexLoadMoreButtonElement.style.display = "none";
 }
 
 async function createNewPokemonCardsFromJSON(pokemonsJSON) {
   currentPokemons = [];
   nextSetOfPokemons = pokemonsJSON.next;
   for (const pokemon of pokemonsJSON.results) {
+    addCSSAnimationClassToElement();
     const pokemonDetails = await getPokemon(pokemon.name);
     currentPokemons.push(pokemonDetails);
   }
+  loaderElement.classList.remove("pokedex-loader-animation");
 
+  if (currentPokemons.length >= 1008) {
+    pokedexLoadMoreButtonElement.style.display = "none";
+  }
   createPokemonCards();
+  pokedexLoadMoreButtonElement.style.display = "block";
 }
 
 function createPokemonCards() {
@@ -66,9 +72,7 @@ function createPokemonCards() {
     constructTheCardWithAllInformation(
       pokemon,
       pokemon.name,
-      pokemon["sprites"]["versions"]["generation-v"]["black-white"][
-        "front_default"
-      ],
+      pokemon["sprites"]["front_default"],
       returnTheContainersSecondType(pokemon)
     )
   );
@@ -102,7 +106,7 @@ async function fetchAPI(URL, options) {
 function getPokemons() {
   return fetchAPI(pokemonURL, { method: "GET" });
 }
-// TODO Mettre un commentaire qui explique les deux fonctions en dessus et en dessous
+
 /**
  * Calls the function fetchAPI() with the nextURL parameter and with the method "GET"
  * The nextURL parameter refers to the url given by the api pointing to the next of comming pokemons
@@ -147,8 +151,12 @@ function returnTheContainersSecondType(result) {
 async function searchForAPokemon() {
   pokedexListElement.innerHTML = "";
   currentPokemons = [];
+  addCSSAnimationClassToElement();
   const pokemonDetails = await getPokemon(searchElement.value.toLowerCase());
+
   currentPokemons.push(pokemonDetails);
+  loaderElement.classList.remove("pokedex-loader-animation");
+
   createPokemonCards();
   if (currentPokemons.length === 1) {
     pokedexLoadMoreButtonElement.style.display = "none";
@@ -261,11 +269,6 @@ searchElement.addEventListener("keydown", (event) => {
 });
 
 pokedexLoadMoreButtonElement.onclick = loadMorePokemons;
-
-loaderElement.addEventListener("animationend", () => {
-  loaderElement.style.display = "none";
-  pokedexLoadMoreButtonElement.style.display = "block";
-});
 
 /*
  ***********************
