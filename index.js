@@ -53,14 +53,14 @@ function addCSSAnimationClassToElement() {
 async function createNewPokemonCardsFromJSON(pokemonsJSON) {
   currentPokemons = [];
   nextSetOfPokemons = pokemonsJSON.next;
+  addCSSAnimationClassToElement();
   for (const pokemon of pokemonsJSON.results) {
-    addCSSAnimationClassToElement();
     const pokemonDetails = await getPokemon(pokemon.name);
     currentPokemons.push(pokemonDetails);
   }
   loaderElement.classList.remove("pokedex-loader-animation");
 
-  if (currentPokemons.length >= 1008) {
+  if (pokemonsJSON.next === null) {
     pokedexLoadMoreButtonElement.style.display = "none";
   }
   createPokemonCards();
