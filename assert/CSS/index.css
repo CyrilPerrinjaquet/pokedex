@@ -96,44 +96,44 @@ div ~ p {
   font-size: 1em;
 }
 
-.pokedex-loader-animation .contener_general {
+.pokedex-loader-animation .pokedex-loader-main-container {
   animation: animball_two 1.5s infinite;
   width: 44px;
   height: 44px;
 }
-.pokedex-loader-animation .contener_mixte {
+.pokedex-loader-animation .pokedex-loader-main-container > div {
   width: 44px;
   height: 44px;
   position: absolute;
 }
-.pokedex-loader-animation .ballcolor {
+.pokedex-loader-animation div > div:only-child {
   width: 20px;
   height: 20px;
   border-radius: 50%;
 }
-.pokedex-loader-animation .ball_1,
-.pokedex-loader-animation .ball_2,
-.pokedex-loader-animation .ball_3,
-.pokedex-loader-animation .ball_4 {
+.pokedex-loader-animation .pokedex-loader-ball-one,
+.pokedex-loader-animation .pokedex-loader-ball-two,
+.pokedex-loader-animation .pokedex-loader-ball-three,
+.pokedex-loader-animation .pokedex-loader-ball-four {
   position: absolute;
   animation: animball_one 1.5s infinite ease;
 }
-.pokedex-loader-animation .ball_1 {
+.pokedex-loader-animation .pokedex-loader-ball-one {
   background-color: #cb2025;
   top: 0;
   left: 0;
 }
-.pokedex-loader-animation .ball_2 {
+.pokedex-loader-animation .pokedex-loader-ball-two {
   background-color: #f8b334;
   top: 0;
   left: 24px;
 }
-.pokedex-loader-animation .ball_3 {
+.pokedex-loader-animation .pokedex-loader-ball-three {
   background-color: #00a096;
   top: 24px;
   left: 0;
 }
-.pokedex-loader-animation .ball_4 {
+.pokedex-loader-animation .pokedex-loader-ball-four {
   background-color: #97bf0d;
   top: 24px;
   left: 24px;
