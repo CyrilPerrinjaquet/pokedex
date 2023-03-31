@@ -97,7 +97,7 @@ div ~ p {
 }
 
 .pokedex-loader-animation .pokedex-loader-main-container {
-  animation: animball_two 1.5s infinite;
+  animation: pokedex_main_loader_container_rotation 1.5s infinite;
   width: 44px;
   height: 44px;
 }
@@ -111,29 +111,25 @@ div ~ p {
   height: 20px;
   border-radius: 50%;
 }
-.pokedex-loader-animation .pokedex-loader-ball-one,
-.pokedex-loader-animation .pokedex-loader-ball-two,
-.pokedex-loader-animation .pokedex-loader-ball-three,
-.pokedex-loader-animation .pokedex-loader-ball-four {
-  position: absolute;
-  animation: animball_one 1.5s infinite ease;
+.pokedex-loader-animation .pokedex-loader-ball {
+  animation: pokedex_loader_balls_animation 1.5s infinite ease;
 }
-.pokedex-loader-animation .pokedex-loader-ball-one {
+.pokedex-loader-animation #pokedex-loader-ball-one {
   background-color: #cb2025;
   top: 0;
   left: 0;
 }
-.pokedex-loader-animation .pokedex-loader-ball-two {
+.pokedex-loader-animation #pokedex-loader-ball-two {
   background-color: #f8b334;
   top: 0;
   left: 24px;
 }
-.pokedex-loader-animation .pokedex-loader-ball-three {
+.pokedex-loader-animation #pokedex-loader-ball-three {
   background-color: #00a096;
   top: 24px;
   left: 0;
 }
-.pokedex-loader-animation .pokedex-loader-ball-four {
+.pokedex-loader-animation #pokedex-loader-ball-four {
   background-color: #97bf0d;
   top: 24px;
   left: 24px;
@@ -200,10 +196,6 @@ a {
 }
 a:hover {
   background-color: #f9fafb;
-}
-
-.pokedex-card-container {
-  height: 150px;
 }
 
 .pokedex-card-info {
@@ -366,15 +358,7 @@ a:hover {
     text-align: center;
   }
 }
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-@keyframes animball_one {
+@keyframes pokedex_loader_balls_animation {
   0% {
     position: absolute;
   }
@@ -388,7 +372,7 @@ a:hover {
     position: absolute;
   }
 }
-@keyframes animball_two {
+@keyframes pokedex_main_loader_container_rotation {
   0% {
     transform: rotate(0deg) scale(1);
   }

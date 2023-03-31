@@ -44,7 +44,7 @@ function loadMorePokemons() {
     createNewPokemonCardsFromJSON(result)
   );
 }
-
+/* 09 06*/
 function addCSSAnimationClassToElement() {
   loaderElement.classList.add("pokedex-loader-animation");
   pokedexLoadMoreButtonElement.style.display = "none";
