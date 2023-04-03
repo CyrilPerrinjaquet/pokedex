@@ -96,6 +96,11 @@ div ~ p {
   font-size: 1em;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
+
 .pokedex-loader-animation .pokedex-loader-main-container {
   animation: pokedex_main_loader_container_rotation 1.5s infinite;
   width: 44px;
@@ -166,38 +171,6 @@ div ~ p {
   outline: none;
 }
 
-.pokedex-dropdown-container {
-  position: relative;
-  margin-right: 20px;
-  width: 187px;
-}
-.pokedex-dropdown-container:hover div {
-  border: 2px #000000 solid;
-  box-shadow: #ededed 0 10px 10px;
-  display: block;
-  top: 38px;
-  border-radius: 10px;
-}
-
-.pokedex-dropdown-container > div {
-  display: none;
-  position: absolute;
-  text-align: center;
-  background-color: #fff;
-}
-
-a {
-  display: block;
-  color: #000000;
-  text-decoration: none;
-  padding: 15px 20px;
-  width: 97px;
-  border-radius: 10px;
-}
-a:hover {
-  background-color: #f9fafb;
-}
-
 .pokedex-card-info {
   width: 300px;
   max-width: 300px;
@@ -210,6 +183,9 @@ a:hover {
   height: 150px;
   place-items: center;
 }
+.pokedex-card-info:hover {
+  cursor: pointer;
+}
 
 .pokedex-card-info img {
   width: 140px;
@@ -217,7 +193,7 @@ a:hover {
   image-rendering: pixelated;
 }
 .pokedex-card-info img:hover {
-  cursor: default;
+  cursor: pointer;
 }
 
 .pokedex-type-word-container {
@@ -384,4 +360,4 @@ a:hover {
   }
 }
 
-/*# sourceMappingURL=index.css.map */
+/*# sourceMappingURL=pokemons_list.css.map */

@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@200&display=swap");
+* {
+  font-family: "Archivo", sans-serif;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #f8fafc;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  grid-row-gap: 20px;
+}
+
+main > div {
+  box-shadow: 0 0.5rem #dfd9d9;
+  border: 1px black solid;
+  width: 670px;
+  max-width: 670px;
+  height: 200px;
+  place-items: center;
+  border-radius: 8px;
+  background-color: #ededed;
+}
+
+main > div:first-child {
+  display: grid;
+  grid-template-columns: 18% 32% 50%;
+}
+
+div > img {
+  width: 140px;
+  height: 140px;
+}
+
+.pokedex-details-id-of-pokemon {
+  border: 1.5px black solid;
+  width: 80px;
+  height: 80px;
+  margin-left: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  place-self: start;
+  border-radius: 50%;
+}
+
+.pokedex-details-name-and-types-container > div:first-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding-right: 10px;
+  width: 100%;
+}
+
+.pokedex-details-name-and-types-container > div:last-child {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.pokedex-details-name-and-types-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 90%;
+}
+
+/*# sourceMappingURL=pokemon_details.css.map */

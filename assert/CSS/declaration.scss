@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@200&display=swap");
+
+$black: #000000;
+$font-archivo: "Archivo", sans-serif;
+$grass-type: #79b473;
+$aqua-type: #57c4e5;
+$fire-type: #ff4e00;
+$normal-type: #d7dae5;
+$poison-type: #bc76ae;
+$flying-type: #85aeff;
+$bug-type: #bcc949;
+$fairy-type: #ffbdff;
+$psychic-type: #ff76ae;
+$electric-type: #ffd759;
+$ground-type: #e5c976;
+$fighting-type: #c97668;
+$dragon-type: #9385f2;
+$ice-type: #9ccef6;
+$ghost-type: #382856;
+$rock-type: #826155;
+$steel-type: #bcbdc9;
+$dark-type: #000000;
+
+$numberInPourcentage100: 100%;
+$px150: 150px;
+$lightGrey: #ededed;
+
+* {
+  font-family: $font-archivo;
+}
+
+@mixin box-shadow($shadow...) {
+  box-shadow: $shadow;
+}
+
+@mixin border($border-size, $border-color) {
+  border: $border-size $border-color solid;
+}
+
+@mixin putSameValue($value, $properties...) {
+  @each $property in $properties {
+    #{$property}: $value;
+  }
+}
+
+

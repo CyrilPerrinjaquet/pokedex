@@ -35,8 +35,24 @@ let currentPokemons = [];
  */
 
 function getSetOfPokemons() {
-  getPokemons().then((result) => createNewPokemonCardsFromJSON(result));
+  getPokemons().then((result) => {
+    createNewPokemonCardsFromJSON(result);
+  });
 }
+
+/*
+* THIS IS A TEST, I KEEPING IT BECAUSE IT IS THE ONLY SOLUTION I FOUND 
+
+function functionLikeNewPokemonCardsFromJSONButNotTheSame() {
+  fetchHTMLFile("pokemon_details.html", { method: "GET" }).then((data) => {
+    const parser = new DOMParser();
+    const responseDocument = parser.parseFromString(data, "text/html");
+    getSetOfPokemons().then((result) => {
+      constructDetailCard(responseDocument.getElementById("pokedex-card-details"), result, "", "", "", "")
+    })
+  });
+} 
+*/
 
 function loadMorePokemons() {
   addCSSAnimationClassToElement();
@@ -44,7 +60,7 @@ function loadMorePokemons() {
     createNewPokemonCardsFromJSON(result)
   );
 }
-/* 09 06*/
+
 function addCSSAnimationClassToElement() {
   loaderElement.classList.add("pokedex-loader-animation");
   pokedexLoadMoreButtonElement.style.display = "none";
@@ -99,6 +115,15 @@ async function fetchAPI(URL, options) {
   }
 }
 
+async function fetchHTMLFile(file, options) {
+  const response = await fetch(file, options);
+  if (response.ok) {
+    return response.text();
+  } else {
+    alert("ERROR");
+  }
+}
+
 /**
  * Calls the function fetchAPI() with the pokemonURL constant and with the method "GET"
  * @returns The response in JSON of the pokemonURL
@@ -128,6 +153,13 @@ function getAbilities(nameOfPokemon) {
 function getCharacteristic(nameOfPokemon) {
   return fetchAPI(
     `${POKE_API_BASE_URL}/${VERSION}/characteristic/${nameOfPokemon}`,
+    { method: "GET" }
+  );
+}
+
+function getPokemonSpecies() {
+  return fetchAPI(
+    `${POKE_API_BASE_URL}/${VERSION}/pokemon-species/${nameOfPokemon}`,
     { method: "GET" }
   );
 }
@@ -175,24 +207,23 @@ function constructTheCardWithAllInformation(
   pokemonImage,
   containerOfTheSecondDiv
 ) {
-  pokedexListElement.innerHTML +=
-    '<div class="pokedex-card-container"><div class="pokedex-card-info"><div><p>N°' +
-    pokemonDetails.id +
-    "</p></div><p>" +
-    pokemonName +
-    '</p><img src="' +
-    pokemonImage +
-    '" alt="pokemon-image of ' +
-    pokemonName +
-    '" /><div><p class="pokedex-type-icon" id="emoji-pokemon-' +
-    pokemonDetails.id +
-    '"></p><div class="pokedex-type-word-container" id="pokemon-type-' +
-    pokemonDetails.id +
-    '"><p>' +
-    pokemonDetails.types[0].type.name +
-    "</p></div>" +
-    containerOfTheSecondDiv +
-    "</div></div></div>";
+  pokedexListElement.innerHTML += `<div> class="pokedex-card-container" id="${pokemonDetails.id}"><a href="pokemon_details.html#${pokemonDetails.id}"><div class="pokedex-card-info"><div><p>N°${pokemonDetails.id}</p></div><p>${pokemonName}</p><img src="${pokemonImage}" alt="pokemon-image of ${pokemonName}"/><div><p class="pokedex-type-icon" id="emoji-pokemon-${pokemonDetails.id}"></p><div class="pokedex-type-word-container" id="pokemon-type-${pokemonDetails.id}"><p>${pokemonDetails.types[0].type.name}</p></div>${containerOfTheSecondDiv}</div></div></div>`;
+  applySecondPokemonTypeIfExists(pokemonDetails);
+  applyPokemonTypes(
+    pokemonDetails.types[0].type.name,
+    "pokemon-type-",
+    pokemonDetails.id
+  );
+}
+
+function constructDetailCard(
+  idOfElement,
+  pokemonDetails,
+  pokemonName,
+  pokemonImage,
+  containerOfTheSecondDiv
+) {
+  idOfElement.innerHTML += `<div class="pokedex-details-id-of-pokemon"><p>N°${pokemonDetails.id}</p></div><div><img src="${pokemonImage}" alt="animated image of ${pokemonName}" style="image-rendering: pixelated;" /></div><div class="pokedex-details-name-and-types-container"><div><p>${pokemonName}</p><p class="pokedex-type-icon" id="emoji-pokemon-${pokemonDetails.id}"></p><div class="pokedex-type-word-container" id="pokemon-type-${pokemonDetails.id}"><p>${pokemonDetails.types[0].type.name}</p></div><div><p>${containerOfTheSecondDiv}</p></div></div><div><p>${pokemonDetails}</p></div></div>` 
   applySecondPokemonTypeIfExists(pokemonDetails);
   applyPokemonTypes(
     pokemonDetails.types[0].type.name,

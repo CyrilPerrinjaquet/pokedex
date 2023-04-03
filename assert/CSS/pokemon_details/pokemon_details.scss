@@ -1,0 +1,69 @@
+@import "../declaration.scss";
+
+html,
+body {
+  @include putSameValue(0, padding, margin);
+  @include putSameValue(100%, height, width);
+  background-color: #f8fafc;
+}
+
+main {
+  @include putSameValue(100%, height, width);
+  @include putSameValue(auto, margin-right, margin-left);
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  grid-row-gap: 20px;
+}
+
+main > div {
+  @include box-shadow(0 0.5rem #dfd9d9);
+  @include border(1px, black);
+  @include putSameValue(670px, width, max-width);
+  height: 200px;
+
+  place-items: center;
+  border-radius: 8px;
+  background-color: $lightGrey;
+}
+
+main > div:first-child {
+  display: grid;
+  grid-template-columns: 18% 32% 50%;
+}
+
+div > img {
+    @include putSameValue(140px, width, height)
+}
+
+.pokedex-details-id-of-pokemon {
+  @include border(1.5px, black);
+  @include putSameValue(80px, width, height);
+  @include putSameValue(20px, margin-left, margin-top);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  place-self: start;
+  border-radius: 50%;
+}
+
+.pokedex-details-name-and-types-container > div:first-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding-right: 10px;
+  width: 100%;
+}
+
+.pokedex-details-name-and-types-container > div:last-child {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.pokedex-details-name-and-types-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 90%;
+}
