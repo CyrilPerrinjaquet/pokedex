@@ -21,7 +21,6 @@ main > div {
   @include border(1px, black);
   @include putSameValue(670px, width, max-width);
   height: 200px;
-
   place-items: center;
   border-radius: 8px;
   background-color: $lightGrey;
@@ -37,7 +36,6 @@ div > img {
 }
 
 .pokedex-details-id-of-pokemon {
-  @include border(1.5px, black);
   @include putSameValue(80px, width, height);
   @include putSameValue(20px, margin-left, margin-top);
   display: flex;

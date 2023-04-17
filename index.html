@@ -28,9 +28,7 @@
       </div>
     </header>
     <main>
-      <div id="pokedex-list">
-        <!--Card-->
-      </div>
+      <div id="pokedex-list"></div>
       <div>
         <button id="loadMorePokemons">Charger plus</button>
         <!-- TODO Mettre un bouton qui scroll tout en haut de façon smooth quand le user arrive en bas, le mettre juste à coté du bouton -->
@@ -38,21 +36,34 @@
         <div id="loader">
           <div class="pokedex-loader-main-container">
             <div>
-              <div id="pokedex-loader-ball-one" class="pokedex-loader-ball"></div>
+              <div
+                id="pokedex-loader-ball-one"
+                class="pokedex-loader-ball"
+              ></div>
             </div>
             <div>
-              <div id="pokedex-loader-ball-two" class="pokedex-loader-ball"></div>
+              <div
+                id="pokedex-loader-ball-two"
+                class="pokedex-loader-ball"
+              ></div>
             </div>
             <div>
-              <div id="pokedex-loader-ball-three" class="pokedex-loader-ball"></div>
+              <div
+                id="pokedex-loader-ball-three"
+                class="pokedex-loader-ball"
+              ></div>
             </div>
             <div>
-              <div id="pokedex-loader-ball-four" class="pokedex-loader-ball"></div>
+              <div
+                id="pokedex-loader-ball-four"
+                class="pokedex-loader-ball"
+              ></div>
             </div>
           </div>
         </div>
       </div>
     </main>
-    <script src="pokemons_list.js"></script>
+    <script src="index.js" type="module"></script>
+    <script src="modules/create_pokemon_card.js" type="module"></script>
   </body>
 </html>
