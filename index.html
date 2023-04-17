@@ -13,15 +13,12 @@
           Github
         </h1>
         <div>
-          <div class="pokedex-dropdown-container">
+          <!-- <div class="pokedex-dropdown-container">
             <button>Filter pokemons by...</button>
-            <div class="pokedex-dropdown-options-container">
+            <div>
               <a href="#">Name</a>
-              <!-- <a href="#">Type</a>
-              <a href="#">Ascending numbers</a>
-              <a href="#">Descending numbers</a> -->
             </div>
-          </div>
+          </div> -->
           <!--Search Bar-->
           <div class="pokedex-search-bar-container">
             <input
@@ -29,9 +26,9 @@
               type="text"
               placeholder="Search for a pokemon... "
             />
-            <div>
+            <button id="searchPokemonButton">
               <img src="images/search_icon.png" alt="search-bar-icon" />
-            </div>
+            </button>
           </div>
         </div>
       </div>
@@ -39,10 +36,27 @@
     <main>
       <div id="pokedex-list">
         <!--Card-->
-        
       </div>
       <div>
-        <button onclick="loadMorePokemons()">Charger plus</button>
+        <button id="loadMorePokemons">Charger plus</button>
+        <!-- TODO Mettre un bouton qui scroll tout en haut de façon smooth quand le user arrive en bas, le mettre juste à coté du bouton -->
+        <!-- Loader -->
+        <div id="loader">
+          <div class="pokedex-loader-main-container">
+            <div>
+              <div id="pokedex-loader-ball-one" class="pokedex-loader-ball"></div>
+            </div>
+            <div>
+              <div id="pokedex-loader-ball-two" class="pokedex-loader-ball"></div>
+            </div>
+            <div>
+              <div id="pokedex-loader-ball-three" class="pokedex-loader-ball"></div>
+            </div>
+            <div>
+              <div id="pokedex-loader-ball-four" class="pokedex-loader-ball"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
     <script src="index.js"></script>

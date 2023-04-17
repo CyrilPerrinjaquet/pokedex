@@ -14,6 +14,13 @@ $psychic-type: #ff76ae;
 $electric-type: #ffd759;
 $ground-type: #e5c976;
 $fighting-type: #c97668;
+$dragon-type: #9385f2;
+$ice-type: #9ccef6;
+$ghost-type: #382856;
+$rock-type: #826155;
+$steel-type: #bcbdc9;
+$dark-type: #000000;
+
 $numberInPourcentage100: 100%;
 $px150: 150px;
 $lightGrey: #ededed;
@@ -30,7 +37,7 @@ $lightGrey: #ededed;
   border: $border-size $border-color solid;
 }
 
-@mixin putSameValueForTheGivenParameters($value, $properties...) {
+@mixin putSameValue($value, $properties...) {
   @each $property in $properties {
     #{$property}: $value;
   }
@@ -38,32 +45,31 @@ $lightGrey: #ededed;
 
 html,
 body {
-  @include putSameValueForTheGivenParameters(0, padding, margin);
-  @include putSameValueForTheGivenParameters(100%, height, width);
+  @include putSameValue(0, padding, margin);
+  @include putSameValue(100%, height, width);
   background-color: #f8fafc;
 }
 
 header > div {
-  @include putSameValueForTheGivenParameters(
-    center,
-    justify-content,
-    align-items
-  );
+  @include putSameValue(center, justify-content, align-items);
+  @include putSameValue(auto, margin-left, margin-right);
   display: flex;
   flex-direction: column;
-  width: $numberInPourcentage100;
+  min-width: $numberInPourcentage100;
 }
 
-h1 + div:nth-child(2) {
+h1 + div {
   width: 800px;
   display: flex;
   flex-direction: row;
 }
 
-input + div {
-  @include putSameValueForTheGivenParameters(35px, max-height, min-width);
+input + button {
+  @include putSameValue(35px, max-height, min-width);
   display: flex;
   align-items: center;
+  border: none;
+  box-shadow: none;
 }
 
 div img {
@@ -75,40 +81,46 @@ div img {
 }
 
 main {
-  @include putSameValueForTheGivenParameters(100%, height, width);
+  @include putSameValue(100%, height, width);
+  @include putSameValue(auto, margin-right, margin-left);
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
   justify-items: center;
-  @include putSameValueForTheGivenParameters(auto, margin-right, margin-left);
   margin-top: 30px;
 }
 
-main > div {
+main > div:first-child {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: repeat(auto-fit, 180px);
+  grid-row-gap: 23px;
   place-items: center;
-  width: 960px;
-  height: auto;
+  min-width: 960px;
 }
 
-main > div:nth-child(2) {
-  display: grid;
-  grid-template-columns: 1fr;
-  place-items: center;
-  max-height: 200px;
+main > div:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100px;
 }
 
 p {
   margin: 0;
+
+  &::first-letter {
+    text-transform: capitalize;
+  }
 }
 
 button {
-  @include putSameValueForTheGivenParameters(10px, padding, border-radius);
+  @include putSameValue(10px, padding, border-radius);
   @include box-shadow($lightGrey 0 10px 10px);
   background-color: white;
-  border-collapse: collapse;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 div ~ p {
@@ -121,15 +133,60 @@ div ~ p {
   }
 }
 
+.pokedex-loader-animation {
+
+  .pokedex-loader-main-container {
+    animation: pokedex_main_loader_container_rotation 1.5s infinite;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .pokedex-loader-main-container > div {
+    width: 44px;
+    height: 44px;
+    position: absolute;
+  }
+  
+  div > div:only-child {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+  
+  .pokedex-loader-ball {
+    animation: pokedex_loader_balls_animation 1.5s infinite ease;
+  }
+  
+  #pokedex-loader-ball-one {
+    background-color: #cb2025;
+    top: 0;
+    left: 0;
+  }
+  
+  #pokedex-loader-ball-two {
+    background-color: #f8b334;
+    top: 0;
+    left: 24px;
+  }
+  
+  #pokedex-loader-ball-three {
+    background-color: #00a096;
+    top: 24px;
+    left: 0;
+  }
+  
+  #pokedex-loader-ball-four {
+    background-color: #97bf0d;
+    top: 24px;
+    left: 24px;
+  }
+}
+
 .pokedex-search-bar-container {
   @include border(1.5px, lightgrey);
   @include box-shadow(0px 0px 20px -18px);
-  @include putSameValueForTheGivenParameters(
-    center,
-    align-items,
-    justify-content
-  );
-  @include putSameValueForTheGivenParameters(10px, border-radius);
+  @include putSameValue(center, align-items, justify-content);
+  border-radius: 10px;
   display: flex;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
   background-color: #fff;
@@ -145,11 +202,11 @@ div ~ p {
 }
 
 .pokedex-search-bar-container input {
-  @include putSameValueForTheGivenParameters(10px, padding, border-radius);
+  @include putSameValue(10px, padding, border-radius);
   width: $numberInPourcentage100;
   border: none;
   font-weight: bold;
-
+  letter-spacing: 1.4px;
   &:focus {
     outline: none;
   }
@@ -160,7 +217,7 @@ div ~ p {
   margin-right: 20px;
   width: 187px;
 
-  &:hover .pokedex-dropdown-options-container {
+  &:hover div {
     @include border(2px, $black);
     @include box-shadow($lightGrey 0 10px 10px);
     display: block;
@@ -169,14 +226,14 @@ div ~ p {
   }
 }
 
-.pokedex-dropdown-options-container {
+.pokedex-dropdown-container > div {
   display: none;
   position: absolute;
   text-align: center;
   background-color: #fff;
 }
 
-.pokedex-dropdown-options-container a {
+a {
   display: block;
   color: $black;
   text-decoration: none;
@@ -189,14 +246,11 @@ div ~ p {
   }
 }
 
-.pokedex-card-container {
-  margin: 15px 10px 0 10px;
-  height: $px150;
-}
+
 
 .pokedex-card-info {
-  @include putSameValueForTheGivenParameters(300px, width, max-width);
-  @include box-shadow(0 0.4rem #dfd9d9);
+  @include putSameValue(300px, width, max-width);
+  @include box-shadow(0 0.5rem #dfd9d9);
   display: grid;
   grid-template-columns: [first] 30% [second] 45% [third] 25%;
   grid-template-rows: [row1-start] 80% [row2-start] 20%;
@@ -207,7 +261,7 @@ div ~ p {
 }
 
 .pokedex-card-info img {
-  @include putSameValueForTheGivenParameters(180px, width, height);
+  @include putSameValue(140px, width, height);
   image-rendering: pixelated;
 
   &:hover {
@@ -216,7 +270,7 @@ div ~ p {
 }
 
 .pokedex-type-word-container {
-  @include putSameValueForTheGivenParameters(5px, padding, border-radius);
+  @include putSameValue(5px, padding, border-radius);
   text-align: center;
   margin-bottom: 12px;
   font: {
@@ -232,18 +286,7 @@ div ~ p {
 
 .pokedex-type-icon {
   place-self: center;
-}
-
-#first-three-pokemons {
-  background-color: $grass-type;
-}
-
-#last-three-pokemons {
-  background-color: $fire-type;
-}
-
-#charizard {
-  @include putSameValueForTheGivenParameters(155px, height, width);
+  font-size: 1.4em;
 }
 
 .background-grass-type {
@@ -293,27 +336,44 @@ div ~ p {
   background-color: $fighting-type;
 }
 
-@media screen and (max-width: 440px) {
-  h1 + div:nth-child(2) {
-    @include putSameValueForTheGivenParameters(
-      center,
-      justify-content,
-      align-items
-    );
+.background-ghost-type {
+  color: white;
+  background-color: $ghost-type;
+}
+
+.background-dragon-type {
+  background-color: $dragon-type;
+}
+
+.background-ice-type {
+  background-color: $ice-type;
+}
+
+.background-rock-type {
+  background-color: $rock-type;
+}
+
+.background-steel-type {
+  background-color: $steel-type;
+}
+
+.background-dark-type {
+  color: white;
+  background-color: $dark-type;
+}
+
+@media screen and (max-width: 800px) {
+  h1 + div {
+    @include putSameValue(center, justify-content, align-items);
     width: $numberInPourcentage100;
     flex-direction: column-reverse;
   }
 
-  main {
-    height: 1100px;
-  }
-
-  main > div {
-    @include putSameValueForTheGivenParameters(auto, margin-right, margin-left);
-    width: 100%;
+  main > div:first-child {
+    @include putSameValue(auto, margin-right, margin-left);
+    min-width: 100%;
     grid-template-columns: 1fr;
     place-items: center;
-    height: 6000px;
   }
 
   .pokedex-card-info {
@@ -333,12 +393,50 @@ div ~ p {
     width: 142px;
   }
 
-  #venusaur {
-    @include putSameValueForTheGivenParameters(125px, height, width);
+  .pokedex-card-info img {
+    @include putSameValue(135px, width, height);
   }
 
   h1 {
     text-align: center;
     font-size: 1.5em;
+  }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  main > div:first-child {
+    grid-template-columns: 1fr;
+    min-width: 100%;
+  }
+
+  h1 {
+    text-align: center;
+  }
+}
+
+@keyframes pokedex_loader_balls_animation {
+  0% {
+    position: absolute;
+  }
+  50% {
+    top: 12px;
+    left: 12px;
+    position: absolute;
+    opacity: 0.5;
+  }
+  100% {
+    position: absolute;
+  }
+}
+
+@keyframes pokedex_main_loader_container_rotation {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(360deg) scale(1.3);
+  }
+  100% {
+    transform: rotate(720deg) scale(1);
   }
 }
