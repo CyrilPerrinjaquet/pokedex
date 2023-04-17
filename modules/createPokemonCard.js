@@ -78,7 +78,7 @@ export function createPokemonCard(
   // Div of the first type
   pokedexFirstTypeParagraph.appendChild(nameOfFirstType);
   pokedexWordTypeContainer.appendChild(pokedexFirstTypeParagraph);
-  
+
   // Append div of the first type and the second type if exists
   appendChildToParent(pokedexMainTypeContainer, [
     pokedexTypeIconParagraph,
@@ -138,4 +138,99 @@ function appendChildToParent(parent, child) {
   for (let index = 0; index < child.length; index++) {
     parent.appendChild(child[index]);
   }
+}
+
+
+/*****************************************************************************************/
+/*****************************************************************************************/
+/*****************************************************************************************/
+/*****************************************************************************************/
+/*****************************************************************************************/
+/*****************************************************************************************/
+
+export function createDetailsPokemonCard(
+  pokemonListElement,
+  pokemonDetails,
+  pokemonName,
+  pokemonAnimatedSprite,
+  pokedexEntry
+) {
+  const pokedexDetailsIdOfPokemon = document.createElement("div");
+  pokedexDetailsIdOfPokemon.setAttribute(
+    "class",
+    "pokedex-details-id-of-pokemon"
+  );
+
+  const IdOfPokemonParagraph = document.createElement("p");
+  const idOfPokemon = document.createTextNode(`N°${pokemonDetails.id}`);
+
+  const pokedexAnimatedSpriteContainer = document.createElement("div");
+  const containerOfAnimatedSprite = document.createElement("img");
+
+  containerOfAnimatedSprite.setAttribute("src", `${pokemonAnimatedSprite}`);
+  containerOfAnimatedSprite.setAttribute(
+    "alt",
+    `Animated image of ${pokemonName}`
+  );
+
+  const pokedexDetailsInformationContainer = document.createElement("div");
+  pokedexDetailsInformationContainer.setAttribute(
+    "class",
+    "pokedex-details-information-container"
+  );
+
+  const nameAndTypesContainer = document.createElement("div");
+  const nameOfPokemonParagraph = document.createElement("p");
+  const nameOfPokemon = document.createTextNode(`${pokemonName}`);
+
+  const pokedexTypeIconParagraph = document.createElement("p");
+  pokedexTypeIconParagraph.setAttribute("class", "pokedex-type-icon");
+  pokedexTypeIconParagraph.setAttribute(
+    "id",
+    `emoji-pokemon-${pokemonDetails.id}`
+  );
+
+  const pokedexWordTypeContainer = document.createElement("div");
+  pokedexWordTypeContainer.setAttribute("class", "pokedex-type-word-container");
+  pokedexWordTypeContainer.setAttribute(
+    "id",
+    `pokemon-type-${pokemonDetails.id}`
+  );
+  const pokedexFirstTypeParagraph = document.createElement("p");
+  const nameOfFirstType = document.createTextNode(
+    `${pokemonDetails.types[0].type.name}`
+  );
+
+  const pokedexDescriptionContainer = document.createElement("div");
+  const pokedexDescriptionParagraph = document.createElement("p");
+
+  const descriptionOfPokemon = document.createTextNode(`${pokedexEntry}`);
+
+  pokedexDescriptionParagraph.appendChild(descriptionOfPokemon);
+  pokedexDescriptionContainer.appendChild(pokedexDescriptionParagraph);
+  pokedexFirstTypeParagraph.appendChild(nameOfFirstType);
+  pokedexWordTypeContainer.appendChild(pokedexFirstTypeParagraph);
+
+  nameOfPokemonParagraph.appendChild(nameOfPokemon);
+  nameAndTypesContainer.appendChild(nameOfPokemonParagraph);
+  nameAndTypesContainer.appendChild(pokedexTypeIconParagraph);
+  nameAndTypesContainer.appendChild(pokedexWordTypeContainer);
+
+  pokedexDetailsInformationContainer.appendChild(nameAndTypesContainer);
+  pokedexDetailsInformationContainer.appendChild(pokedexDescriptionContainer);
+
+  pokedexAnimatedSpriteContainer.appendChild(containerOfAnimatedSprite);
+  IdOfPokemonParagraph.appendChild(idOfPokemon);
+  pokedexDetailsIdOfPokemon.appendChild(IdOfPokemonParagraph);
+
+  pokemonListElement.appendChild(pokedexDetailsIdOfPokemon);
+  pokemonListElement.appendChild(pokedexAnimatedSpriteContainer);
+  pokemonListElement.appendChild(pokedexDetailsInformationContainer);
+
+  pokemonCardStyle.applySecondPokemonTypeIfExists(pokemonDetails);
+  pokemonCardStyle.applyPokemonTypes(
+    pokemonDetails.types[0].type.name,
+    "pokemon-type-",
+    pokemonDetails.id
+  );
 }

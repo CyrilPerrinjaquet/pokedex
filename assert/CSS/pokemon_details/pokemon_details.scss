@@ -32,7 +32,8 @@ main > div:first-child {
 }
 
 div > img {
-    @include putSameValue(140px, width, height)
+    @include putSameValue(140px, width, height);
+    image-rendering: pixelated;
 }
 
 .pokedex-details-id-of-pokemon {
@@ -43,9 +44,10 @@ div > img {
   align-items: center;
   place-self: start;
   border-radius: 50%;
+  border: 2px solid black;
 }
 
-.pokedex-details-name-and-types-container > div:first-child {
+.pokedex-details-information-container > div:first-child {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -54,12 +56,26 @@ div > img {
   width: 100%;
 }
 
-.pokedex-details-name-and-types-container > div:last-child {
+.pokedex-type-word-container {
+  @include putSameValue(6px, padding, border-radius);
+  text-align: center;
+  font: {
+    size: 0.8em;
+    weight: bold;
+  }
+  background-color: $aqua-type;
+}
+
+.pokedex-type-word-container > p {
+  margin: 0;
+}
+
+.pokedex-details-information-container > div:last-child {
   display: flex;
   justify-content: flex-start;
 }
 
-.pokedex-details-name-and-types-container {
+.pokedex-details-information-container {
   display: flex;
   flex-direction: column;
   text-align: center;
