@@ -1,4 +1,5 @@
-/* import * as pokeAPI from './pokeAPI.js' */
+import * as pokeAPI from "./modules/pokeAPI.js";
+
 
 /* import "nom de la fonction" as quelquechose from './createPokemonCard.js'*/
 
