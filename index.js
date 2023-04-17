@@ -4,7 +4,7 @@
  ********
  */
 
-import { constructTheCardWithAllInformation } from "./modules/createPokemonCard.js";
+import { createPokemonCard } from "./modules/createPokemonCard.js";
 import * as pokeAPI from "./modules/pokeAPI.js";
 
 /*
@@ -46,9 +46,9 @@ function getSetOfPokemons() {
 
 function loadMorePokemons() {
   addCSSAnimationClassToElement();
-  pokeAPI.getNextSetOfPokemons(nextSetOfPokemons).then((result) =>
-    createNewPokemonCardsFromJSON(result)
-  );
+  pokeAPI
+    .getNextSetOfPokemons(nextSetOfPokemons)
+    .then((result) => createNewPokemonCardsFromJSON(result));
 }
 
 function addCSSAnimationClassToElement() {
@@ -75,7 +75,7 @@ async function createNewPokemonCardsFromJSON(pokemonsJSON) {
 
 function createPokemonCards() {
   currentPokemons.forEach((pokemon) =>
-    constructTheCardWithAllInformation(
+    createPokemonCard(
       pokedexListElement,
       pokemon,
       pokemon.name,
@@ -101,7 +101,9 @@ async function searchForAPokemon() {
   pokedexListElement.innerHTML = "";
   currentPokemons = [];
   addCSSAnimationClassToElement();
-  const pokemonDetails = await pokeAPI.getPokemon(searchElement.value.toLowerCase());
+  const pokemonDetails = await pokeAPI.getPokemon(
+    searchElement.value.toLowerCase()
+  );
 
   currentPokemons.push(pokemonDetails);
   loaderElement.classList.remove("pokedex-loader-animation");

@@ -1,24 +1,108 @@
 import * as pokemonCardStyle from "./stylePokemonCard.js";
 
-export function constructTheCardWithAllInformation(
+export function createPokemonCard(
   pokemonListElement,
   pokemonDetails,
   pokemonName,
   pokemonImage
 ) {
-  pokemonListElement.innerHTML += `<div class="pokedex-card-container" id="${
-    pokemonDetails.id
-  }"><a href="pokemon_details?pokemon=${pokemonName}"><div class="pokedex-card-info"><div><p>N°${
-    pokemonDetails.id
-  }</p></div><p>${pokemonName}</p><img src="${pokemonImage}" alt="pokemon-image of ${pokemonName}"/><div><p class="pokedex-type-icon" id="emoji-pokemon-${
-    pokemonDetails.id
-  }"></p><div class="pokedex-type-word-container" id="pokemon-type-${
-    pokemonDetails.id
-  }"><p>${
-    pokemonDetails.types[0].type.name
-  }</p></div>${returnTheContainersSecondType(
-    pokemonDetails
-  )}</div></div></div>`;
+  // ! Creating elements and attributes
+
+  // 1. Pokemon card container
+  const pokedexCardContainer = document.createElement("div");
+
+  pokedexCardContainer.setAttribute("class", "pokedex-card-container");
+  pokedexCardContainer.setAttribute("id", `${pokemonDetails.id}`);
+
+  // 2. Pokemon link to the details
+  const pokedexLinkToDetails = document.createElement("a");
+
+  pokedexLinkToDetails.setAttribute(
+    "href",
+    `pokemon_details?pokemon=${pokemonName}`
+  );
+
+  // 3. Pokemon card info
+  const pokedexCardInfo = document.createElement("div");
+
+  pokedexCardInfo.setAttribute("class", "pokedex-card-info");
+
+  // 4. Div for id of pokemon
+  const pokedexIdDivOfPokemon = document.createElement("div");
+
+  // 5. Paragraph containing id of pokemon
+  const IdOfPokemonParagraph = document.createElement("p");
+  const idOfPokemon = document.createTextNode(`N°${pokemonDetails.id}`);
+
+  // 6. Paragraph containing name of pokemon
+  const pokemonParagraphName = document.createElement("p");
+  const nameOfPokemon = document.createTextNode(`${pokemonName}`);
+
+  // 7. Image of pokemon
+  const imageOfPokemon = document.createElement("img");
+
+  imageOfPokemon.setAttribute("src", `${pokemonImage}`);
+  imageOfPokemon.setAttribute("alt", `pokemon image of ${pokemonName}`);
+
+  // 8. Pokemon card type(s) container
+  const pokedexMainTypeContainer = document.createElement("div");
+
+  // 9. Paragraph containing icon related to type name of pokemon
+  const pokedexTypeIconParagraph = document.createElement("p");
+
+  pokedexTypeIconParagraph.setAttribute("class", "pokedex-type-icon");
+  pokedexTypeIconParagraph.setAttribute(
+    "id",
+    `emoji-pokemon-${pokemonDetails.id}`
+  );
+
+  // 10. Pokemon card word of first type container
+  const pokedexWordTypeContainer = document.createElement("div");
+
+  pokedexWordTypeContainer.setAttribute("class", "pokedex-type-word-container");
+  pokedexWordTypeContainer.setAttribute(
+    "id",
+    `pokemon-type-${pokemonDetails.id}`
+  );
+
+  // 11. Paragraph containing the name of the first type
+  const pokedexFirstTypeParagraph = document.createElement("p");
+
+  // 12. Name of the first type
+  const nameOfFirstType = document.createTextNode(
+    `${pokemonDetails.types[0].type.name}`
+  );
+
+  // ! Append Childs
+
+  // Div of the first type
+  pokedexFirstTypeParagraph.appendChild(nameOfFirstType);
+  pokedexWordTypeContainer.appendChild(pokedexFirstTypeParagraph);
+  
+  // Append div of the first type and the second type if exists
+  appendChildToParent(pokedexMainTypeContainer, [
+    pokedexTypeIconParagraph,
+    pokedexWordTypeContainer,
+    returnTheContainersSecondType(pokemonDetails),
+  ]);
+
+  // Pokemon div of the id (N°)
+  pokemonParagraphName.appendChild(nameOfPokemon);
+  IdOfPokemonParagraph.appendChild(idOfPokemon);
+  pokedexIdDivOfPokemon.appendChild(IdOfPokemonParagraph);
+
+  // Append childs to the Pokemon Card info div
+  appendChildToParent(pokedexCardInfo, [
+    pokedexIdDivOfPokemon,
+    pokemonParagraphName,
+    imageOfPokemon,
+    pokedexMainTypeContainer,
+  ]);
+  pokedexLinkToDetails.appendChild(pokedexCardInfo);
+  pokedexCardContainer.appendChild(pokedexLinkToDetails);
+  pokemonListElement.appendChild(pokedexCardContainer);
+
+  // Applying styles for the container of the types
   pokemonCardStyle.applySecondPokemonTypeIfExists(pokemonDetails);
   pokemonCardStyle.applyPokemonTypes(
     pokemonDetails.types[0].type.name,
@@ -28,11 +112,30 @@ export function constructTheCardWithAllInformation(
 }
 
 function returnTheContainersSecondType(result) {
-  return result.types[1] === undefined
-    ? ""
-    : '<div class="pokedex-type-word-container" id="second-pokemon-type-' +
-        result.id +
-        '"><p>' +
-        result.types[1].type.name +
-        "</p></div>";
+  if (result.types[1] === undefined) {
+    return document.createTextNode("");
+  } else {
+    const pokedexWordTypeContainer = document.createElement("div");
+    const pokedexFirstTypeParagraph = document.createElement("p");
+    const textOfFirstType = document.createTextNode(
+      `${result.types[1].type.name}`
+    );
+    pokedexWordTypeContainer.setAttribute(
+      "id",
+      `second-pokemon-type-${result.id}`
+    );
+    pokedexWordTypeContainer.setAttribute(
+      "class",
+      "pokedex-type-word-container"
+    );
+    pokedexFirstTypeParagraph.appendChild(textOfFirstType);
+    pokedexWordTypeContainer.appendChild(pokedexFirstTypeParagraph);
+    return pokedexWordTypeContainer;
+  }
+}
+
+function appendChildToParent(parent, child) {
+  for (let index = 0; index < child.length; index++) {
+    parent.appendChild(child[index]);
+  }
 }
