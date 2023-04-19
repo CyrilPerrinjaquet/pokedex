@@ -17,8 +17,8 @@ main {
 }
 
 main > div {
-  @include box-shadow(0 0.5rem #dfd9d9);
-  @include border(1px, black);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   @include putSameValue(670px, width, max-width);
   height: 200px;
   place-items: center;
@@ -32,26 +32,60 @@ main > div:first-child {
 }
 
 div > img {
-    @include putSameValue(140px, width, height);
-    image-rendering: pixelated;
+  min-height: 130px;
+  min-width: 130px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  margin-bottom: 15px;
+  max-width: 250px;
+  max-height: 18vh;
+}
+
+div > p:first-child {
+  font-weight: bold;
+}
+
+p + div {
+  margin-left: 50px;
+}
+
+body > div {
+  width: min-content;
+  position: absolute;
+  left: 30px;
+  top: 10px;
+}
+
+button {
+  @include putSameValue(10px, padding, border-radius);
+  @include box-shadow($lightGrey 0 10px 10px);
+  background-color: white;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+.pokedex-type-icon {
+  font-size: 1.4em;
+  margin: 0;
 }
 
 .pokedex-details-id-of-pokemon {
   @include putSameValue(80px, width, height);
   @include putSameValue(20px, margin-left, margin-top);
+  @include putSameValue(center, justify-content, align-items);
   display: flex;
-  justify-content: center;
-  align-items: center;
   place-self: start;
   border-radius: 50%;
-  border: 2px solid black;
+  border: 1.5px solid black;
 }
 
 .pokedex-details-information-container > div:first-child {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   padding-right: 10px;
   width: 100%;
 }
@@ -63,11 +97,88 @@ div > img {
     size: 0.8em;
     weight: bold;
   }
-  background-color: $aqua-type;
+  background-color: $fire-type;
 }
 
 .pokedex-type-word-container > p {
   margin: 0;
+}
+
+p::first-letter {
+  text-transform: capitalize;
+}
+
+.background-grass-type {
+  background-color: $grass-type;
+}
+
+.background-water-type {
+  background-color: $aqua-type;
+}
+.background-fire-type {
+  background-color: $fire-type;
+}
+
+.background-normal-type {
+  background-color: $normal-type;
+}
+
+.background-poison-type {
+  background-color: $poison-type;
+}
+
+.background-flying-type {
+  background-color: $flying-type;
+}
+
+.background-bug-type {
+  background-color: $bug-type;
+}
+
+.background-fairy-type {
+  background-color: $fairy-type;
+}
+
+.background-psychic-type {
+  background-color: $psychic-type;
+}
+
+.background-electric-type {
+  background-color: $electric-type;
+}
+
+.background-ground-type {
+  background-color: $ground-type;
+}
+
+.background-fighting-type {
+  background-color: $fighting-type;
+}
+
+.background-ghost-type {
+  color: white;
+  background-color: $ghost-type;
+}
+
+.background-dragon-type {
+  background-color: $dragon-type;
+}
+
+.background-ice-type {
+  background-color: $ice-type;
+}
+
+.background-rock-type {
+  background-color: $rock-type;
+}
+
+.background-steel-type {
+  background-color: $steel-type;
+}
+
+.background-dark-type {
+  color: white;
+  background-color: $dark-type;
 }
 
 .pokedex-details-information-container > div:last-child {

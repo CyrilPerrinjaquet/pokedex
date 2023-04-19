@@ -4,7 +4,7 @@
  ********
  */
 
-import { createPokemonCard } from "./modules/createPokemonCard.js";
+import { createPokemonCard } from "./modules/createPokemonCards.js";
 import * as pokeAPI from "./modules/pokeAPI.js";
 
 /*
@@ -23,6 +23,10 @@ const searchElement = document.getElementById("search");
 
 const loaderElement = document.getElementById("loader");
 
+const scrollTopAncorElement = document.getElementById(
+  "pokedex-scroll-to-top-anchor"
+);
+
 /*
  ***********
  *VARIABLES*
@@ -31,7 +35,6 @@ const loaderElement = document.getElementById("loader");
 
 let nextSetOfPokemons = "";
 let currentPokemons = [];
-let currentPokemonDetail = [];
 /*
  *******************
  *POKEDEX FUNCTIONS*
@@ -39,24 +42,25 @@ let currentPokemonDetail = [];
  */
 
 function getSetOfPokemons() {
-  pokeAPI.getPokemons().then((result) => {
-    createNewPokemonCardsFromJSON(result);
-  });
+  pokeAPI
+    .getPokemons()
+    .then((result) => createNewPokemonCardsFromJSON(result, false));
 }
 
 function loadMorePokemons() {
   addCSSAnimationClassToElement();
   pokeAPI
     .getNextSetOfPokemons(nextSetOfPokemons)
-    .then((result) => createNewPokemonCardsFromJSON(result));
+    .then((result) => createNewPokemonCardsFromJSON(result, true));
 }
 
 function addCSSAnimationClassToElement() {
   loaderElement.classList.add("pokedex-loader-animation");
   pokedexLoadMoreButtonElement.style.display = "none";
+  scrollTopAncorElement.style.display = "none";
 }
 
-async function createNewPokemonCardsFromJSON(pokemonsJSON) {
+async function createNewPokemonCardsFromJSON(pokemonsJSON, home) {
   currentPokemons = [];
   nextSetOfPokemons = pokemonsJSON.next;
   addCSSAnimationClassToElement();
@@ -71,6 +75,19 @@ async function createNewPokemonCardsFromJSON(pokemonsJSON) {
   }
   createPokemonCards();
   pokedexLoadMoreButtonElement.style.display = "block";
+  scrollTopAncorElement.style.display = "block";
+  
+  if (home) {
+    setTimeout(
+      () =>
+        window.scrollTo({
+          left: 0,
+          top: Math.floor(document.body.scrollHeight - 1300),
+          behavior: "smooth",
+        }),
+      200
+    );
+  }
 }
 
 function createPokemonCards() {
@@ -84,13 +101,6 @@ function createPokemonCards() {
   );
 }
 
-/* function createPokemonDetails(idOfPokemon, idOfHTMLElement) {
-  currentPokemonDetail = [];
-  const pokemon = pokeAPI.getPokemon(idOfPokemon);
-  currentPokemonDetail.push(pokemon);
-  createPokemonDetailCard(idOfHTMLElement);
-} */
-
 /*
  *****************
  *SEARCH FUNCTION*
@@ -101,40 +111,23 @@ async function searchForAPokemon() {
   pokedexListElement.innerHTML = "";
   currentPokemons = [];
   addCSSAnimationClassToElement();
-  const pokemonDetails = await pokeAPI.getPokemon(
-    searchElement.value.toLowerCase()
-  );
+  if (searchElement.value.toLowerCase() != "".trim()) {
+    const pokemonDetails = await pokeAPI.getPokemon(
+      searchElement.value.toLowerCase()
+    );
+    currentPokemons.push(pokemonDetails);
+    loaderElement.classList.remove("pokedex-loader-animation");
 
-  currentPokemons.push(pokemonDetails);
-  loaderElement.classList.remove("pokedex-loader-animation");
+    createPokemonCards();
 
-  createPokemonCards();
+    searchElement.value = "".trim();
+  } else {
+    getSetOfPokemons();
+  }
+
   if (currentPokemons.length === 1) {
     pokedexLoadMoreButtonElement.style.display = "none";
   }
-}
-
-/*
- *************************************
- *CONSTRUCTION OF THE CARDS FUNCTIONS*
- *************************************
- */
-
-// For details of the pokemon
-function constructDetailCard(
-  idOfElement,
-  pokemonDetails,
-  pokemonName,
-  pokemonImage,
-  containerOfTheSecondDiv
-) {
-  idOfElement.innerHTML += `<div class="pokedex-details-id-of-pokemon"><p>N°${pokemonDetails.id}</p></div><div><img src="${pokemonImage}" alt="animated image of ${pokemonName}" style="image-rendering: pixelated;" /></div><div class="pokedex-details-name-and-types-container"><div><p>${pokemonName}</p><p class="pokedex-type-icon" id="emoji-pokemon-${pokemonDetails.id}"></p><div class="pokedex-type-word-container" id="pokemon-type-${pokemonDetails.id}"><p>${pokemonDetails.types[0].type.name}</p></div><div><p>${containerOfTheSecondDiv}</p></div></div><div><p>${pokemonDetails.flavor_text_entries.flavor_text}</p></div></div>`;
-  applySecondPokemonTypeIfExists(pokemonDetails);
-  applyPokemonTypes(
-    pokemonDetails.types[0].type.name,
-    "pokemon-type-",
-    pokemonDetails.id
-  );
 }
 
 /*
@@ -151,6 +144,12 @@ searchElement.addEventListener("keydown", (event) => {
 });
 
 pokedexLoadMoreButtonElement.onclick = loadMorePokemons;
+
+scrollTopAncorElement.onclick = window.scrollTo({
+  top: 0,
+  left: 0,
+  behavior: "smooth",
+});
 
 /*
  ***********************

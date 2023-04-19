@@ -5,6 +5,7 @@ body {
   @include putSameValue(0, padding, margin);
   @include putSameValue(100%, height, width);
   background-color: #f8fafc;
+  scroll-behavior: smooth;
 }
 
 header > div {
@@ -66,6 +67,7 @@ main > div:last-child {
 p {
   margin: 0;
 
+  font-weight: bold;
   &::first-letter {
     text-transform: capitalize;
   }
@@ -95,49 +97,59 @@ a {
   text-decoration: none;
 }
 
+i {
+  font-size: 1em;
+}
+
+a[href^="#header"] {
+  margin-left: 20px;
+}
+
+a > button {
+  border-radius: 50%;
+}
 
 .pokedex-loader-animation {
-
   .pokedex-loader-main-container {
     animation: pokedex_main_loader_container_rotation 1.5s infinite;
     width: 44px;
     height: 44px;
   }
-  
+
   .pokedex-loader-main-container > div {
     width: 44px;
     height: 44px;
     position: absolute;
   }
-  
+
   div > div:only-child {
     width: 20px;
     height: 20px;
     border-radius: 50%;
   }
-  
+
   .pokedex-loader-ball {
     animation: pokedex_loader_balls_animation 1.5s infinite ease;
   }
-  
+
   #pokedex-loader-ball-one {
     background-color: #cb2025;
     top: 0;
     left: 0;
   }
-  
+
   #pokedex-loader-ball-two {
     background-color: #f8b334;
     top: 0;
     left: 24px;
   }
-  
+
   #pokedex-loader-ball-three {
     background-color: #00a096;
     top: 24px;
     left: 0;
   }
-  
+
   #pokedex-loader-ball-four {
     background-color: #97bf0d;
     top: 24px;
@@ -177,7 +189,8 @@ a {
 
 .pokedex-card-info {
   @include putSameValue(300px, width, max-width);
-  @include box-shadow(0 0.5rem #dfd9d9);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   display: grid;
   grid-template-columns: [first] 30% [second] 45% [third] 25%;
   grid-template-rows: [row1-start] 80% [row2-start] 20%;
@@ -290,6 +303,11 @@ a {
 .background-dark-type {
   color: white;
   background-color: $dark-type;
+}
+
+.pokedex-buttons-container {
+  display: flex;
+  flex-direction: row;
 }
 
 @media screen and (max-width: 800px) {
