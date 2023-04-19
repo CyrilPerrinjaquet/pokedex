@@ -135,7 +135,9 @@ function returnTheContainersSecondType(
   detailsView,
   pokedexIconElement
 ) {
-  detailsView ? (pokedexIconElement.style.padding = "0px 0px 0px 30px") : "";
+  detailsView /* With one type */
+    ? (pokedexIconElement.style.padding = "0px 20px 0px 50px")
+    : "";
   if (result.types[1] === undefined) {
     return document.createTextNode("");
   } else {
@@ -154,7 +156,9 @@ function returnTheContainersSecondType(
     );
     pokedexFirstTypeParagraph.appendChild(textOfFirstType);
     pokedexWordTypeContainer.appendChild(pokedexFirstTypeParagraph);
-    detailsView ? (pokedexIconElement.style.padding = "0px 25px 5px 0px") : "";
+    detailsView /* With two types */
+      ? (pokedexIconElement.style.padding = "0px 30px 5px 0px")
+      : "";
     return pokedexWordTypeContainer;
   }
 }
@@ -164,7 +168,6 @@ function appendChildToParent(parent, child) {
     parent.appendChild(child[index]);
   }
 }
-
 
 export function createDetailsPokemonCard(
   pokemonListElement,
@@ -268,4 +271,15 @@ export function createDetailsPokemonCard(
     "pokemon-type-",
     pokemonDetails.id
   );
+}
+
+function createStatsCard(
+  pokemonListElement,
+  pokemonDetails,
+  pokemonName,
+  pokemonAnimatedSprite,
+  pokemonImage,
+  pokedexEntry
+) {
+  console.log();
 }

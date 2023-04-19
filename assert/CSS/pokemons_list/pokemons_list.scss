@@ -58,9 +58,10 @@ main > div:first-child {
 
 main > div:last-child {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+  margin-top: 15px;
   height: 100px;
 }
 
@@ -187,10 +188,19 @@ a > button {
   }
 }
 
-.pokedex-card-info {
-  @include putSameValue(300px, width, max-width);
+.pokedex-card-container {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  &:hover {
+    .pokedex-card-info img {
+      margin-bottom: 20px;
+      transform: perspective(120cm) translateZ(800px);
+    }
+  }
+}
+
+.pokedex-card-info {
+  @include putSameValue(300px, width, max-width);
   display: grid;
   grid-template-columns: [first] 30% [second] 45% [third] 25%;
   grid-template-rows: [row1-start] 80% [row2-start] 20%;
@@ -198,7 +208,9 @@ a > button {
   border-radius: 8px;
   height: $px150;
   place-items: center;
+
   &:hover {
+    box-shadow: 0 0 0 1px #52525b;
     cursor: pointer;
   }
 }
@@ -206,10 +218,6 @@ a > button {
 .pokedex-card-info img {
   @include putSameValue(140px, width, height);
   image-rendering: pixelated;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .pokedex-type-word-container {

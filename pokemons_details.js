@@ -33,7 +33,8 @@ function createPokemonCards(pokedexEntryFromJSONResponse) {
         "front_default"
       ],
       pokedexEntryFromJSONResponse
-    )
+    ), 
+    /* createStatsCards(), createEvolutionCards() */
   );
 }
 

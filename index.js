@@ -44,14 +44,14 @@ let currentPokemons = [];
 function getSetOfPokemons() {
   pokeAPI
     .getPokemons()
-    .then((result) => createNewPokemonCardsFromJSON(result, false));
+    .then((result) => createNewPokemonCardsFromJSON(result));
 }
 
 function loadMorePokemons() {
   addCSSAnimationClassToElement();
   pokeAPI
     .getNextSetOfPokemons(nextSetOfPokemons)
-    .then((result) => createNewPokemonCardsFromJSON(result, true));
+    .then((result) => createNewPokemonCardsFromJSON(result));
 }
 
 function addCSSAnimationClassToElement() {
@@ -60,7 +60,7 @@ function addCSSAnimationClassToElement() {
   scrollTopAncorElement.style.display = "none";
 }
 
-async function createNewPokemonCardsFromJSON(pokemonsJSON, home) {
+async function createNewPokemonCardsFromJSON(pokemonsJSON) {
   currentPokemons = [];
   nextSetOfPokemons = pokemonsJSON.next;
   addCSSAnimationClassToElement();
@@ -76,18 +76,27 @@ async function createNewPokemonCardsFromJSON(pokemonsJSON, home) {
   createPokemonCards();
   pokedexLoadMoreButtonElement.style.display = "block";
   scrollTopAncorElement.style.display = "block";
-  
-  if (home) {
-    setTimeout(
-      () =>
-        window.scrollTo({
-          left: 0,
-          top: Math.floor(document.body.scrollHeight - 1300),
-          behavior: "smooth",
-        }),
-      200
-    );
-  }
+
+  if (window.innerWidth > 1000) {
+    setTimeout(() => {
+      window.scrollTo({
+        left: 0,
+        top: document.body.scrollHeight - 1310,
+        behavior: "smooth",
+      }),
+        200;
+    });
+    return;
+  } 
+    setTimeout(() => {
+      window.scrollTo({
+        left: 0,
+        top: document.body.scrollHeight - 3560,
+        behavior: "smooth",
+      }),
+        200;
+    });
+    return;
 }
 
 function createPokemonCards() {
