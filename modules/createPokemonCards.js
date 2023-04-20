@@ -135,9 +135,9 @@ function returnTheContainersSecondType(
   detailsView,
   pokedexIconElement
 ) {
-  detailsView /* With one type */
-    ? (pokedexIconElement.style.padding = "0px 20px 0px 50px")
-    : "";
+  if (window.innerWidth > 1000 && detailsView) {
+    pokedexIconElement.style.padding = "0px 0px 0px 40px";
+  }
   if (result.types[1] === undefined) {
     return document.createTextNode("");
   } else {
