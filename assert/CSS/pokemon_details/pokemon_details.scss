@@ -31,14 +31,17 @@ main > div:first-child {
   grid-template-columns: 18% 32% 50%;
 }
 
+main > div:last-child {
+  height: 130px;
+}
+
 div > img {
-  min-height: 130px;
-  min-width: 130px;
+  height: 160px;
   object-fit: contain;
   image-rendering: pixelated;
   margin-bottom: 15px;
-  max-width: 250px;
-  max-height: 18vh;
+  max-width: 150px;
+  max-height: 20vh;
 }
 
 div > p:first-child {
@@ -190,6 +193,38 @@ p::first-letter {
   flex-direction: column;
   text-align: center;
   width: 90%;
+}
+
+#pokedex-card-stats {
+  height: auto;
+  max-height: 300px;
+}
+
+.pokedex-stats-main-container {
+  width: 100%;
+}
+
+.pokedex-stats-main-container > div {
+  display: grid;
+  grid-template-rows: 50px;
+  grid-template-columns: 20% 75% 5%;
+  width: 100%;
+}
+
+.pokedex-progress-bar-container {
+  margin-right: 20px;
+}
+
+.pokedex-progress-bar-container > div {
+  margin: 10px 0px;
+  border-radius: 6px;
+  height: 30px;
+  max-width: 100%;
+  background-color: white;
+}
+
+.pokedex-stat-name {
+  margin-left: 10px;
 }
 
 @media screen and (max-width: 800px) {
