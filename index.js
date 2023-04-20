@@ -120,10 +120,14 @@ async function searchForAPokemon() {
   pokedexListElement.innerHTML = "";
   currentPokemons = [];
   addCSSAnimationClassToElement();
+
   if (searchElement.value.toLowerCase() != "".trim()) {
     const pokemonDetails = await pokeAPI.getPokemon(
       searchElement.value.toLowerCase()
     );
+    if (!pokemonDetails) {
+      alert("The Pokemon doesn't exist")
+    } 
     currentPokemons.push(pokemonDetails);
     loaderElement.classList.remove("pokedex-loader-animation");
 

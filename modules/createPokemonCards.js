@@ -170,13 +170,14 @@ function appendChildToParent(parent, child) {
 }
 
 export function createDetailsPokemonCard(
-  pokemonListElement,
+  pokedexIdOfContainerElement,
   pokemonDetails,
   pokemonName,
   pokemonAnimatedSprite,
   pokemonImage,
   pokedexEntry
 ) {
+
   const pokedexDetailsIdOfPokemon = document.createElement("div");
   pokedexDetailsIdOfPokemon.setAttribute(
     "class",
@@ -187,17 +188,14 @@ export function createDetailsPokemonCard(
   const idOfPokemon = document.createTextNode(`N°${pokemonDetails.id}`);
 
   const pokedexAnimatedSpriteContainer = document.createElement("div");
-  const containerOfAnimatedSprite = document.createElement("img");
+  const animatedSpriteElement = document.createElement("img");
 
-  containerOfAnimatedSprite.setAttribute(
+  animatedSpriteElement.setAttribute(
     "src",
     `${pokemonAnimatedSprite ?? pokemonImage}`
   );
 
-  containerOfAnimatedSprite.setAttribute(
-    "alt",
-    `Animated image of ${pokemonName}`
-  );
+  animatedSpriteElement.setAttribute("alt", `Animated image of ${pokemonName}`);
 
   const pokedexDetailsInformationContainer = document.createElement("div");
   pokedexDetailsInformationContainer.setAttribute(
@@ -255,11 +253,11 @@ export function createDetailsPokemonCard(
     pokedexDescriptionContainer,
   ]);
 
-  pokedexAnimatedSpriteContainer.appendChild(containerOfAnimatedSprite);
+  pokedexAnimatedSpriteContainer.appendChild(animatedSpriteElement);
   IdOfPokemonParagraph.appendChild(idOfPokemon);
   pokedexDetailsIdOfPokemon.appendChild(IdOfPokemonParagraph);
 
-  appendChildToParent(pokemonListElement, [
+  appendChildToParent(pokedexIdOfContainerElement, [
     pokedexDetailsIdOfPokemon,
     pokedexAnimatedSpriteContainer,
     pokedexDetailsInformationContainer,
@@ -273,13 +271,62 @@ export function createDetailsPokemonCard(
   );
 }
 
-function createStatsCard(
-  pokemonListElement,
-  pokemonDetails,
-  pokemonName,
-  pokemonAnimatedSprite,
-  pokemonImage,
-  pokedexEntry
-) {
-  console.log();
+export function createStatsCard(pokedexIdOfContainerElement, pokemonDetails) {
+  const pokedexStatsMainContainer = document.createElement("div");
+  pokedexStatsMainContainer.setAttribute(
+    "class",
+    "pokedex-stats-main-container"
+  );
+
+  pokemonDetails.stats.forEach((stat) => {
+    const pokedexStatsRowContainer = document.createElement("div");
+
+    const pokemonNameOfStatContainer = document.createElement("div");
+    const pokemonStatNameParagraphElement = document.createElement("p");
+    pokemonStatNameParagraphElement.setAttribute("class", "pokedex-stat-name");
+    const nameOfPokemonStatElement = document.createTextNode(
+      `${stat.stat.name}`
+    );
+
+    const pokemonProgessBarContainer = document.createElement("div");
+    pokemonProgessBarContainer.setAttribute(
+      "class",
+      "pokedex-progress-bar-container"
+    );
+
+    const pokemonProgessBarDiv = document.createElement("div");
+    pokemonProgessBarDiv.setAttribute("class", "pokedex-progress-bar");
+    const pokemonNumberOfStatContainer = document.createElement("div");
+    const pokemonNumberOfStatParapgraphElement = document.createElement("p");
+    const numberOfStat = document.createTextNode(`${stat.base_stat}`);
+
+    pokemonNumberOfStatParapgraphElement.appendChild(numberOfStat);
+    pokemonNumberOfStatContainer.appendChild(
+      pokemonNumberOfStatParapgraphElement
+    );
+
+    pokemonProgessBarContainer.appendChild(pokemonProgessBarDiv);
+
+    pokemonStatNameParagraphElement.appendChild(nameOfPokemonStatElement);
+    pokemonNameOfStatContainer.appendChild(pokemonStatNameParagraphElement);
+
+    pokedexStatsRowContainer.appendChild(pokemonNameOfStatContainer);
+    pokedexStatsRowContainer.appendChild(pokemonProgessBarContainer);
+    pokedexStatsRowContainer.appendChild(pokemonNumberOfStatContainer);
+
+    pokedexStatsMainContainer.appendChild(pokedexStatsRowContainer);
+
+    pokedexIdOfContainerElement.appendChild(pokedexStatsMainContainer);
+
+    if (stat.base_stat >= 220) {
+      pokemonProgessBarDiv.style.width = "100%";
+      return;
+    }
+    if (stat.base_stat / 2 >= 100) {
+      pokemonProgessBarDiv.style.width = `${stat.base_stat / 3}%`;
+      return;
+    }
+
+    pokemonProgessBarDiv.style.width = `${stat.base_stat / 2}%`;
+  });
 }

@@ -8,7 +8,5 @@ export async function fetchAPI(URL, options) {
   const response = await fetch(URL, options);
   if (response.ok) {
     return response.json();
-  } else {
-    alert("ERROR");
-  }
+  } 
 }
