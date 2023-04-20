@@ -43,9 +43,3 @@ $lightGrey: #ededed;
   font-family: $font-archivo;
   scroll-behavior: smooth;
 }
-
-html, body {
-  @include putSameValue(100%, width, height);
-  @include putSameValue(0, padding, margin);
-  background-color: #f8fafc;
-}

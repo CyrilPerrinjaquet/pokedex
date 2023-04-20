@@ -1,6 +1,12 @@
 @use "../loader.scss";
 @import "../declaration.scss";
 
+html, body {
+  @include putSameValue(100%, width, height);
+  @include putSameValue(0, padding, margin);
+  background-color: #f8fafc;
+}
+
 main {
   @include putSameValue(100%, height, width);
   @include putSameValue(auto, margin-right, margin-left);
