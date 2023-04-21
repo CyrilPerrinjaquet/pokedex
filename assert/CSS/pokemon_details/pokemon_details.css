@@ -68,7 +68,8 @@
   scroll-behavior: smooth;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   padding: 0;
@@ -77,8 +78,8 @@ html, body {
 }
 
 main {
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 90%;
   margin-right: auto;
   margin-left: auto;
   display: grid;
@@ -91,19 +92,21 @@ main > div {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   width: 670px;
   max-width: 670px;
-  height: 200px;
   place-items: center;
   border-radius: 8px;
   background-color: #ededed;
 }
 
 main > div:first-child {
+  height: 90%;
+  align-self: end;
   display: grid;
   grid-template-columns: 18% 32% 50%;
 }
 
 main > div:last-child {
-  height: 130px;
+  align-self: start;
+  height: 300px;
 }
 
 div > img {
@@ -358,6 +361,11 @@ p::first-letter {
   }
   .pokedex-details-id-of-pokemon {
     margin-left: 5px;
+  }
+}
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  main {
+    grid-row-gap: 0px;
   }
 }
 
