@@ -9,23 +9,29 @@ const pokedexDetailsCardElement = document.getElementById(
 );
 
 const loaderElement = document.getElementById("loader");
-console.log(loaderElement);
+
+const pokedexPreviousButtonElement = document.getElementById(
+  "pokedex-previous-button"
+);
+const pokedexNextButtonElement = document.getElementById("pokedex-next-button");
 
 const pokedexStatsCardElement = document.getElementById("pokedex-card-stats");
 
 const searchParams = new URL(document.location).searchParams;
-const pokemon = searchParams.get("pokemon");
 
+let pokemon = searchParams.get("pokemon");
+let previousPokemon = parseInt(pokemon) - 1;
+let nextPokemon = parseInt(pokemon) + 1;
 let currentPokemon = [];
 
-function createPokemonCard() {
+function createPokemonCard(pokemon) {
   pokeAPI
     .getPokemonSpecies(pokemon)
     .then((resultJSON) => retrievePokedexEntry(resultJSON));
 }
 
 async function retrievePokedexEntry(JSONResponse) {
-  // CHANGER NOM DE FONCTION
+  //TODO CHANGER NOM DE FONCTION
   loaderElement.classList.add("pokedex-loader-animation");
   const pokemonDetails = await pokeAPI.getPokemon(pokemon);
   currentPokemon.push(pokemonDetails);
@@ -43,6 +49,7 @@ function createPokemonCards(pokedexEntryFromJSONResponse) {
         "front_default"
       ],
       pokemon["sprites"]["front_default"],
+      pokemon["sprites"]["other"]["official-artwork"]["front_default"],
       pokedexEntryFromJSONResponse
     );
     createStatsCard(pokedexStatsCardElement, pokemon);
@@ -66,4 +73,24 @@ function returnPokemonEntry(JSONResponse) {
     .toLowerCase();
 }
 
-createPokemonCard();
+if (previousPokemon === 0) {
+  pokedexPreviousButtonElement.style.opacity = 0.2;
+  pokedexPreviousButtonElement.style.pointerEvents = "none";
+} else {
+  pokedexPreviousButtonElement.addEventListener("click", () => {
+    window.location.href = `pokemon_details?pokemon=${previousPokemon}`;
+  });
+}
+
+if (nextPokemon === 1011) {
+  pokedexNextButtonElement.addEventListener("click", () => {
+    window.location.href = `pokemon_details?pokemon=1`;
+  });
+
+} else {
+  pokedexNextButtonElement.addEventListener("click", () => {
+    window.location.href = `pokemon_details?pokemon=${nextPokemon}`;
+  });
+}
+
+createPokemonCard(pokemon);

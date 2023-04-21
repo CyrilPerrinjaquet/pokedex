@@ -1,7 +1,8 @@
 @use "../loader.scss";
 @import "../declaration.scss";
 
-html, body {
+html,
+body {
   @include putSameValue(100%, width, height);
   @include putSameValue(0, padding, margin);
   background-color: #f8fafc;
@@ -59,12 +60,47 @@ body > div {
   top: 10px;
 }
 
+body > div:nth-child(2) {
+  width: min-content;
+  position: absolute;
+  left: 5%;
+  top: 50%;
+}
+
+body > div:nth-child(3) {
+  width: min-content;
+  position: absolute;
+  left: 92.2%;
+  top: 50%;
+}
+
+body > div:nth-child(4) {
+  margin-left: 50px;
+  width: max-content;
+}
+
 button {
   @include putSameValue(10px, padding, border-radius);
   @include box-shadow($lightGrey 0 10px 10px);
   background-color: white;
   &:hover {
     cursor: pointer;
+  }
+}
+
+.pokedex-previous-and-next-buttons {
+  padding: 0;
+  border: none;
+  background-color: #f8fafc;
+  box-shadow: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  & i {
+    font-size: 3.2em;
+    background-color: #f8fafc;
   }
 }
 
@@ -112,14 +148,13 @@ p::first-letter {
 
 .pokedex-details-information-container > div:last-child {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
 }
 
 .pokedex-details-information-container {
   display: flex;
   flex-direction: column;
-  text-align: center;
-  width: 90%;
+  width: 100%;
 }
 
 #pokedex-card-stats {
@@ -297,4 +332,3 @@ p::first-letter {
     margin-left: 5px;
   }
 }
-

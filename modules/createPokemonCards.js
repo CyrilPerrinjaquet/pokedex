@@ -175,6 +175,7 @@ export function createDetailsPokemonCard(
   pokemonName,
   pokemonAnimatedSprite,
   pokemonImage,
+  pokemonOfficialArtwork,
   pokedexEntry
 ) {
 
@@ -192,10 +193,10 @@ export function createDetailsPokemonCard(
 
   animatedSpriteElement.setAttribute(
     "src",
-    `${pokemonAnimatedSprite ?? pokemonImage}`
+    `${pokemonAnimatedSprite ?? pokemonImage ?? pokemonOfficialArtwork}`
   );
 
-  animatedSpriteElement.setAttribute("alt", `Animated image of ${pokemonName}`);
+  animatedSpriteElement.setAttribute("alt", `Animated image or static image of ${pokemonName}`);
 
   const pokedexDetailsInformationContainer = document.createElement("div");
   pokedexDetailsInformationContainer.setAttribute(
