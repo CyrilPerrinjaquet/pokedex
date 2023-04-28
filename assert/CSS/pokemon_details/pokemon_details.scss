@@ -14,7 +14,6 @@ main {
   display: grid;
   grid-template-columns: 1fr;
   place-items: center;
-  grid-row-gap: 20px;
 }
 
 main > div {
@@ -36,13 +35,13 @@ main > div:last-child {
   height: 130px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  place-items: center;
 }
 
 div > img {
-  height: 160px;
+  height: 140px;
   object-fit: contain;
   image-rendering: pixelated;
-  margin-bottom: 15px;
   max-width: 150px;
   max-height: 20vh;
 }
@@ -281,7 +280,6 @@ p::first-letter {
     left: 90px;
     top: 10px;
   }
-  
 
   body > div:nth-child(3) {
     left: 20px;

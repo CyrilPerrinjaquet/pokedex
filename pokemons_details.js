@@ -45,18 +45,14 @@ async function createPokemonCardsFromJSON(JSONResponse, evolutionsChainURL) {
   currentPokemon.push(pokemonDetails);
   createPokemonCards(
     returnPokemonEntry(JSONResponse),
-    getEvolutionChainAndReturnFirstSprite(evolutionsChainURL),
-    getEvolutionChainAndReturnSecondSprite(evolutionsChainURL),
-    getEvolutionChainAndReturnThirdSprite(evolutionsChainURL)
+    getEvolutionChainAndReturnSprite(evolutionsChainURL)
   );
   loaderElement.classList.remove("pokedex-loader-animation");
 }
 
 function createPokemonCards(
   pokedexEntryFromJSONResponse,
-  firstPokemonSpriteOfEvolutionChain,
-  secondPokemonSpriteOfEvolutionChain,
-  thirdPokemonSpriteOfEvolutionChain
+  firstPokemonSpriteOfEvolutionChain
 ) {
   currentPokemon.forEach((pokemon) => {
     createDetailsPokemonCard(
@@ -73,9 +69,7 @@ function createPokemonCards(
     createStatsCard(pokedexStatsCardElement, pokemon);
     createEvolutionsCard(
       pokedexEvolutionsCardElement,
-      firstPokemonSpriteOfEvolutionChain,
-      secondPokemonSpriteOfEvolutionChain,
-      thirdPokemonSpriteOfEvolutionChain
+      firstPokemonSpriteOfEvolutionChain
     );
   });
 }
@@ -96,39 +90,46 @@ function returnPokemonEntry(JSONResponse) {
     .toLowerCase();
 }
 
-function returnFirstSpriteOfPokemonEvolution(evolutionChain) {
-  return pokeAPI
-    .getPokemon(evolutionChain.chain.species.name)
-    .then((resultJSON) => resultJSON["sprites"]["front_default"]);
+function getPromiseOfSpriteSource(evolutionChain, depth) {
+  let nameOfPokemon;
+
+  if (!evolutionChain.chain.evolves_to[0]) {
+    pokedexEvolutionsCardElement.innerHTML = "This pokemon does not have an evolution chain !"
+    pokedexEvolutionsCardElement.style.gridTemplateColumns = "1fr";
+    return;
+  }
+
+  while (evolutionChain.chain.evolves_to[0]) {
+    switch (depth) {
+      case 0:
+        nameOfPokemon = evolutionChain.chain.species.name;
+        break;
+      case 1:
+        nameOfPokemon = evolutionChain.chain.evolves_to[0].species.name;
+        break;
+      case 2:
+        if (!evolutionChain.chain.evolves_to[0].evolves_to[0]) {
+          pokedexEvolutionsCardElement.style.gridTemplateColumns = "1fr 1fr";
+          return;
+        }
+        nameOfPokemon =
+          evolutionChain.chain.evolves_to[0].evolves_to[0].species.name;
+        break;
+    }
+    return pokeAPI.getPokemon(nameOfPokemon).then((resultJSON) => {
+      return resultJSON["sprites"]["front_default"];
+    });
+  }
+  
 }
 
-function returnSecondSpriteOfPokemonEvolution(evolutionChain) {
-  return pokeAPI
-    .getPokemon(evolutionChain.chain.evolves_to[0].species.name)
-    .then((resultJSON) => resultJSON["sprites"]["front_default"]);
-}
-
-function returnThirdSpriteOfPokemonEvolution(evolutionChain) {
-  return pokeAPI
-    .getPokemon(evolutionChain.chain.evolves_to[0].evolves_to[0].species.name)
-    .then((resultJSON) => resultJSON["sprites"]["front_default"]);
-}
-
-function getEvolutionChainAndReturnFirstSprite(evolutionChain) {
-  pokeAPI.getEvolutionChains(evolutionChain).then((resultJSON) => {
-    returnFirstSpriteOfPokemonEvolution(resultJSON);
-  });
-}
-
-function getEvolutionChainAndReturnSecondSprite(evolutionChain) {
-  pokeAPI.getEvolutionChains(evolutionChain).then((resultJSON) => {
-    returnSecondSpriteOfPokemonEvolution(resultJSON);
-  });
-}
-
-function getEvolutionChainAndReturnThirdSprite(evolutionChain) {
-  pokeAPI.getEvolutionChains(evolutionChain).then((resultJSON) => {
-    returnThirdSpriteOfPokemonEvolution(resultJSON);
+function getEvolutionChainAndReturnSprite(evolutionChain) {
+  return pokeAPI.getEvolutionChains(evolutionChain).then((resultJSON) => {
+    return Promise.all([
+      getPromiseOfSpriteSource(resultJSON, 0),
+      getPromiseOfSpriteSource(resultJSON, 1),
+      getPromiseOfSpriteSource(resultJSON, 2),
+    ]);
   });
 }
 

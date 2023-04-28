@@ -42,9 +42,7 @@ let currentPokemons = [];
  */
 
 function getSetOfPokemons() {
-  pokeAPI
-    .getPokemons()
-    .then((result) => createNewPokemonCardsFromJSON(result));
+  pokeAPI.getPokemons().then((result) => createNewPokemonCardsFromJSON(result));
 }
 
 function loadMorePokemons() {
@@ -78,25 +76,19 @@ async function createNewPokemonCardsFromJSON(pokemonsJSON) {
   scrollTopAncorElement.style.display = "block";
 
   if (window.innerWidth > 1000) {
-    setTimeout(() => {
-      window.scrollTo({
-        left: 0,
-        top: document.body.scrollHeight - 1310,
-        behavior: "smooth",
-      }),
-        200;
+    window.scrollTo({
+      left: 0,
+      top: document.body.scrollHeight - 1310,
+      behavior: "smooth",
     });
     return;
-  } 
-    setTimeout(() => {
-      window.scrollTo({
-        left: 0,
-        top: document.body.scrollHeight - 3560,
-        behavior: "smooth",
-      }),
-        200;
-    });
-    return;
+  }
+  window.scrollTo({
+    left: 0,
+    top: document.body.scrollHeight - 3560,
+    behavior: "smooth",
+  });
+  return;
 }
 
 function createPokemonCards() {
@@ -126,8 +118,8 @@ async function searchForAPokemon() {
       searchElement.value.toLowerCase()
     );
     if (!pokemonDetails) {
-      alert("The Pokemon doesn't exist")
-    } 
+      alert("The Pokemon doesn't exist");
+    }
     currentPokemons.push(pokemonDetails);
     loaderElement.classList.remove("pokedex-loader-animation");
 
