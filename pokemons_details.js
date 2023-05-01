@@ -90,47 +90,54 @@ function returnPokemonEntry(JSONResponse) {
     .toLowerCase();
 }
 
-function getPromiseOfSpriteSource(evolutionChain, depth) {
-  let nameOfPokemon;
 
+function getPokemonNames(evolutionChain)  {
+  let pokemonsList = [evolutionChain.species.name];
+  let lenghtInSameDepth = evolutionChain.evolves_to;
+
+  for (let index = 0; index < lenghtInSameDepth.length; index++) {
+    let element = evolutionChain.evolves_to[index];
+    while (element.evolves_to.length > 0) {
+      pokemonsList.push(element.species.name);
+      element = element.evolves_to[0];
+    }
+    pokemonsList.push(element.species.name);
+    
+  }
+
+  if (pokemonsList.length === 2) {
+    pokedexEvolutionsCardElement.style.gridTemplateColumns = "1fr 1fr";
+  }
+  if (pokemonsList.length === 1) {
+    pokedexEvolutionsCardElement.style.gridTemplateColumns = "1fr";
+  }
+
+  return pokemonsList;
+}
+
+function getPromiseOfSpriteSource(pokemonName) {
+  /* 
   if (!evolutionChain.chain.evolves_to[0]) {
     pokedexEvolutionsCardElement.innerHTML = "This pokemon does not have an evolution chain !"
     pokedexEvolutionsCardElement.style.gridTemplateColumns = "1fr";
     return;
   }
-
-  while (evolutionChain.chain.evolves_to[0]) {
-    switch (depth) {
-      case 0:
-        nameOfPokemon = evolutionChain.chain.species.name;
-        break;
-      case 1:
-        nameOfPokemon = evolutionChain.chain.evolves_to[0].species.name;
-        break;
-      case 2:
-        if (!evolutionChain.chain.evolves_to[0].evolves_to[0]) {
-          pokedexEvolutionsCardElement.style.gridTemplateColumns = "1fr 1fr";
-          return;
-        }
-        nameOfPokemon =
-          evolutionChain.chain.evolves_to[0].evolves_to[0].species.name;
-        break;
-    }
-    return pokeAPI.getPokemon(nameOfPokemon).then((resultJSON) => {
-      return resultJSON["sprites"]["front_default"];
-    });
-  }
-  
+ */
+  return pokeAPI.getPokemon(pokemonName).then((resultJSON) => {
+    return resultJSON["sprites"]["front_default"];
+  });
 }
 
 function getEvolutionChainAndReturnSprite(evolutionChain) {
-  return pokeAPI.getEvolutionChains(evolutionChain).then((resultJSON) => {
-    return Promise.all([
-      getPromiseOfSpriteSource(resultJSON, 0),
-      getPromiseOfSpriteSource(resultJSON, 1),
-      getPromiseOfSpriteSource(resultJSON, 2),
-    ]);
-  });
+  return pokeAPI
+    .getEvolutionChains(evolutionChain)
+    .then((evolutionChainJSON) => {
+      const pokemonListEvolution = getPokemonNames(
+        evolutionChainJSON.chain
+      ).map((name) => getPromiseOfSpriteSource(name));
+
+      return Promise.all(pokemonListEvolution);
+    });
 }
 
 if (previousPokemon === 0) {

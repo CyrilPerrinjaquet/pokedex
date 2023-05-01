@@ -9,18 +9,17 @@ body {
 }
 
 main {
-  @include putSameValue(100%, height, width);
-  @include putSameValue(auto, margin-right, margin-left);
+  min-height: 100%;
+  gap: 20px;
   display: grid;
-  grid-template-columns: 1fr;
   place-items: center;
 }
 
 main > div {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-  @include putSameValue(670px, width, max-width);
-  height: 200px;
+  @include putSameValue(690px, width, max-width);
+  min-height: 200px;
   place-items: center;
   border-radius: 8px;
   background-color: $lightGrey;
@@ -32,7 +31,7 @@ main > div:first-child {
 }
 
 main > div:last-child {
-  height: 130px;
+  min-height: 130px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   place-items: center;

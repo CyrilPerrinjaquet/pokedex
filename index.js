@@ -113,22 +113,18 @@ async function searchForAPokemon() {
   currentPokemons = [];
   addCSSAnimationClassToElement();
 
-  if (searchElement.value.toLowerCase() != "".trim()) {
-    const pokemonDetails = await pokeAPI.getPokemon(
-      searchElement.value.toLowerCase()
-    );
-    if (!pokemonDetails) {
-      alert("The Pokemon doesn't exist");
-    }
-    currentPokemons.push(pokemonDetails);
-    loaderElement.classList.remove("pokedex-loader-animation");
-
-    createPokemonCards();
-
-    searchElement.value = "".trim();
-  } else {
-    getSetOfPokemons();
+  const pokemonDetails = await pokeAPI.getPokemon(
+    searchElement.value.toLowerCase()
+  );
+  if (!pokemonDetails) {
+    alert("The Pokemon doesn't exist");
   }
+  currentPokemons.push(pokemonDetails);
+  loaderElement.classList.remove("pokedex-loader-animation");
+
+  createPokemonCards();
+
+  searchElement.value = "";
 
   if (currentPokemons.length === 1) {
     pokedexLoadMoreButtonElement.style.display = "none";
