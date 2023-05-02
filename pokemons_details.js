@@ -90,39 +90,35 @@ function returnPokemonEntry(JSONResponse) {
     .toLowerCase();
 }
 
-
-function getPokemonNames(evolutionChain)  {
+function getPokemonNames(evolutionChain) {
   let pokemonsList = [evolutionChain.species.name];
-  let lenghtInSameDepth = evolutionChain.evolves_to;
+  let evolutions = evolutionChain.evolves_to;
 
-  for (let index = 0; index < lenghtInSameDepth.length; index++) {
-    let element = evolutionChain.evolves_to[index];
+  for (let index = 0; index < evolutions.length; index++) {
+    let element = evolutions[index];
     while (element.evolves_to.length > 0) {
       pokemonsList.push(element.species.name);
       element = element.evolves_to[0];
     }
     pokemonsList.push(element.species.name);
-    
   }
 
-  if (pokemonsList.length === 2) {
-    pokedexEvolutionsCardElement.style.gridTemplateColumns = "1fr 1fr";
-  }
-  if (pokemonsList.length === 1) {
-    pokedexEvolutionsCardElement.style.gridTemplateColumns = "1fr";
-  }
+  changePokemonCardColumnsStyle(pokemonsList, 1, "1fr");
+  changePokemonCardColumnsStyle(pokemonsList, 2, "1fr 1fr");
 
   return pokemonsList;
 }
 
+function changePokemonCardColumnsStyle(
+  pokemonArray,
+  numbersOfElements,
+  styleOfColumns
+) {
+  if (pokemonArray.length === numbersOfElements)
+    pokedexEvolutionsCardElement.style.gridTemplateColumns = `${styleOfColumns}`;
+}
+
 function getPromiseOfSpriteSource(pokemonName) {
-  /* 
-  if (!evolutionChain.chain.evolves_to[0]) {
-    pokedexEvolutionsCardElement.innerHTML = "This pokemon does not have an evolution chain !"
-    pokedexEvolutionsCardElement.style.gridTemplateColumns = "1fr";
-    return;
-  }
- */
   return pokeAPI.getPokemon(pokemonName).then((resultJSON) => {
     return resultJSON["sprites"]["front_default"];
   });

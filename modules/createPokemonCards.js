@@ -345,9 +345,6 @@ export function createEvolutionsCard(pokedexContainerElement, imagesPromise) {
   imagesPromise.then((images) => {
     for (let index = 0; index < images.length; index++) {
       const image = images[index];
-      if (!image) {
-        return;
-      }
       const pokedexEvolutionContainer = document.createElement("div");
       
       const pokemonImageElement = document.createElement("img");
