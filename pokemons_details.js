@@ -8,6 +8,9 @@ const pokedexDetailsCardElement = document.getElementById(
   "pokedex-card-details"
 );
 
+
+const loaderElement = document.getElementById("loader");
+
 const pokedexStatsCardElement = document.getElementById("pokedex-card-stats");
 
 const searchParams = new URL(document.location).searchParams;
@@ -23,9 +26,12 @@ function createPokemonCard() {
 
 async function retrievePokedexEntry(JSONResponse) {
   // CHANGER NOM DE FONCTION
+
+  loaderElement.classList.add("pokedex-loader-animation");
   const pokemonDetails = await pokeAPI.getPokemon(pokemon);
   currentPokemon.push(pokemonDetails);
   createPokemonCards(returnPokemonEntry(JSONResponse));
+  loaderElement.classList.remove("pokedex-loader-animation");
 }
 
 function createPokemonCards(pokedexEntryFromJSONResponse) {
