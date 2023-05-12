@@ -11,47 +11,59 @@
     <title>Pokemon Details</title>
   </head>
   <body>
+    <!-- Back to the list -->
     <div>
       <a href="index.html"
-        ><button><i class="fa fa-angle-double-left"></i></button
+        ><button><i class="fa fa-x"></i></button
       ></a>
     </div>
 
-    <div class="pokedex-previous-pokemon"></div>
+    <!-- Back to first pokemon -->
+    <div>
+      <a href="?pokemon=1">
+        <button>Back to first pokemon</button>
+      </a>
+    </div>
+    <!-- Previous pokemon -->
+    <div>
+      <button
+        id="pokedex-previous-button"
+        class="pokedex-previous-and-next-buttons"
+      >
+        <i class="fa fa-long-arrow-left"></i>
+      </button>
+    </div>
+    <!-- Next pokemon -->
+    <div>
+      <button
+        id="pokedex-next-button"
+        class="pokedex-previous-and-next-buttons"
+      >
+        <i class="fa fa-long-arrow-right"></i>
+      </button>
+    </div>
+
     <main>
       <!-- Details -->
       <div id="pokedex-card-details"></div>
       <!-- Stats -->
       <div id="pokedex-card-stats"></div>
       <!-- Evolutions -->
-      <div></div>
-     
+      <div id="pokedex-card-evolutions"></div>
     </main>
     <div id="loader">
       <div class="pokedex-loader-main-container">
         <div>
-          <div
-            id="pokedex-loader-ball-one"
-            class="pokedex-loader-ball"
-          ></div>
+          <div id="pokedex-loader-ball-one" class="pokedex-loader-ball"></div>
         </div>
         <div>
-          <div
-            id="pokedex-loader-ball-two"
-            class="pokedex-loader-ball"
-          ></div>
+          <div id="pokedex-loader-ball-two" class="pokedex-loader-ball"></div>
         </div>
         <div>
-          <div
-            id="pokedex-loader-ball-three"
-            class="pokedex-loader-ball"
-          ></div>
+          <div id="pokedex-loader-ball-three" class="pokedex-loader-ball"></div>
         </div>
         <div>
-          <div
-            id="pokedex-loader-ball-four"
-            class="pokedex-loader-ball"
-          ></div>
+          <div id="pokedex-loader-ball-four" class="pokedex-loader-ball"></div>
         </div>
       </div>
     </div>
