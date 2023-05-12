@@ -21,12 +21,14 @@ const pokedexDetailsCardElement = document.getElementById(
   "pokedex-card-details"
 );
 
+
 const loaderElement = document.getElementById("loader");
 
 const pokedexPreviousButtonElement = document.getElementById(
   "pokedex-previous-button"
 );
 const pokedexNextButtonElement = document.getElementById("pokedex-next-button");
+
 
 const pokedexStatsCardElement = document.getElementById("pokedex-card-stats");
 
