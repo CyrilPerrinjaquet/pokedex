@@ -40,6 +40,7 @@ function createPokemonCard(pokemon) {
 
 async function createPokemonCardsFromJSON(JSONResponse, evolutionsChainURL) {
   loaderElement.classList.add("pokedex-loader-animation");
+
   const pokemonDetails = await pokeAPI.getPokemon(pokemon);
 
   currentPokemon.push(pokemonDetails);

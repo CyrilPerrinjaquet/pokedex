@@ -19,6 +19,7 @@ h1 + div {
   width: 800px;
   display: flex;
   flex-direction: row;
+  z-index: 3;
 }
 
 input + button {
@@ -37,6 +38,16 @@ div img {
   }
 }
 
+body > img {
+  width: 620px;
+  height: 620px;
+  position: fixed;
+  right: -113px;
+  top: -70px;
+  opacity: 0.5;
+  z-index: 1;
+}
+
 main {
   @include putSameValue(100%, height, width);
   @include putSameValue(auto, margin-right, margin-left);
@@ -53,6 +64,7 @@ main > div:first-child {
   grid-row-gap: 23px;
   place-items: center;
   min-width: 960px;
+  z-index: 2;
 }
 
 main > div:last-child {
@@ -277,6 +289,16 @@ a > button {
     flex-direction: column-reverse;
   }
 
+  body > img {
+    width: 320px;
+    height: 320px;
+    position: fixed;
+    right: -121px;
+    top: 130px;
+    opacity: 0.5;
+    z-index: 1;
+  }
+
   main > div:first-child {
     @include putSameValue(auto, margin-right, margin-left);
     min-width: 100%;
@@ -316,6 +338,7 @@ a > button {
     grid-template-columns: 1fr;
     min-width: 100%;
   }
+
 
   h1 {
     text-align: center;
