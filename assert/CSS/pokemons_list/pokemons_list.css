@@ -90,6 +90,7 @@ h1 + div {
   width: 800px;
   display: flex;
   flex-direction: row;
+  z-index: 3;
 }
 
 input + button {
@@ -106,6 +107,16 @@ div img {
 }
 div img:hover {
   cursor: pointer;
+}
+
+body > img {
+  width: 620px;
+  height: 620px;
+  position: fixed;
+  right: -113px;
+  top: -70px;
+  opacity: 0.5;
+  z-index: 1;
 }
 
 main {
@@ -126,6 +137,7 @@ main > div:first-child {
   grid-row-gap: 23px;
   place-items: center;
   min-width: 960px;
+  z-index: 2;
 }
 
 main > div:last-child {
@@ -345,6 +357,15 @@ a > button {
     align-items: center;
     width: 100%;
     flex-direction: column-reverse;
+  }
+  body > img {
+    width: 320px;
+    height: 320px;
+    position: fixed;
+    right: -121px;
+    top: 130px;
+    opacity: 0.5;
+    z-index: 1;
   }
   main > div:first-child {
     margin-right: auto;
