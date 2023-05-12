@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assert/CSS/index.css" />
+    <script src="https://kit.fontawesome.com/4de2d955fa.js"></script>
+    <link rel="stylesheet" href="assert/CSS/pokemons_list/pokemons_list.css" />
     <title>Pokédex</title>
   </head>
   <body>
-    <header>
+    <header id="header">
       <div>
         <h1>
           Pokédex made by Cyril, you can see other projects by visiting my
           Github
         </h1>
         <div>
-          <!-- <div class="pokedex-dropdown-container">
-            <button>Filter pokemons by...</button>
-            <div>
-              <a href="#">Name</a>
-            </div>
-          </div> -->
           <!--Search Bar-->
           <div class="pokedex-search-bar-container">
             <input
@@ -27,38 +23,54 @@
               placeholder="Search for a pokemon... "
             />
             <button id="searchPokemonButton">
-              <img src="images/search_icon.png" alt="search-bar-icon" />
+              <i class="fa fa-search"></i>
             </button>
           </div>
         </div>
       </div>
     </header>
     <main>
-      <div id="pokedex-list">
-        <!--Card-->
-      </div>
+      <div id="pokedex-list"></div>
       <div>
-        <button id="loadMorePokemons">Charger plus</button>
-        <!-- TODO Mettre un bouton qui scroll tout en haut de façon smooth quand le user arrive en bas, le mettre juste à coté du bouton -->
+        <div class="pokedex-buttons-container">
+          <button id="loadMorePokemons">Charger plus</button>
+          <a id="pokedex-scroll-to-top-anchor" href="#header">
+            <button>
+              <i class="fas fa-arrow-up"></i>
+            </button>
+          </a>
+        </div>
         <!-- Loader -->
         <div id="loader">
           <div class="pokedex-loader-main-container">
             <div>
-              <div id="pokedex-loader-ball-one" class="pokedex-loader-ball"></div>
+              <div
+                id="pokedex-loader-ball-one"
+                class="pokedex-loader-ball"
+              ></div>
             </div>
             <div>
-              <div id="pokedex-loader-ball-two" class="pokedex-loader-ball"></div>
+              <div
+                id="pokedex-loader-ball-two"
+                class="pokedex-loader-ball"
+              ></div>
             </div>
             <div>
-              <div id="pokedex-loader-ball-three" class="pokedex-loader-ball"></div>
+              <div
+                id="pokedex-loader-ball-three"
+                class="pokedex-loader-ball"
+              ></div>
             </div>
             <div>
-              <div id="pokedex-loader-ball-four" class="pokedex-loader-ball"></div>
+              <div
+                id="pokedex-loader-ball-four"
+                class="pokedex-loader-ball"
+              ></div>
             </div>
           </div>
         </div>
       </div>
     </main>
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
   </body>
 </html>
