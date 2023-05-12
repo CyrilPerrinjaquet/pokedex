@@ -105,11 +105,10 @@ main > div:first-child {
 }
 
 main > div:last-child {
-  height: 130px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-
+  align-self: start;
+  height: 300px;
 }
+
 div > img {
   height: 160px;
   object-fit: contain;
@@ -134,24 +133,6 @@ body > div {
   top: 10px;
 }
 
-body > div:nth-child(2) {
-  margin-left: 50px;
-  width: max-content;
-}
-
-body > div:nth-child(3) {
-  width: min-content;
-  position: absolute;
-  top: 50%;
-}
-
-body > div:nth-child(4) {
-  width: min-content;
-  position: absolute;
-  left: 95%;
-  top: 50%;
-}
-
 button {
   padding: 10px;
   border-radius: 10px;
@@ -160,20 +141,6 @@ button {
 }
 button:hover {
   cursor: pointer;
-}
-
-.pokedex-previous-and-next-buttons {
-  padding: 0;
-  border: none;
-  box-shadow: none;
-  background-color: transparent;
-}
-.pokedex-previous-and-next-buttons:hover {
-  cursor: pointer;
-}
-.pokedex-previous-and-next-buttons i {
-  font-size: 3.2em;
-  background-color: transparent;
 }
 
 .pokedex-type-icon {
@@ -222,14 +189,14 @@ p::first-letter {
 
 .pokedex-details-information-container > div:last-child {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 
 .pokedex-details-information-container {
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: 100%;
+  width: 90%;
 }
 
 #pokedex-card-stats {
@@ -257,7 +224,7 @@ p::first-letter {
   border-radius: 6px;
   height: 30px;
   max-width: 100%;
-  background-color: #a1a1aa;
+  background-color: white;
 }
 
 .pokedex-stat-name {
@@ -338,14 +305,6 @@ p::first-letter {
   background-color: #000000;
 }
 
-#loader {
-  position: absolute;
-  top: 50%;
-  right: 50%;
-  left: 50%;
-  bottom: 50%;
-}
-
 .pokedex-details-information-container > div:last-child {
   display: flex;
   justify-content: flex-start;
@@ -390,21 +349,10 @@ p::first-letter {
   margin-left: 10px;
 }
 
+
 @media screen and (max-width: 800px) {
   main {
     margin-top: 70px;
-  }
-  body > div {
-    left: 90px;
-    top: 10px;
-  }
-  body > div:nth-child(3) {
-    left: 20px;
-    top: 10px;
-  }
-  body > div:nth-child(4) {
-    left: 85%;
-    top: 10px;
   }
   main > div {
     width: 300px;
@@ -430,32 +378,20 @@ p::first-letter {
   .pokedex-progress-bar-container {
     margin-right: 10px;
   }
-  .pokedex-previous-and-next-buttons i {
-    font-size: 2.8em;
-  }
-  #loader {
-    position: absolute;
-    top: 60%;
-    left: 45%;
-  }
 }
+#loader {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  left: 50%;
+  bottom: 50%;
+}
+
 @media screen and (max-width: 300px) {
   main > div {
     width: 250px;
     height: 320px;
     margin: 0px auto;
-  }
-  body > div {
-    left: 45px;
-    top: 10px;
-  }
-  body > div:nth-child(3) {
-    left: 7px;
-    top: 15px;
-  }
-  body > div:nth-child(4) {
-    left: 89%;
-    top: 15px;
   }
   main > div:first-child {
     grid-template-columns: 1fr 1fr;
@@ -470,9 +406,6 @@ p::first-letter {
   }
   .pokedex-details-id-of-pokemon {
     margin-left: 5px;
-  }
-  .pokedex-previous-and-next-buttons i {
-    font-size: 2em;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1000px) {

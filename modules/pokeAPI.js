@@ -39,13 +39,6 @@ export function getAbilities(nameOfPokemon) {
     method: "GET",
   });
 }
-
-export function getEvolutionChains(URL) {
-  return fetchAPI(`${URL}`, {
-    method: "GET",
-  });
-}
-
 export function getCharacteristic(nameOfPokemon) {
   return fetchAPI(
     `${POKE_API_BASE_URL}/${VERSION}/characteristic/${nameOfPokemon}`,

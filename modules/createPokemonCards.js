@@ -138,9 +138,6 @@ function returnTheContainersSecondType(
   if (window.innerWidth > 1000 && detailsView) {
     pokedexIconElement.style.padding = "0px 0px 0px 40px";
   }
-  if ((window.innerWidth < 1000) & detailsView) {
-    pokedexIconElement.style.padding = "0px 0px 0px 50px";
-  }
   if (result.types[1] === undefined) {
     return document.createTextNode("");
   } else {
@@ -173,14 +170,14 @@ function appendChildToParent(parent, child) {
 }
 
 export function createDetailsPokemonCard(
-  pokedexContainerElement,
+  pokedexIdOfContainerElement,
   pokemonDetails,
   pokemonName,
   pokemonAnimatedSprite,
   pokemonImage,
-  pokemonOfficialArtwork,
   pokedexEntry
 ) {
+
   const pokedexDetailsIdOfPokemon = document.createElement("div");
   pokedexDetailsIdOfPokemon.setAttribute(
     "class",
@@ -195,13 +192,10 @@ export function createDetailsPokemonCard(
 
   animatedSpriteElement.setAttribute(
     "src",
-    `${pokemonAnimatedSprite ?? pokemonImage ?? pokemonOfficialArtwork}`
+    `${pokemonAnimatedSprite ?? pokemonImage}`
   );
 
-  animatedSpriteElement.setAttribute(
-    "alt",
-    `Animated image or static image of ${pokemonName}`
-  );
+  animatedSpriteElement.setAttribute("alt", `Animated image of ${pokemonName}`);
 
   const pokedexDetailsInformationContainer = document.createElement("div");
   pokedexDetailsInformationContainer.setAttribute(
@@ -263,7 +257,7 @@ export function createDetailsPokemonCard(
   IdOfPokemonParagraph.appendChild(idOfPokemon);
   pokedexDetailsIdOfPokemon.appendChild(IdOfPokemonParagraph);
 
-  appendChildToParent(pokedexContainerElement, [
+  appendChildToParent(pokedexIdOfContainerElement, [
     pokedexDetailsIdOfPokemon,
     pokedexAnimatedSpriteContainer,
     pokedexDetailsInformationContainer,
@@ -277,9 +271,7 @@ export function createDetailsPokemonCard(
   );
 }
 
-export function createStatsCard(pokedexContainerElement, pokemonDetails) {
-  const maxStat = 255;
-
+export function createStatsCard(pokedexIdOfContainerElement, pokemonDetails) {
   const pokedexStatsMainContainer = document.createElement("div");
   pokedexStatsMainContainer.setAttribute(
     "class",
@@ -318,37 +310,23 @@ export function createStatsCard(pokedexContainerElement, pokemonDetails) {
     pokemonStatNameParagraphElement.appendChild(nameOfPokemonStatElement);
     pokemonNameOfStatContainer.appendChild(pokemonStatNameParagraphElement);
 
-    appendChildToParent(pokedexStatsRowContainer, [
-      pokemonNameOfStatContainer,
-      pokemonProgessBarContainer,
-      pokemonNumberOfStatContainer,
-    ]);
+    pokedexStatsRowContainer.appendChild(pokemonNameOfStatContainer);
+    pokedexStatsRowContainer.appendChild(pokemonProgessBarContainer);
+    pokedexStatsRowContainer.appendChild(pokemonNumberOfStatContainer);
 
     pokedexStatsMainContainer.appendChild(pokedexStatsRowContainer);
 
-    pokedexContainerElement.appendChild(pokedexStatsMainContainer);
+    pokedexIdOfContainerElement.appendChild(pokedexStatsMainContainer);
 
-    pokemonProgessBarDiv.style.width = `${stat.base_stat / (maxStat / 100)}%`;
-    updateProgressBar(pokemonProgessBarDiv, stat.base_stat / (maxStat / 100));
+    if (stat.base_stat >= 220) {
+      pokemonProgessBarDiv.style.width = "100%";
+      return;
+    }
+    if (stat.base_stat / 2 >= 100) {
+      pokemonProgessBarDiv.style.width = `${stat.base_stat / 3}%`;
+      return;
+    }
+
+    pokemonProgessBarDiv.style.width = `${stat.base_stat / 2}%`;
   });
-}
-
-function updateProgressBar(progessBar, percentage) {
-  progessBar.style.width = `0%`;
-  progessBar.animate(
-    { width: `${percentage}%` },
-    { duration: 500, fill: "forwards" }
-  );
-}
-
-export function createEvolutionsCard(pokedexContainerElement, ...image) {
-  for (let index = 0; index < 3; index++) {
-    const pokedexEvolutionContainer = document.createElement("div");
-    const pokemonImageElement = document.createElement("img");
-    pokemonImageElement.setAttribute("src", `${image}`);
-  pokemonImageElement.setAttribute("alt", `Pokemon image of ${/*image*/"Comming evolution"}`);
-
-    pokedexEvolutionContainer.appendChild(pokemonImageElement);
-    pokedexContainerElement.appendChild(pokedexEvolutionContainer);
-  }
 }
