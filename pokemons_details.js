@@ -1,10 +1,21 @@
+/*
+ ********
+ *IMPORT*
+ ********
+ */
+
 import {
   createDetailsPokemonCard,
   createStatsCard,
   createEvolutionsCard,
 } from "./modules/createPokemonCards.js";
-import { fetchAPI } from "./modules/fetchUtils.js";
 import * as pokeAPI from "./modules/pokeAPI.js";
+
+/*
+ **********
+ *ELEMENTS*
+ **********
+ */
 
 const pokedexDetailsCardElement = document.getElementById(
   "pokedex-card-details"
@@ -25,10 +36,22 @@ const pokedexEvolutionsCardElement = document.getElementById(
 
 const searchParams = new URL(document.location).searchParams;
 
+/*
+ ***********
+ *VARIABLES*
+ ***********
+ */
+
 let pokemon = searchParams.get("pokemon");
 let previousPokemon = parseInt(pokemon) - 1;
 let nextPokemon = parseInt(pokemon) + 1;
 let currentPokemon = [];
+
+/*
+ ********************************
+ *CREATE CARDS HANDLERS FUNCTION*
+ ********************************
+ */
 
 function createPokemonCard(pokemon) {
   pokeAPI
@@ -74,6 +97,8 @@ function createPokemonCards(
   });
 }
 
+
+
 function returnPokemonEntry(JSONResponse) {
   const foundRightLanguage = JSONResponse.flavor_text_entries.find(
     (element) => element.language.name === "en"
@@ -94,18 +119,21 @@ function getPokemonNames(evolutionChain) {
   let pokemonsList = [evolutionChain.species.name];
   let evolutions = evolutionChain.evolves_to;
 
-  for (let index = 0; index < evolutions.length; index++) {
+  // ! Récursif
+  
+  pokemonsList.push(
+    ...evolutions.flatMap((children) => getPokemonNames(children))
+  );
+  /* ! Itératif
+     for (let index = 0; index < evolutions.length; index++) {
     let element = evolutions[index];
     while (element.evolves_to.length > 0) {
       pokemonsList.push(element.species.name);
       element = element.evolves_to[0];
     }
     pokemonsList.push(element.species.name);
-  }
-
-  changePokemonCardColumnsStyle(pokemonsList, 1, "1fr");
-  changePokemonCardColumnsStyle(pokemonsList, 2, "1fr 1fr");
-
+  } */
+  
   return pokemonsList;
 }
 
@@ -118,8 +146,8 @@ function changePokemonCardColumnsStyle(
     pokedexEvolutionsCardElement.style.gridTemplateColumns = `${styleOfColumns}`;
 }
 
-function getPromiseOfSpriteSource(pokemonName) {
-  return pokeAPI.getPokemon(pokemonName).then((resultJSON) => {
+async function getPromiseOfSpriteSource(pokemonName) {
+  return await pokeAPI.getPokemon(pokemonName).then((resultJSON) => {
     return resultJSON["sprites"]["front_default"];
   });
 }
@@ -131,6 +159,7 @@ function getEvolutionChainAndReturnSprite(evolutionChain) {
       const pokemonListEvolution = getPokemonNames(
         evolutionChainJSON.chain
       ).map((name) => getPromiseOfSpriteSource(name));
+
 
       return Promise.all(pokemonListEvolution);
     });

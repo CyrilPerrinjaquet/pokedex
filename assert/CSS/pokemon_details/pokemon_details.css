@@ -102,8 +102,8 @@ main > div:first-child {
 main > div:last-child {
   min-height: 130px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   place-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 div > img {

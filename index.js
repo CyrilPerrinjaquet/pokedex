@@ -35,6 +35,7 @@ const scrollTopAncorElement = document.getElementById(
 
 let nextSetOfPokemons = "";
 let currentPokemons = [];
+
 /*
  *******************
  *POKEDEX FUNCTIONS*
