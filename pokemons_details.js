@@ -1,10 +1,21 @@
+/*
+ ********
+ *IMPORT*
+ ********
+ */
+
 import {
   createDetailsPokemonCard,
   createStatsCard,
   createEvolutionsCard,
 } from "./modules/createPokemonCards.js";
-import { fetchAPI } from "./modules/fetchUtils.js";
 import * as pokeAPI from "./modules/pokeAPI.js";
+
+/*
+ **********
+ *ELEMENTS*
+ **********
+ */
 
 const pokedexDetailsCardElement = document.getElementById(
   "pokedex-card-details"
@@ -27,10 +38,22 @@ const pokedexEvolutionsCardElement = document.getElementById(
 
 const searchParams = new URL(document.location).searchParams;
 
+/*
+ ***********
+ *VARIABLES*
+ ***********
+ */
+
 let pokemon = searchParams.get("pokemon");
 let previousPokemon = parseInt(pokemon) - 1;
 let nextPokemon = parseInt(pokemon) + 1;
 let currentPokemon = [];
+
+/*
+ ********************************
+ *CREATE CARDS HANDLERS FUNCTION*
+ ********************************
+ */
 
 function createPokemonCard(pokemon) {
   pokeAPI
@@ -42,23 +65,20 @@ function createPokemonCard(pokemon) {
 
 async function createPokemonCardsFromJSON(JSONResponse, evolutionsChainURL) {
   loaderElement.classList.add("pokedex-loader-animation");
+
   const pokemonDetails = await pokeAPI.getPokemon(pokemon);
 
   currentPokemon.push(pokemonDetails);
   createPokemonCards(
     returnPokemonEntry(JSONResponse),
-    getEvolutionChainAndReturnFirstSprite(evolutionsChainURL),
-    getEvolutionChainAndReturnSecondSprite(evolutionsChainURL),
-    getEvolutionChainAndReturnThirdSprite(evolutionsChainURL)
+    getEvolutionChainAndReturnSprite(evolutionsChainURL)
   );
   loaderElement.classList.remove("pokedex-loader-animation");
 }
 
 function createPokemonCards(
   pokedexEntryFromJSONResponse,
-  firstPokemonSpriteOfEvolutionChain,
-  secondPokemonSpriteOfEvolutionChain,
-  thirdPokemonSpriteOfEvolutionChain
+  firstPokemonSpriteOfEvolutionChain
 ) {
   currentPokemon.forEach((pokemon) => {
     createDetailsPokemonCard(
@@ -75,12 +95,12 @@ function createPokemonCards(
     createStatsCard(pokedexStatsCardElement, pokemon);
     createEvolutionsCard(
       pokedexEvolutionsCardElement,
-      firstPokemonSpriteOfEvolutionChain,
-      secondPokemonSpriteOfEvolutionChain,
-      thirdPokemonSpriteOfEvolutionChain
+      firstPokemonSpriteOfEvolutionChain
     );
   });
 }
+
+
 
 function returnPokemonEntry(JSONResponse) {
   const foundRightLanguage = JSONResponse.flavor_text_entries.find(
@@ -98,40 +118,54 @@ function returnPokemonEntry(JSONResponse) {
     .toLowerCase();
 }
 
-function returnFirstSpriteOfPokemonEvolution(evolutionChain) {
-  return pokeAPI
-    .getPokemon(evolutionChain.chain.species.name)
-    .then((resultJSON) => resultJSON["sprites"]["front_default"]);
+function getPokemonNames(evolutionChain) {
+  let pokemonsList = [evolutionChain.species.name];
+  let evolutions = evolutionChain.evolves_to;
+
+  // ! Récursif
+  
+  pokemonsList.push(
+    ...evolutions.flatMap((children) => getPokemonNames(children))
+  );
+  /* ! Itératif
+     for (let index = 0; index < evolutions.length; index++) {
+    let element = evolutions[index];
+    while (element.evolves_to.length > 0) {
+      pokemonsList.push(element.species.name);
+      element = element.evolves_to[0];
+    }
+    pokemonsList.push(element.species.name);
+  } */
+  
+  return pokemonsList;
 }
 
-function returnSecondSpriteOfPokemonEvolution(evolutionChain) {
-  return pokeAPI
-    .getPokemon(evolutionChain.chain.evolves_to[0].species.name)
-    .then((resultJSON) => resultJSON["sprites"]["front_default"]);
+function changePokemonCardColumnsStyle(
+  pokemonArray,
+  numbersOfElements,
+  styleOfColumns
+) {
+  if (pokemonArray.length === numbersOfElements)
+    pokedexEvolutionsCardElement.style.gridTemplateColumns = `${styleOfColumns}`;
 }
 
-function returnThirdSpriteOfPokemonEvolution(evolutionChain) {
-  return pokeAPI
-    .getPokemon(evolutionChain.chain.evolves_to[0].evolves_to[0].species.name)
-    .then((resultJSON) => resultJSON["sprites"]["front_default"]);
-}
-
-function getEvolutionChainAndReturnFirstSprite(evolutionChain) {
-  pokeAPI.getEvolutionChains(evolutionChain).then((resultJSON) => {
-    returnFirstSpriteOfPokemonEvolution(resultJSON);
+async function getPromiseOfSpriteSource(pokemonName) {
+  return await pokeAPI.getPokemon(pokemonName).then((resultJSON) => {
+    return resultJSON["sprites"]["front_default"];
   });
 }
 
-function getEvolutionChainAndReturnSecondSprite(evolutionChain) {
-  pokeAPI.getEvolutionChains(evolutionChain).then((resultJSON) => {
-    returnSecondSpriteOfPokemonEvolution(resultJSON);
-  });
-}
+function getEvolutionChainAndReturnSprite(evolutionChain) {
+  return pokeAPI
+    .getEvolutionChains(evolutionChain)
+    .then((evolutionChainJSON) => {
+      const pokemonListEvolution = getPokemonNames(
+        evolutionChainJSON.chain
+      ).map((name) => getPromiseOfSpriteSource(name));
 
-function getEvolutionChainAndReturnThirdSprite(evolutionChain) {
-  pokeAPI.getEvolutionChains(evolutionChain).then((resultJSON) => {
-    returnThirdSpriteOfPokemonEvolution(resultJSON);
-  });
+
+      return Promise.all(pokemonListEvolution);
+    });
 }
 
 if (previousPokemon === 0) {

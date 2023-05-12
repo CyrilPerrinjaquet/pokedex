@@ -160,7 +160,7 @@ function returnTheContainersSecondType(
     pokedexFirstTypeParagraph.appendChild(textOfFirstType);
     pokedexWordTypeContainer.appendChild(pokedexFirstTypeParagraph);
     detailsView /* With two types */
-      ? (pokedexIconElement.style.padding = "0px 30px 5px 0px")
+      ? (pokedexIconElement.style.padding = "0px 0px 5px 0px")
       : "";
     return pokedexWordTypeContainer;
   }
@@ -341,14 +341,21 @@ function updateProgressBar(progessBar, percentage) {
   );
 }
 
-export function createEvolutionsCard(pokedexContainerElement, ...image) {
-  for (let index = 0; index < 3; index++) {
-    const pokedexEvolutionContainer = document.createElement("div");
-    const pokemonImageElement = document.createElement("img");
-    pokemonImageElement.setAttribute("src", `${image}`);
-  pokemonImageElement.setAttribute("alt", `Pokemon image of ${/*image*/"Comming evolution"}`);
+export function createEvolutionsCard(pokedexContainerElement, imagesPromise) {
+  imagesPromise.then((images) => {
+    for (let index = 0; index < images.length; index++) {
+      const image = images[index];
+      const pokedexEvolutionContainer = document.createElement("div");
+      
+      const pokemonImageElement = document.createElement("img");
+      pokemonImageElement.setAttribute("src", `${image}`);
+      pokemonImageElement.setAttribute(
+        "alt",
+        `Pokemon image of the evolution chain`
+      );
 
-    pokedexEvolutionContainer.appendChild(pokemonImageElement);
-    pokedexContainerElement.appendChild(pokedexEvolutionContainer);
-  }
+      pokedexEvolutionContainer.appendChild(pokemonImageElement);
+      pokedexContainerElement.appendChild(pokedexEvolutionContainer);
+    }
+  });
 }
