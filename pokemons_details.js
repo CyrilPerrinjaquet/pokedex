@@ -95,7 +95,8 @@ function createPokemonCards(
     createStatsCard(pokedexStatsCardElement, pokemon);
     createEvolutionsCard(
       pokedexEvolutionsCardElement,
-      firstPokemonSpriteOfEvolutionChain
+      firstPokemonSpriteOfEvolutionChain,
+      pokemon["sprites"]["other"]["official-artwork"]["front_default"]
     );
   });
 }
@@ -163,10 +164,10 @@ function getEvolutionChainAndReturnSprite(evolutionChain) {
         evolutionChainJSON.chain
       ).map((name) => getPromiseOfSpriteSource(name));
 
-
       return Promise.all(pokemonListEvolution);
     });
 }
+
 
 if (previousPokemon === 0) {
   pokedexPreviousButtonElement.style.opacity = 0.2;

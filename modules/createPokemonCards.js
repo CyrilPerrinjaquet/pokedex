@@ -341,14 +341,19 @@ function updateProgressBar(progessBar, percentage) {
   );
 }
 
-export function createEvolutionsCard(pokedexContainerElement, imagesPromise) {
+export function createEvolutionsCard(
+  pokedexContainerElement,
+  imagesPromise,
+  artWorkImage
+) {
   imagesPromise.then((images) => {
     for (let index = 0; index < images.length; index++) {
-      const image = images[index];
+      let image = images[index];
       const pokedexEvolutionContainer = document.createElement("div");
-      
+
       const pokemonImageElement = document.createElement("img");
-      pokemonImageElement.setAttribute("src", `${image}`);
+      console.log(artWorkImage);
+      pokemonImageElement.setAttribute("src", `${image ?? artWorkImage}`);
       pokemonImageElement.setAttribute(
         "alt",
         `Pokemon image of the evolution chain`
