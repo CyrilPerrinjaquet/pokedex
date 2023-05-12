@@ -25,6 +25,10 @@ $numberInPourcentage100: 100%;
 $px150: 150px;
 $lightGrey: #ededed;
 
+* {
+  font-family: $font-archivo;
+}
+
 @mixin box-shadow($shadow...) {
   box-shadow: $shadow;
 }
@@ -39,7 +43,4 @@ $lightGrey: #ededed;
   }
 }
 
-* {
-  font-family: $font-archivo;
-  scroll-behavior: smooth;
-}
+
