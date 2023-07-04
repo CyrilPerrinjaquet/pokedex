@@ -179,7 +179,7 @@ if (nextPokemon === 1011) {
 
 function viewPreviousAndNextPokemon(buttonElement, pokemonId) {
   buttonElement.addEventListener("click", () => {
-    window.location.href = `pokemon_details?pokemon=${pokemonId}`;
+    window.location.href = `pokemon_details.html?pokemon=${pokemonId}`;
   });
 }
 
