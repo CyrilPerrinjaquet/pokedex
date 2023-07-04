@@ -21,14 +21,12 @@ const pokedexDetailsCardElement = document.getElementById(
   "pokedex-card-details"
 );
 
-
 const loaderElement = document.getElementById("loader");
 
 const pokedexPreviousButtonElement = document.getElementById(
   "pokedex-previous-button"
 );
 const pokedexNextButtonElement = document.getElementById("pokedex-next-button");
-
 
 const pokedexStatsCardElement = document.getElementById("pokedex-card-stats");
 
@@ -101,8 +99,6 @@ function createPokemonCards(
   });
 }
 
-
-
 function returnPokemonEntry(JSONResponse) {
   const foundRightLanguage = JSONResponse.flavor_text_entries.find(
     (element) => element.language.name === "en"
@@ -124,7 +120,7 @@ function getPokemonNames(evolutionChain) {
   let evolutions = evolutionChain.evolves_to;
 
   // ! Récursif
-  
+
   pokemonsList.push(
     ...evolutions.flatMap((children) => getPokemonNames(children))
   );
@@ -137,7 +133,7 @@ function getPokemonNames(evolutionChain) {
     }
     pokemonsList.push(element.species.name);
   } */
-  
+
   return pokemonsList;
 }
 
@@ -167,7 +163,6 @@ function getEvolutionChainAndReturnSprite(evolutionChain) {
       return Promise.all(pokemonListEvolution);
     });
 }
-
 
 if (previousPokemon === 0) {
   pokedexPreviousButtonElement.style.opacity = 0.2;

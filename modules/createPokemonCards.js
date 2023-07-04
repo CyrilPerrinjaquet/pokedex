@@ -32,7 +32,7 @@ export function createPokemonCard(
 
   pokedexLinkToDetails.setAttribute(
     "href",
-    `pokemon_details?pokemon=${pokemonDetails.id}`
+    `pokemon_details.html?pokemon=${pokemonDetails.id}`
   );
 
   // 3. Pokemon card info
