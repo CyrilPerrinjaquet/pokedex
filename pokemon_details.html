@@ -1,72 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <script src="https://kit.fontawesome.com/4de2d955fa.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="assert/CSS/pokemon_details/pokemon_details.css"
-    />
-    <title>Pokemon Details</title>
-  </head>
-  <body>
-    <!-- Back to the list -->
-    <div>
-      <a href="index.html"
-        ><button><i class="fa fa-x"></i></button
-      ></a>
-    </div>
 
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://kit.fontawesome.com/4de2d955fa.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assert/CSS/pokemon_details/pokemon_details.css" />
+  <title>Pokemon Details</title>
+</head>
+
+<body>
+  <!-- Back to the list -->
+  <div>
+    <div>
+      <a href="index.html"><button><i class="fa fa-x"></i></button></a>
+    </div>
     <!-- Back to first pokemon -->
     <div>
       <a href="?pokemon=1">
         <button>Back to first pokemon</button>
       </a>
     </div>
-    <!-- Previous pokemon -->
-    <div>
-      <button
-        id="pokedex-previous-button"
-        class="pokedex-previous-and-next-buttons"
-      >
-        <i class="fa fa-long-arrow-left"></i>
-      </button>
-    </div>
-    <!-- Next pokemon -->
-    <div>
-      <button
-        id="pokedex-next-button"
-        class="pokedex-previous-and-next-buttons"
-      >
-        <i class="fa fa-long-arrow-right"></i>
-      </button>
-    </div>
-
-    <main>
-      <!-- Details -->
-      <div id="pokedex-card-details"></div>
-      <!-- Stats -->
+  </div>
+  <main>
+    <!-- Details -->
+    <div id="pokedex-card-details"></div>
+    <!-- Stats -->
+    <div class="pokedex-navigation-arrows-cards-stats-container">
+      <!-- Previous pokemon -->
+      <div>
+        <button id="pokedex-previous-button" class="pokedex-previous-and-next-buttons">
+          <i class="fa fa-arrow-left"></i>
+        </button>
+      </div>
       <div id="pokedex-card-stats"></div>
-      <!-- Evolutions -->
-      <div id="pokedex-card-evolutions"></div>
-    </main>
-    <div id="loader">
-      <div class="pokedex-loader-main-container">
-        <div>
-          <div id="pokedex-loader-ball-one" class="pokedex-loader-ball"></div>
-        </div>
-        <div>
-          <div id="pokedex-loader-ball-two" class="pokedex-loader-ball"></div>
-        </div>
-        <div>
-          <div id="pokedex-loader-ball-three" class="pokedex-loader-ball"></div>
-        </div>
-        <div>
-          <div id="pokedex-loader-ball-four" class="pokedex-loader-ball"></div>
-        </div>
+      <!-- Next pokemon -->
+      <div>
+        <button id="pokedex-next-button" class="pokedex-previous-and-next-buttons">
+          <i class="fa fa-arrow-right"></i>
+        </button>
       </div>
     </div>
-    <script type="module" src="pokemons_details.js"></script>
-  </body>
+    <!-- Evolutions -->
+    <div id="pokedex-card-evolutions"></div>
+  </main>
+  <div id="loader">
+    <div class="pokedex-loader-main-container">
+      <div>
+        <div id="pokedex-loader-ball-one" class="pokedex-loader-ball"></div>
+      </div>
+      <div>
+        <div id="pokedex-loader-ball-two" class="pokedex-loader-ball"></div>
+      </div>
+      <div>
+        <div id="pokedex-loader-ball-three" class="pokedex-loader-ball"></div>
+      </div>
+      <div>
+        <div id="pokedex-loader-ball-four" class="pokedex-loader-ball"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="pokemons_details.js"></script>
+</body>
+
 </html>
