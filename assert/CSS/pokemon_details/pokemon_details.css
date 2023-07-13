@@ -101,14 +101,6 @@ main > div:first-child {
   grid-template-columns: 18% 32% 50%;
 }
 
-.pokedex-navigation-arrows-cards-stats-container {
-  max-height: 300px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 main > div:last-child {
   min-height: 130px;
   display: grid;
@@ -133,11 +125,12 @@ p + div {
 }
 
 body > div {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
   align-items: center;
-  margin: 20px 0 20px 0;
+  margin: 0px 0px 0px 20px;
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 10px;
 }
 
 button {
@@ -148,6 +141,17 @@ button {
 }
 button:hover {
   cursor: pointer;
+}
+
+.pokedex-navigation-arrows-cards-stats-container {
+  max-height: 300px;
+  min-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border-radius: 0px;
+  box-shadow: none;
 }
 
 .pokedex-previous-and-next-buttons {
@@ -427,9 +431,11 @@ p::first-letter {
 
 @media screen and (max-width: 800px) {
   body > div {
-    left: 50%;
-    right: 50%;
-    top: 10px;
+    display: flex;
+    justify-content: center;
+    position: static;
+    gap: 10px;
+    margin: 20px 0 20px 0;
   }
   main > div {
     width: 300px;
@@ -488,8 +494,9 @@ p::first-letter {
     margin: 0px auto;
   }
   body > div {
-    left: 45px;
-    top: 10px;
+    margin: 20px 0 20px 0;
+    justify-content: center;
+    position: static;
   }
   body > div:nth-child(3) {
     left: 7px;
@@ -507,7 +514,8 @@ p::first-letter {
     width: auto;
     padding: 10px;
   }
-  .pokedex-navigation-arrows-cards-stats-container > div:first-child, .pokedex-navigation-arrows-cards-stats-container > div:last-child {
+  .pokedex-navigation-arrows-cards-stats-container > div:first-child,
+  .pokedex-navigation-arrows-cards-stats-container > div:last-child {
     width: 30px;
     height: 30px;
     top: 2.8%;
