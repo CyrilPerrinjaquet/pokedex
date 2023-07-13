@@ -453,7 +453,7 @@ p::first-letter {
     margin: 0;
   }
   .pokedex-navigation-arrows-cards-stats-container {
-    width: 300px;
+    min-width: 300px;
   }
   .pokedex-navigation-arrows-cards-stats-container > div:first-child {
     position: absolute;
@@ -528,7 +528,7 @@ p::first-letter {
     left: 85%;
   }
   .pokedex-navigation-arrows-cards-stats-container {
-    width: 250px;
+    min-width: 250px;
   }
   .pokedex-details-information-container > div:first-child {
     width: 100%;

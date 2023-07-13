@@ -385,7 +385,7 @@ p::first-letter {
   }
 
   .pokedex-navigation-arrows-cards-stats-container {
-    width: 300px;
+    min-width: 300px;
   }
 
   .pokedex-navigation-arrows-cards-stats-container > div:first-child {
@@ -475,7 +475,7 @@ p::first-letter {
   }
 
   .pokedex-navigation-arrows-cards-stats-container {
-    width: 250px;
+    min-width: 250px;
   }
 
   .pokedex-details-information-container > div:first-child {
