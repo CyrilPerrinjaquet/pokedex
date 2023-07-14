@@ -124,7 +124,7 @@ p + div {
   margin-left: 50px;
 }
 
-body > div {
+body > div:not(.pokedex-loader-animation) {
   align-items: center;
   margin: 0px 0px 0px 20px;
   display: flex;

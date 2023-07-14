@@ -5,7 +5,6 @@
  */
 
 import * as pokemonCardStyle from "./stylePokemonCard.js";
-import * as pokeAPI from "./pokeAPI.js";
 
 /*
  *******************************************
@@ -352,7 +351,6 @@ export function createEvolutionsCard(
       const pokedexEvolutionContainer = document.createElement("div");
 
       const pokemonImageElement = document.createElement("img");
-      console.log(artWorkImage);
       pokemonImageElement.setAttribute("src", `${image ?? artWorkImage}`);
       pokemonImageElement.setAttribute(
         "alt",
