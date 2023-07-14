@@ -430,7 +430,7 @@ p::first-letter {
 }
 
 @media screen and (max-width: 800px) {
-  body > div {
+  body > div:not(.pokedex-loader-animation) {
     display: flex;
     justify-content: center;
     position: static;
@@ -493,7 +493,7 @@ p::first-letter {
     width: 250px;
     margin: 0px auto;
   }
-  body > div {
+  body > div:not(.pokedex-loader-animation) {
     margin: 20px 0 20px 0;
     justify-content: center;
     position: static;
