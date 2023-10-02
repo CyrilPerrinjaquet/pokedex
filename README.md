@@ -1,6 +1,6 @@
 ## Pokédex
 
-This is my first project using differents front-end technologies, like an API => https://pokeapi.co/, SASS (SCSS).
+This is my first project using differents front-end technologies, like an API => https://pokeapi.co/, SCSS.
 
 ### Description 
 
