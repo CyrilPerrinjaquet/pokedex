@@ -113,12 +113,30 @@ i {
   font-size: 1em;
 }
 
-a[href^="#header"] {
-  margin-left: 20px;
+#pokedex-scroll-to-top-anchor {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+  display: none; /* Controlled by JS */
+  margin-left: 0;
 }
 
 a > button {
+  @include putSameValue(50px, width, height);
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  background-color: #ff1c1c;
+  color: white;
+  border: none;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .pokedex-search-bar-container {
